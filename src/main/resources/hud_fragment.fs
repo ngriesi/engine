@@ -13,8 +13,11 @@ uniform int isText;
 uniform int maskMode;
 uniform int depth;
 uniform float keepCornerProportion;
+uniform float keepEdgeProportion;
 uniform float cornerSize;
+uniform float edgeSize;
 uniform float full;
+uniform vec4 edgeColor;
 
 float smoothing;
 
@@ -175,42 +178,68 @@ void main() {
             if(mvPos.x < startX) {
                 if(mvPos.y < startY) {
 
-                    if(pow((mvPos.x - startX),2) + pow(mvPos.y - startY,2) > pow(value,2)) {
+                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,startY,1,value);
+
+                    if(t > 0) {
                          fragColor = color * 0;
                     } else {
-                        useColor(1);
+                        useColor(1+t/pow(value,2));
                     }
                 } else if(mvPos.y > endY) {
-                    if(pow((mvPos.x - startX),2) + pow(mvPos.y - endY,2) > pow(value,2)) {
+
+                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,endY,1,value);
+
+                    if(t > 0) {
                          fragColor = color * 0;
                     } else {
-                        useColor(1);
+                        useColor(1+t/pow(value,2));
                     }
                 } else {
-                    useColor(1);
+                    float temp1 = (abs(mvPos.x) - (0.5f - value)) * 2;
+                    float temp2 = temp1>0?pow(temp1,2):0;
+                    useColor(temp2 * (25)/(pow(value * 10,2)));
                 }
             } else if (mvPos.x > endX) {
                 if(mvPos.y < startY) {
-                    if(pow((mvPos.x - endX),2) + pow(mvPos.y - startY,2) > pow(value,2)) {
+
+                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,startY,1,value);
+
+                    if(t > 0) {
                          fragColor = color * 0;
                     } else {
-                        useColor(1);
+                        useColor(1+t/pow(value,2));
                     }
                 } else if(mvPos.y > endY) {
-                    if(pow((mvPos.x - endX),2) + pow(mvPos.y - endY,2) > pow(value,2)) {
+
+                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,endY,1,value);
+
+                    if(t > 0) {
                          fragColor = color * 0;
                     } else {
-                         useColor(1);
+                         useColor(1+t/pow(value,2));
                     }
                 } else {
-                    useColor(1);
+                    float temp1 = (abs(mvPos.x) - (0.5f - value)) * 2;
+                    float temp2 = temp1>0?pow(temp1,2):0;
+                    useColor(temp2 * (25)/(pow(value * 10,2)));
                 }
             } else {
-                useColor(1);
+                float temp1 = (abs(mvPos.y) - (0.5f - value)) * 2;
+                float temp2 = temp1>0?pow(temp1,2):0;
+                useColor(temp2 * (25)/(pow(value * 10,2)));
             }
         }
         } else {
-            useColor(1);
+
+            if(keepEdgeProportion == 0) {
+                 useColor(max(abs(mvPos.x),abs(mvPos.y))*2);
+            }
+            else if(keepEdgeProportion > 0){
+                 useColor(max(abs(mvPos.x * keepEdgeProportion) - 0.5f,abs(mvPos.y))*2);
+            } else {
+                 useColor(max(abs(mvPos.x),abs(mvPos.y * ((keepEdgeProportion+1)*0.5f - 1)))*2);
+            }
+
         }
     } else {
 
@@ -230,7 +259,13 @@ void useColor(float dist) {
     if( hasTexture == 1) {
         fragColor = color * texture(texture_sampler, outTexCord);
     }else{
-        fragColor = color * dist;
+
+
+        if(dist > 1 - edgeSize) {
+            fragColor = edgeColor;
+        } else {
+            fragColor = color;
+        }
 
 
     }

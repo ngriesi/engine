@@ -113,6 +113,9 @@ public class Renderer {
         hudShaderProgram.createUniforms("useColorShade");
         hudShaderProgram.createUniforms("hasTexture");
         hudShaderProgram.createUniforms("keepCornerProportion");
+        hudShaderProgram.createUniforms("keepEdgeProportion");
+        hudShaderProgram.createUniforms("edgeSize");
+        hudShaderProgram.createUniforms("edgeColor");
         hudShaderProgram.createUniforms("maskMode");
         hudShaderProgram.createUniforms("cornerSize");
         hudShaderProgram.createUniforms("depth");

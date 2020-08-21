@@ -20,6 +20,11 @@ public class QuadComponent extends SubComponent {
         KEEP_X,KEEP_Y,FREE
     }
 
+    /** determines proportion of edges */
+    public enum EdgeProportion {
+        KEEP_X,KEEP_Y,FREE
+    }
+
     /** determines what effect transparent pixels have on the mask */
     public enum MaskMode {
         DISPOSE_TRANSPARENT,USE_TRANSPARENT
@@ -28,14 +33,23 @@ public class QuadComponent extends SubComponent {
     /** mesh of the component */
     private Quad quad;
 
-    /** if true corners are the same in both x and y direction */
+    /** if not FREE corners are the same in both x and y direction */
     private CornerProportion cornerProportion;
+
+    /** if not FREE edges are the same in both x and y direction */
+    private EdgeProportion edgeProportion;
 
     /** way the mask for the children is created */
     private MaskMode maskMode;
 
     /** size of the rounded corners relative to component size (0 disables rounded corners)*/
     private float cornerSize;
+
+    /** size of the edges relative to the components size*/
+    private float edgeSize;
+
+    /** color of the edge */
+    private Color edgeColor;
 
     /**
      *  colors of the quad, when color shade is off only the first one is used,
@@ -67,10 +81,13 @@ public class QuadComponent extends SubComponent {
         super();
         quad = new Quad();
         cornerProportion = CornerProportion.FREE;
+        edgeProportion = EdgeProportion.FREE;
         maskMode = MaskMode.USE_TRANSPARENT;
         cornerSize = 0f;
+        edgeSize = 0;
         colors = new ColorScheme();
         useColorShade = false;
+        edgeColor = new Color();
 
 
     }
@@ -145,7 +162,7 @@ public class QuadComponent extends SubComponent {
             hudShaderProgram.setUniform("hasTexture", mesh.getMaterial().isTexture() ? 1 : 0);
             switch (cornerProportion) {
                 case FREE:
-                    hudShaderProgram.setUniform("keepCornerProportion", 1);
+                    hudShaderProgram.setUniform("keepCornerProportion", 0);
                     break;
                 case KEEP_Y:
                     hudShaderProgram.setUniform("keepCornerProportion", (super.getOnScreenWidth() / super.getOnScreenHeight()) * ((float) super.getWindow().getWidth() / super.getWindow().getHeight()));
@@ -153,8 +170,23 @@ public class QuadComponent extends SubComponent {
                 case KEEP_X:
                     hudShaderProgram.setUniform("keepCornerProportion", -(super.getOnScreenWidth() / super.getOnScreenHeight()) * ((float) super.getWindow().getWidth() / super.getWindow().getHeight()));
             }
+
             hudShaderProgram.setUniform("maskMode", maskMode.ordinal());
             hudShaderProgram.setUniform("cornerSize", cornerSize);
+            hudShaderProgram.setUniform("edgeSize",edgeSize);
+            hudShaderProgram.setUniform("edgeColor",edgeColor.getColor());
+            if(cornerSize == 0) {
+                switch (edgeProportion) {
+                    case FREE:
+                        hudShaderProgram.setUniform("keepEdgeProportion",0);
+                        break;
+                    case KEEP_Y:
+                        hudShaderProgram.setUniform("keepEdgeProportion", (super.getOnScreenWidth() / super.getOnScreenHeight()) * ((float) super.getWindow().getWidth() / super.getWindow().getHeight()));
+                        break;
+                    case KEEP_X:
+                        hudShaderProgram.setUniform("keepEdgeProportion", -(super.getOnScreenWidth() / super.getOnScreenHeight()) * ((float) super.getWindow().getWidth() / super.getWindow().getHeight()));
+                }
+            }
 
         } else {
             hudShaderProgram.setUniform("colors", new Vector4f[] {new Vector4f(1,1,1,1)});
@@ -251,6 +283,11 @@ public class QuadComponent extends SubComponent {
         return rotation;
     }
 
+    public void setEdgeProportion(EdgeProportion edgeProportion) {
+        this.edgeProportion = edgeProportion;
+    }
 
-
+    public void setEdgeSize(float edgeSize) {
+        this.edgeSize = edgeSize;
+    }
 }
