@@ -65,7 +65,10 @@ void main() {
                         useColor(1+t/pow(value,2));
                     }
                 } else {
-                    useColor(pow((abs(mvPos.x) - (0.5f - value)) * 2,2) * 25/(pow(value * 10,2)));
+                    float val2 = value;
+                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;
+                    float temp2 = temp1>0?pow(temp1,2):0;
+                    useColor(temp2 * (25)/(pow(val2 * 10,2)));
                 }
             } else if (mvPos.x > endX) {
                 if(mvPos.y < startY) {
@@ -87,7 +90,10 @@ void main() {
                          useColor(1+t/pow(value,2));
                     }
                 } else {
-                    useColor(pow((abs(mvPos.x) - (0.5f - value)) * 2,2) * 25/(pow(value * 10,2)));
+                    float val2 = value;
+                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;
+                    float temp2 = temp1>0?pow(temp1,2):0;
+                    useColor(temp2 * (25)/(pow(val2 * 10,2)));
                 }
             } else {
                 float val2 = value *-keepCornerProportion;
@@ -105,42 +111,58 @@ void main() {
 
             if(mvPos.x < startX) {
                 if(mvPos.y < startY) {
-                    float t = -pow((mvPos.x - startX) * keepCornerProportion,2) + pow(mvPos.y - startY,2) - pow(value,2);
+                    float t = cornerDist(mvPos.x,startX,keepCornerProportion,mvPos.y,startY,1,value);
+
                     if(t > 0) {
                          fragColor = color * 0;
                     } else {
-                        useColor(t);
+                        useColor(1+t/pow(value,2));
                     }
                 } else if(mvPos.y > endY) {
-                    float t = -pow((mvPos.x - startX) * keepCornerProportion,2) + pow(mvPos.y - endY,2) - pow(value,2);
+
+                    float t = cornerDist(mvPos.x,startX,keepCornerProportion,mvPos.y,endY,1,value);
+
                     if(t > 0) {
                          fragColor = color * 0;
                     } else {
-                        useColor(t);
+                        useColor(1+t/pow(value,2));
                     }
                 } else {
-                    useColor(mvPos.y);
+                    float val2 = value/keepCornerProportion;
+                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;
+                    float temp2 = temp1>0?pow(temp1,2):0;
+                    useColor(temp2 * (25)/(pow(val2 * 10,2)));
                 }
             } else if (mvPos.x > endX) {
                 if(mvPos.y < startY) {
-                    float t = -pow((mvPos.x - endX) * keepCornerProportion,2) + pow(mvPos.y - startY,2) - pow(value,2);
+
+                    float t = cornerDist(mvPos.x,endX,keepCornerProportion,mvPos.y,startY,1,value);
+
                     if(t > 0) {
                          fragColor = color * 0;
                     } else {
-                        useColor(t);
+                        useColor(1+t/pow(value,2));
                     }
                 } else if(mvPos.y > endY) {
-                    float t = -pow((mvPos.x - endX) * keepCornerProportion,2) + pow(mvPos.y - endY,2) - pow(value,2);
+
+                    float t = cornerDist(mvPos.x,endX,keepCornerProportion,mvPos.y,endY,1,value);
+
                     if(t > 0) {
                          fragColor = color * 0;
                     } else {
-                         useColor(t);
+                         useColor(1+t/pow(value,2));
                     }
                 } else {
-                    useColor(mvPos.y);
+                    float val2 = value/keepCornerProportion;
+                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;
+                    float temp2 = temp1>0?pow(temp1,2):0;
+                    useColor(temp2 * (25)/(pow(val2 * 10,2)));
                 }
             } else {
-                useColor(mvPos.x);
+                float val2 = value;
+                float temp1 = (abs(mvPos.y) - (0.5f - val2)) * 2;
+                float temp2 = temp1>0?pow(temp1,2):0;
+                useColor(temp2 * (25)/(pow(val2 * 10,2)));
             }
 
         } else {
