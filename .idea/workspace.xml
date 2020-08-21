@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/QuadComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/QuadComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/Button.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hud_fragment.fs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hud_fragment.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent$MaskMode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent$MaskMode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/Button.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/Button.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hud_fragment.fs" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hud_fragment.fs" afterDir="false" />
-    </list>
+    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598012176857</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added fragment shader edge distance calculation for the FREE corner mode and added simple support for edge customization from the java code">
+      <created>1598024779267</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1598024779267</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,6 +128,7 @@
     <MESSAGE value="Second commit" />
     <MESSAGE value="Added fragment shader edge distance calculation for the KEEP_X corner mode" />
     <MESSAGE value="Added fragment shader edge distance calculation for the KEEP_Y corner mode and improved the edge distance calculation for the KEEP_X corner mode" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added fragment shader edge distance calculation for the KEEP_Y corner mode and improved the edge distance calculation for the KEEP_X corner mode" />
+    <MESSAGE value="Added fragment shader edge distance calculation for the FREE corner mode and added simple support for edge customization from the java code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added fragment shader edge distance calculation for the FREE corner mode and added simple support for edge customization from the java code" />
   </component>
 </project>
