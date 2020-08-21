@@ -22,6 +22,7 @@ void useColor(float dist);
 
 void setDepth();
 
+float cornerDist(float pow1_1,float pow1_2,float pow1_mult,float pow2_1,float pow2_2,float pow2_div,float value);
 
 void main() {
 
@@ -46,42 +47,53 @@ void main() {
 
             if(mvPos.x < startX) {
                 if(mvPos.y < startY) {
-                    float t = pow((mvPos.x - startX),2) + pow((mvPos.y - startY) / -keepCornerProportion,2) - pow(value,2);
+
+                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,startY,-keepCornerProportion,value);
+
                     if(t > 0) {
                         fragColor = color * 0;
                     } else {
                         useColor(1+t/pow(value,2));
                     }
                 } else if(mvPos.y > endY) {
-                    float t =  pow((mvPos.x - startX),2) + pow((mvPos.y - endY) / -keepCornerProportion,2) - pow(value,2);
+
+                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,endY,-keepCornerProportion,value);
+
                     if(t > 0) {
                         fragColor = color * 0;
                     } else {
                         useColor(1+t/pow(value,2));
                     }
                 } else {
-                    useColor((abs(mvPos.x * 2) - (1 - 2 * value)) * 1/value );
+                    useColor(pow((abs(mvPos.x) - (0.5f - value)) * 2,2) * 25/(pow(value * 10,2)));
                 }
             } else if (mvPos.x > endX) {
                 if(mvPos.y < startY) {
-                    float t = pow((mvPos.x - endX),2) + pow((mvPos.y - startY) / -keepCornerProportion,2) - pow(value,2);
+
+                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,startY,-keepCornerProportion,value);
+
                     if(t > 0) {
                         fragColor = color * 0;
                     } else {
-                        useColor(t);
+                        useColor(1+t/pow(value,2));
                     }
                 } else if(mvPos.y > endY) {
-                    float t = pow((mvPos.x - endX),2) + pow((mvPos.y - endY) / -keepCornerProportion,2) - pow(value,2);
+
+                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,endY,-keepCornerProportion,value);
+
                     if(t > 0) {
                          fragColor = color * 0;
                     } else {
-                         useColor(t);
+                         useColor(1+t/pow(value,2));
                     }
                 } else {
-                    useColor(0.5f - mvPos.x);
+                    useColor(pow((abs(mvPos.x) - (0.5f - value)) * 2,2) * 25/(pow(value * 10,2)));
                 }
             } else {
-                useColor(abs(mvPos.y));
+                float val2 = value *-keepCornerProportion;
+                float temp1 = (abs(mvPos.y) - (0.5f - val2)) * 2;
+                float temp2 = temp1>0?pow(temp1,2):0;
+                useColor(temp2 * (25)/(pow(val2 * 10,2)));
             }
         } else if(keepCornerProportion > 0){
 
@@ -216,5 +228,11 @@ void setDepth() {
                 gl_FragDepth = depth/16777215.0;
 
         }
+
+}
+
+float cornerDist(float pow1_1,float pow1_2,float pow1_mult,float pow2_1,float pow2_2,float pow2_div,float value) {
+
+    return pow((pow1_1 - pow1_2) * pow1_mult,2) + pow((pow2_1 - pow2_2)/pow2_div,2) - pow(value,2);
 
 }
