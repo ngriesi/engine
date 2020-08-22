@@ -290,4 +290,8 @@ public class QuadComponent extends SubComponent {
     public void setEdgeSize(float edgeSize) {
         this.edgeSize = edgeSize;
     }
+
+    public void setEdgeColor(Color edgeColor) {
+        this.edgeColor = edgeColor;
+    }
 }

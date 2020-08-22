@@ -15,7 +15,9 @@ uniform int depth;
 uniform float keepCornerProportion;
 uniform float keepEdgeProportion;
 uniform float cornerSize;
+uniform float edgeSize;
 uniform float full;
+uniform vec4 edgeColor;
 
 float smoothing;
 
@@ -23,210 +25,27 @@ void useColor(float dist);
 
 void setDepth();
 
-float cornerDist(float pow1_1,float pow1_2,float pow1_mult,float pow2_1,float pow2_2,float pow2_div,float value);
+void cornerDist(float pow1_1,float pow1_2,float pow1_mult,float pow2_1,float pow2_2,float pow2_div,float value);
+
+void sideDist(float proportion,float pos);
+
+void calculateCorners(float proportionValue1,float proportionValue2);
+
+void handleText();
 
 void main() {
 
 
     if(isText == 0) {
-        float value = cornerSize;
-
-        float startX;
-        float endX;
-
-        float startY;
-        float endY;
 
         if(cornerSize > 0) {
-        if(keepCornerProportion < 0) {
-
-            startX =  -0.5 + value;
-            endX = -startX;
-
-            startY = -0.5 + value * -keepCornerProportion;
-            endY = -startY;
-
-            if(mvPos.x < startX) {
-                if(mvPos.y < startY) {
-
-                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,startY,-keepCornerProportion,value);
-
-                    if(t > 0) {
-                        fragColor = color * 0;
-                    } else {
-                        useColor(1+t/pow(value,2));
-                    }
-                } else if(mvPos.y > endY) {
-
-                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,endY,-keepCornerProportion,value);
-
-                    if(t > 0) {
-                        fragColor = color * 0;
-                    } else {
-                        useColor(1+t/pow(value,2));
-                    }
-                } else {
-                    float val2 = value;
-                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;
-                    float temp2 = temp1>0?pow(temp1,2):0;
-                    useColor(temp2 * (25)/(pow(val2 * 10,2)));
-                }
-            } else if (mvPos.x > endX) {
-                if(mvPos.y < startY) {
-
-                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,startY,-keepCornerProportion,value);
-
-                    if(t > 0) {
-                        fragColor = color * 0;
-                    } else {
-                        useColor(1+t/pow(value,2));
-                    }
-                } else if(mvPos.y > endY) {
-
-                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,endY,-keepCornerProportion,value);
-
-                    if(t > 0) {
-                         fragColor = color * 0;
-                    } else {
-                         useColor(1+t/pow(value,2));
-                    }
-                } else {
-                    float val2 = value;
-                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;
-                    float temp2 = temp1>0?pow(temp1,2):0;
-                    useColor(temp2 * (25)/(pow(val2 * 10,2)));
-                }
+            if(keepCornerProportion < 0) {
+                calculateCorners(-keepCornerProportion,1);
+            } else if(keepCornerProportion > 0){
+                calculateCorners(1,keepCornerProportion);
             } else {
-                float val2 = value *-keepCornerProportion;
-                float temp1 = (abs(mvPos.y) - (0.5f - val2)) * 2;
-                float temp2 = temp1>0?pow(temp1,2):0;
-                useColor(temp2 * (25)/(pow(val2 * 10,2)));
+                calculateCorners(1,1);
             }
-        } else if(keepCornerProportion > 0){
-
-            startX =  -0.5 + value/keepCornerProportion;
-            endX = -startX;
-
-            startY = -0.5 + value;
-            endY = -startY;
-
-            if(mvPos.x < startX) {
-                if(mvPos.y < startY) {
-                    float t = cornerDist(mvPos.x,startX,keepCornerProportion,mvPos.y,startY,1,value);
-
-                    if(t > 0) {
-                         fragColor = color * 0;
-                    } else {
-                        useColor(1+t/pow(value,2));
-                    }
-                } else if(mvPos.y > endY) {
-
-                    float t = cornerDist(mvPos.x,startX,keepCornerProportion,mvPos.y,endY,1,value);
-
-                    if(t > 0) {
-                         fragColor = color * 0;
-                    } else {
-                        useColor(1+t/pow(value,2));
-                    }
-                } else {
-                    float val2 = value/keepCornerProportion;
-                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;
-                    float temp2 = temp1>0?pow(temp1,2):0;
-                    useColor(temp2 * (25)/(pow(val2 * 10,2)));
-                }
-            } else if (mvPos.x > endX) {
-                if(mvPos.y < startY) {
-
-                    float t = cornerDist(mvPos.x,endX,keepCornerProportion,mvPos.y,startY,1,value);
-
-                    if(t > 0) {
-                         fragColor = color * 0;
-                    } else {
-                        useColor(1+t/pow(value,2));
-                    }
-                } else if(mvPos.y > endY) {
-
-                    float t = cornerDist(mvPos.x,endX,keepCornerProportion,mvPos.y,endY,1,value);
-
-                    if(t > 0) {
-                         fragColor = color * 0;
-                    } else {
-                         useColor(1+t/pow(value,2));
-                    }
-                } else {
-                    float val2 = value/keepCornerProportion;
-                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;
-                    float temp2 = temp1>0?pow(temp1,2):0;
-                    useColor(temp2 * (25)/(pow(val2 * 10,2)));
-                }
-            } else {
-                float val2 = value;
-                float temp1 = (abs(mvPos.y) - (0.5f - val2)) * 2;
-                float temp2 = temp1>0?pow(temp1,2):0;
-                useColor(temp2 * (25)/(pow(val2 * 10,2)));
-            }
-
-        } else {
-            startX =  -0.5 + value;
-            endX = -startX;
-
-            startY = -0.5 + value;
-            endY = -startY;
-
-            if(mvPos.x < startX) {
-                if(mvPos.y < startY) {
-
-                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,startY,1,value);
-
-                    if(t > 0) {
-                         fragColor = color * 0;
-                    } else {
-                        useColor(1+t/pow(value,2));
-                    }
-                } else if(mvPos.y > endY) {
-
-                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,endY,1,value);
-
-                    if(t > 0) {
-                         fragColor = color * 0;
-                    } else {
-                        useColor(1+t/pow(value,2));
-                    }
-                } else {
-                    float temp1 = (abs(mvPos.x) - (0.5f - value)) * 2;
-                    float temp2 = temp1>0?pow(temp1,2):0;
-                    useColor(temp2 * (25)/(pow(value * 10,2)));
-                }
-            } else if (mvPos.x > endX) {
-                if(mvPos.y < startY) {
-
-                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,startY,1,value);
-
-                    if(t > 0) {
-                         fragColor = color * 0;
-                    } else {
-                        useColor(1+t/pow(value,2));
-                    }
-                } else if(mvPos.y > endY) {
-
-                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,endY,1,value);
-
-                    if(t > 0) {
-                         fragColor = color * 0;
-                    } else {
-                         useColor(1+t/pow(value,2));
-                    }
-                } else {
-                    float temp1 = (abs(mvPos.x) - (0.5f - value)) * 2;
-                    float temp2 = temp1>0?pow(temp1,2):0;
-                    useColor(temp2 * (25)/(pow(value * 10,2)));
-                }
-            } else {
-                float temp1 = (abs(mvPos.y) - (0.5f - value)) * 2;
-                float temp2 = temp1>0?pow(temp1,2):0;
-                useColor(temp2 * (25)/(pow(value * 10,2)));
-            }
-        }
         } else {
 
             if(keepEdgeProportion == 0) {
@@ -241,31 +60,29 @@ void main() {
         }
     } else {
 
+        handleText();
 
-        float smoothing = 0.9f / (0.5 * 100);
-
-        float distance = texture(texture_sampler, outTexCord).a;
-        float alpha = smoothstep(full - smoothing, full + smoothing, distance);
-        fragColor = vec4(color.rgb, color.a * alpha);
-
-
-        setDepth();
     }
+}
+
+void handleText() {
+    float smoothing = 0.9f / (0.5 * 100);
+
+    float distance = texture(texture_sampler, outTexCord).a;
+    float alpha = smoothstep(full - smoothing, full + smoothing, distance);
+    fragColor = vec4(color.rgb, color.a * alpha);
+    setDepth();
 }
 
 void useColor(float dist) {
     if( hasTexture == 1) {
         fragColor = color * texture(texture_sampler, outTexCord);
     }else{
-
-
-        if(dist > 0.5f) {
-            fragColor = color * 1;
+        if(dist > 1 - 0.5f + edgeSize) {
+            fragColor = edgeColor * (1- (dist - 0.5f) * 2);
         } else {
-            fragColor = color * dist;
+            fragColor = color;
         }
-
-
     }
 
     setDepth();
@@ -275,19 +92,50 @@ void useColor(float dist) {
 
 void setDepth() {
     if( maskMode == 0) {
-            gl_FragDepth = depth/16777215.0;
-            if(fragColor.a == 0) {
-                discard;
-            }
-        } else {
-                gl_FragDepth = depth/16777215.0;
-
+        if(fragColor.a == 0) {
+            discard;
         }
-
+        gl_FragDepth = depth/16777215.0;
+    } else {
+        gl_FragDepth = depth/16777215.0;
+    }
 }
 
-float cornerDist(float pow1_1,float pow1_2,float pow1_mult,float pow2_1,float pow2_2,float pow2_div,float value) {
+void calculateCorners(float proportionValue1, float proportionValue2) {
 
-    return pow((pow1_1 - pow1_2) * pow1_mult,2) + pow((pow2_1 - pow2_2)/pow2_div,2) - pow(value,2);
+    float startX =  -0.5 + cornerSize/proportionValue2;
+    float endX = -startX;
 
+    float startY = -0.5 + cornerSize * proportionValue1;
+    float endY = -startY;
+
+    if(mvPos.x < startX) {
+         if(mvPos.y < startY) {         cornerDist(mvPos.x,startX,proportionValue2,mvPos.y,startY,proportionValue1,cornerSize);
+         } else if(mvPos.y > endY) {    cornerDist(mvPos.x,startX,proportionValue2,mvPos.y,endY,proportionValue1,cornerSize);
+         } else {                       sideDist(cornerSize/proportionValue2,mvPos.x);}
+    } else if (mvPos.x > endX) {
+         if(mvPos.y < startY) {         cornerDist(mvPos.x,endX,proportionValue2,mvPos.y,startY,proportionValue1,cornerSize);
+         } else if(mvPos.y > endY) {    cornerDist(mvPos.x,endX,proportionValue2,mvPos.y,endY,proportionValue1,cornerSize);
+         } else {                       sideDist(cornerSize/proportionValue2,mvPos.x);}
+    } else {
+        sideDist(cornerSize * proportionValue1,mvPos.y);
+    }
+}
+
+
+
+void sideDist(float proportion,float pos) {
+    useColor(pow(max((abs(pos) - (0.5f - proportion)) * 2,0),2) * (25)/(pow(proportion * 10,2)));
+}
+
+void cornerDist(float pow1_1,float pow1_2,float pow1_mult,float pow2_1,float pow2_2,float pow2_div,float value) {
+
+    float t = pow((pow1_1 - pow1_2) * pow1_mult,2) + pow((pow2_1 - pow2_2)/pow2_div,2) - pow(value,2);
+
+    if(t > 0) {
+         fragColor = color * 0;
+         setDepth();
+    } else {
+         useColor(1+t/pow(cornerSize,2));
+    }
 }

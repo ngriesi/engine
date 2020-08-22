@@ -168,6 +168,7 @@ public class SceneComponent extends ContentComponent {
 
     @Override
     public void drawMesh(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram, RenderMode renderMode) {
+
         Mesh mesh = background.getMesh();
         Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(background, ortho);
         hudShaderProgram.setUniform("projModelMatrix", projModelMatrix);
@@ -177,19 +178,26 @@ public class SceneComponent extends ContentComponent {
             hudShaderProgram.setUniform("colors",new Vector4f[]{new Vector4f(0,0,0,1)});
             hudShaderProgram.setUniform("useColorShade", 0);
             hudShaderProgram.setUniform("hasTexture", mesh.getMaterial().isTexture() ? 1 : 0);
-            hudShaderProgram.setUniform("keepCornerProportion", 1);
+            hudShaderProgram.setUniform("keepCornerProportion", 0);
 
             hudShaderProgram.setUniform("maskMode", 0);
             hudShaderProgram.setUniform("cornerSize", 0);
+            hudShaderProgram.setUniform("edgeSize",0);
+            hudShaderProgram.setUniform("keepEdgeProportion",0);
 
         } else {
             hudShaderProgram.setUniform("colors", new Vector4f[] {new Vector4f(1,1,1,1)});
             hudShaderProgram.setUniform("useColorShade",0);
             hudShaderProgram.setUniform("hasTexture", 0);
+
+            hudShaderProgram.setUniform("maskMode", 0);
+            hudShaderProgram.setUniform("cornerSize", 0);
+            hudShaderProgram.setUniform("edgeSize",0);
+            hudShaderProgram.setUniform("keepEdgeProportion",0);
         }
 
 
-        mesh.render();
+        //mesh.render();
         super.drawMesh(ortho, transformation, hudShaderProgram, renderMode);
     }
 
@@ -210,7 +218,6 @@ public class SceneComponent extends ContentComponent {
         } else {
             currentComponent = null;
         }
-
 
 
         if(currentComponent != null && lastComponent != null) {

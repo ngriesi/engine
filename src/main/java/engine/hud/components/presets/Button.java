@@ -66,11 +66,13 @@ public class Button extends QuadComponent implements DragEvent {
 
         textComponent.setColorScheme(textColor);
 
-        setCornerSize(0);
+        setCornerSize(0.1f);
 
-        setCornerProportion(CornerProportion.FREE);
+        setCornerProportion(CornerProportion.KEEP_Y);
 
         setEdgeProportion(EdgeProportion.KEEP_X);
+
+        setEdgeColor(Color.BLUE);
 
         super.addComponent(textComponent);
 

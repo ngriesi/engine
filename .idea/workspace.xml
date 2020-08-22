@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="" />
+    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/QuadComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/QuadComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/Button.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hud_fragment.fs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hud_fragment.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/Button.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/Button.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hud_fragment.fs" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hud_fragment.fs" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +36,7 @@
   <component name="ProjectId" id="1gP7OwYS7Qq2NHMfAp5PdBnD17c" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -108,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598024779267</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added fragment shader edge distance calculation for the FREE corner mode and added simple support for edge customization from the java code">
+      <created>1598025025971</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1598025025971</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
