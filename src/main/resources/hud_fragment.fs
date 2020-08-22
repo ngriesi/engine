@@ -78,10 +78,16 @@ void useColor(float dist) {
     if( hasTexture == 1) {
         fragColor = color * texture(texture_sampler, outTexCord);
     }else{
-        if(dist > 1 - 0.5f + edgeSize) {
+        if(dist > 1 + edgeSize) {
             fragColor = edgeColor * (1- (dist - 0.5f) * 2);
         } else {
-            fragColor = color;
+
+
+            if(dist > 0.8f) {
+                fragColor = color;
+            } else {
+                fragColor = color * 0;
+            }
         }
     }
 
@@ -102,6 +108,8 @@ void setDepth() {
 }
 
 void calculateCorners(float proportionValue1, float proportionValue2) {
+
+
 
     float startX =  -0.5 + cornerSize/proportionValue2;
     float endX = -startX;
@@ -129,6 +137,7 @@ void sideDist(float proportion,float pos) {
 }
 
 void cornerDist(float pow1_1,float pow1_2,float pow1_mult,float pow2_1,float pow2_2,float pow2_div,float value) {
+
 
     float t = pow((pow1_1 - pow1_2) * pow1_mult,2) + pow((pow2_1 - pow2_2)/pow2_div,2) - pow(value,2);
 
