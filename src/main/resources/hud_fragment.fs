@@ -4,6 +4,16 @@ in vec2 outTexCord;
 in vec3 mvPos;
 in vec4 color;
 
+struct Edge {
+
+    vec4 startColor;
+    vec4 endColor;
+    float size;
+    float position;
+    int blendMode;
+
+};
+
 out vec4 fragColor;
 out float gl_FragDepth;
 
@@ -15,15 +25,18 @@ uniform int depth;
 uniform float keepCornerProportion;
 uniform float keepEdgeProportion;
 uniform float cornerSize;
-uniform float edgeSize;
 uniform float full;
-uniform vec4 edgeColor;
+uniform Edge outerEdge;
+uniform Edge middleEdge;
+uniform Edge innerEdge;
 
 float smoothing;
 
 void useColor(float dist);
 
 void setDepth();
+
+void addEdge(Edge edge, float dist);
 
 void cornerDist(float pow1_1,float pow1_2,float pow1_mult,float pow2_1,float pow2_2,float pow2_div,float value);
 
@@ -78,22 +91,30 @@ void useColor(float dist) {
     if( hasTexture == 1) {
         fragColor = color * texture(texture_sampler, outTexCord);
     }else{
-        if(dist > 1 + edgeSize) {
-            fragColor = edgeColor * (1- (dist - 0.5f) * 2);
-        } else {
+
+        fragColor = color;
+
+        addEdge(outerEdge,dist);
+        addEdge(middleEdge,dist);
+        addEdge(innerEdge,dist);
 
 
-            if(dist > 0.8f) {
-                fragColor = color;
-            } else {
-                fragColor = color * 0;
-            }
-        }
     }
 
     setDepth();
 
     //fragColor = gl_FragDepth * 7000000 * vec4(1,1,1,1);
+}
+
+void addEdge(Edge edge, float dist) {
+    if(edge.size == 0) return;
+    if(dist > 1 - (edge.position + edge.size) && dist < 1 - edge.position) {
+        if(edge.blendMode == 0) {
+            fragColor = edge.startColor * (((1 - dist) - edge.position)/edge.size) + edge.endColor * (1 - (((1- dist) - edge.position)/edge.size));
+        } else if(edge.blendMode == 1) {
+            fragColor = color *  edge.startColor * (((1 - dist) - edge.position)/edge.size) + edge.endColor * (1 - (((1- dist) - edge.position)/edge.size));
+        }
+    }
 }
 
 void setDepth() {

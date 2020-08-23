@@ -4,6 +4,7 @@ import engine.graph.items.Material;
 import engine.graph.light.DirectionalLight;
 import engine.graph.light.PointLight;
 import engine.graph.light.SpotLight;
+import engine.hud.assets.Edge;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -203,6 +204,22 @@ public class ShaderProgram {
     @SuppressWarnings("WeakerAccess")
     public void setUniform(String uniformName, Vector4f value){
         glUniform4f(uniforms.get(uniformName),value.x,value.y,value.z,value.w);
+    }
+
+    public void createEdgeUniform(String uniformName) throws Exception {
+        createUniforms(uniformName + ".startColor");
+        createUniforms(uniformName + ".endColor");
+        createUniforms(uniformName + ".size");
+        createUniforms(uniformName + ".position");
+        createUniforms(uniformName + ".blendMode");
+    }
+
+    public void setUniform(String uniformName, Edge edge) {
+        setUniform(uniformName + ".size",edge.getSize());
+        setUniform(uniformName + ".position",edge.getPosition());
+        setUniform(uniformName + ".startColor",edge.getStartColor().getColor());
+        setUniform(uniformName + ".endColor",edge.getEndColor().getColor());
+        setUniform(uniformName + ".blendMode",edge.getBlendMode().ordinal());
     }
 
     /**

@@ -2,11 +2,14 @@ package engine.hud.components.contentcomponents;
 
 import engine.general.Transformation;
 import engine.graph.items.Mesh;
+import engine.hud.assets.Edge;
 import engine.hud.assets.Quad;
 import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
 import engine.hud.components.Component;
 import engine.hud.components.SubComponent;
+import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
+import engine.hud.constraints.elementSizeConstraints.RelativeToComponentSizeE;
 import engine.render.ShaderProgram;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
@@ -43,13 +46,9 @@ public class QuadComponent extends SubComponent {
     private MaskMode maskMode;
 
     /** size of the rounded corners relative to component size (0 disables rounded corners)*/
-    private float cornerSize;
+    private ElementSizeConstraint cornerSize;
 
-    /** size of the edges relative to the components size*/
-    private float edgeSize;
-
-    /** color of the edge */
-    private Color edgeColor;
+    private Edge outerEdge,middleEdge,innerEdge;
 
     /**
      *  colors of the quad, when color shade is off only the first one is used,
@@ -83,11 +82,12 @@ public class QuadComponent extends SubComponent {
         cornerProportion = CornerProportion.FREE;
         edgeProportion = EdgeProportion.FREE;
         maskMode = MaskMode.USE_TRANSPARENT;
-        cornerSize = 0f;
-        edgeSize = 0;
+        cornerSize = new RelativeToComponentSizeE(0);
         colors = new ColorScheme();
         useColorShade = false;
-        edgeColor = new Color();
+        outerEdge = new Edge();
+        middleEdge = new Edge();
+        innerEdge = new Edge();
 
 
     }
@@ -172,9 +172,8 @@ public class QuadComponent extends SubComponent {
             }
 
             hudShaderProgram.setUniform("maskMode", maskMode.ordinal());
+            float cornerSize = this.cornerSize.getValue(this, ElementSizeConstraint.Direction.WIDTH);
             hudShaderProgram.setUniform("cornerSize", cornerSize);
-            hudShaderProgram.setUniform("edgeSize",edgeSize);
-            hudShaderProgram.setUniform("edgeColor",edgeColor.getColor());
             if(cornerSize == 0) {
                 switch (edgeProportion) {
                     case FREE:
@@ -187,6 +186,9 @@ public class QuadComponent extends SubComponent {
                         hudShaderProgram.setUniform("keepEdgeProportion", -(super.getOnScreenWidth() / super.getOnScreenHeight()) * ((float) super.getWindow().getWidth() / super.getWindow().getHeight()));
                 }
             }
+            hudShaderProgram.setUniform("outerEdge",outerEdge);
+            hudShaderProgram.setUniform("middleEdge",middleEdge);
+            hudShaderProgram.setUniform("innerEdge",innerEdge);
 
         } else {
             hudShaderProgram.setUniform("colors", new Vector4f[] {new Vector4f(1,1,1,1)});
@@ -255,6 +257,10 @@ public class QuadComponent extends SubComponent {
 
     @SuppressWarnings("unused")
     public void setCornerSize(float cornerSize) {
+        this.cornerSize = new RelativeToComponentSizeE(cornerSize);
+    }
+
+    public void setCornerSize(ElementSizeConstraint cornerSize) {
         this.cornerSize = cornerSize;
     }
 
@@ -287,11 +293,31 @@ public class QuadComponent extends SubComponent {
         this.edgeProportion = edgeProportion;
     }
 
-    public void setEdgeSize(float edgeSize) {
-        this.edgeSize = edgeSize;
+    public Edge getOuterEdge() {
+        return outerEdge;
     }
 
-    public void setEdgeColor(Color edgeColor) {
-        this.edgeColor = edgeColor;
+    public void setOuterEdge(Edge outerEdge) {
+        this.outerEdge = outerEdge;
+    }
+
+    public Edge getMiddleEdge() {
+        return middleEdge;
+    }
+
+    public void setMiddleEdge(Edge middleEdge) {
+        this.middleEdge = middleEdge;
+    }
+
+    public Edge getInnerEdge() {
+        return innerEdge;
+    }
+
+    public void setInnerEdge(Edge innerEdge) {
+        this.innerEdge = innerEdge;
+    }
+
+    public void setUseAbsoluteRotation(boolean useAbsoluteRotation) {
+        this.useAbsoluteRotation = useAbsoluteRotation;
     }
 }

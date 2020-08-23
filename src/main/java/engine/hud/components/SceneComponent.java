@@ -182,7 +182,6 @@ public class SceneComponent extends ContentComponent {
 
             hudShaderProgram.setUniform("maskMode", 0);
             hudShaderProgram.setUniform("cornerSize", 0);
-            hudShaderProgram.setUniform("edgeSize",0);
             hudShaderProgram.setUniform("keepEdgeProportion",0);
 
         } else {

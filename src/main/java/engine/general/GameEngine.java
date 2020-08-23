@@ -171,8 +171,6 @@ public class GameEngine implements Runnable{
         }
         window.events();
 
-        hud.needsNextRendering();
-
 
 
     }

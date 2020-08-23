@@ -2,11 +2,14 @@ package engine.hud.components.presets;
 
 import engine.hud.actions.ReturnAction;
 import engine.hud.animations.DefaultAnimations;
+import engine.hud.assets.Edge;
 import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
 import engine.hud.components.SubComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.contentcomponents.TextComponent;
+import engine.hud.constraints.elementSizeConstraints.RelativeToScreenSizeE;
+import engine.hud.constraints.elementSizeConstraints.RelativeToWindowSizeE;
 import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.TextAspectRatio;
@@ -50,7 +53,7 @@ public class Button extends QuadComponent implements DragEvent {
         disabledColor = ColorScheme.getStandardColorScheme(ColorScheme.StandardColorSchemes.BUTTON_DISABLED);
         textDisabledColor = ColorScheme.getStandardColorScheme(ColorScheme.StandardColorSchemes.BUTTON_TEXT_DISABLED);
 
-        autoDeactivate = true;
+        autoDeactivate = false;
         enabled = true;
         pressed = false;
 
@@ -66,21 +69,20 @@ public class Button extends QuadComponent implements DragEvent {
 
         textComponent.setColorScheme(textColor);
 
-        setCornerSize(0.5f);
+        setCornerSize(new RelativeToScreenSizeE(0.015f));
 
-        setCornerProportion(CornerProportion.FREE);
+        setOuterEdge(new Edge(0.6f,0,Color.TEAL,Color.getTransparent(Color.TEAL), Edge.BlendMode.REPLACE));
+        setMiddleEdge(new Edge(0.15f,0.6f,Color.LIGHT_GRAY,Color.LIGHT_GRAY, Edge.BlendMode.MULTIPLY));
+
+        setCornerProportion(CornerProportion.KEEP_X);
 
         setEdgeProportion(EdgeProportion.KEEP_X);
-
-        setEdgeColor(Color.BLUE);
 
         super.addComponent(textComponent);
 
         super.setUseColorShade(true);
 
-        super.setColorScheme(new ColorScheme(Color.BLUE));
-
-        super.setUseColorShade(true);
+        super.setColorScheme(normalColor);
 
         activated = true;
 
@@ -94,11 +96,16 @@ public class Button extends QuadComponent implements DragEvent {
 
             if(enabled) {
                 if (pressed) {
-                    this.setColorScheme(pressedColor);
+                    this.setColorScheme(normalColor);
                     textComponent.setColorScheme(textColor);
+                    hud.needsNextRendering();
+                    pressed = false;
+                    entered.endAnimation();
+                } else {
+                    entered.endAnimation();
+                    exited.startAnimation();
                 }
-                entered.endAnimation();
-                exited.startAnimation();
+
             }
             return true;
         });
@@ -145,6 +152,7 @@ public class Button extends QuadComponent implements DragEvent {
         if(activated && enabled) {
             entered.endAnimation();
             this.setColorScheme(normalColor);
+            hud.needsNextRendering();
             textComponent.setColorScheme(textColor);
             pressed = false;
             if(clickedAction != null) {
@@ -170,6 +178,7 @@ public class Button extends QuadComponent implements DragEvent {
         } else if (hud.getLeftDragEvent().equals(this)) {
             this.setColorScheme(clickedColor);
             textComponent.setColorScheme(textClickedColor);
+            pressed = true;
             return true;
         } else {
             return false;

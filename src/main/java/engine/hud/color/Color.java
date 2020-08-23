@@ -25,6 +25,10 @@ public class Color {
     public static final Color LIGHT_GRAY = new Color(0.7f,0.7f,0.7f,1f);
     public static final Color DARK_GRAY = new Color(0.3f,0.3f,0.3f,1f);
 
+    public static Color getTransparent(Color color) {
+        return new Color(color.getRed(),color.getGreen(),color.getBlue(),0);
+    }
+
 
     public static String getColorName(Vector4f color) {
         for(Field field : engine.hud.color.Color.class.getFields()) {
