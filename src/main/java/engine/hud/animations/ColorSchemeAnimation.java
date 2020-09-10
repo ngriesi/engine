@@ -1,6 +1,7 @@
 package engine.hud.animations;
 
 import engine.hud.Hud;
+import engine.hud.actions.Action;
 import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
 import engine.hud.components.Component;
@@ -43,6 +44,7 @@ public class ColorSchemeAnimation extends Animation<ColorScheme> {
                 return ((QuadComponent)component).getColor(ColorScheme.ColorSide.RIGHT);
             }
         });
+
 
         left = new ColorAnimation(hud, duration, startValue.getLeft(), endValue.getLeft(), new AnimationAction<Color>() {
             @Override
@@ -130,5 +132,25 @@ public class ColorSchemeAnimation extends Animation<ColorScheme> {
     @Override
     public Animation copy() {
         return new ColorSchemeAnimation(hud,duration,startValue,endValue);
+    }
+
+    @Override
+    public void setOnFinishedAction(Action onFinishedAction) {
+        right.setOnFinishedAction(onFinishedAction);
+    }
+
+    @Override
+    public Animation getInverted() {
+        ColorSchemeAnimation result = (ColorSchemeAnimation) copy();
+
+        result.right = (ColorAnimation) right.getInverted();
+        result.left = (ColorAnimation) left.getInverted();
+        result.top = (ColorAnimation) top.getInverted();
+        result.bottom = (ColorAnimation) bottom.getInverted();
+
+        result.endValue = startValue;
+        result.startValue = endValue;
+        result.calculateStep();
+        return result;
     }
 }

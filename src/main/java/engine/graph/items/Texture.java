@@ -28,6 +28,12 @@ public class Texture {
     /** determines the texture filter used */
     private FilterMode filterMode = FilterMode.NEAREST;
 
+    public Texture(int id, int width, int height) {
+        this.id = id;
+        this.width = width;
+        this.height = height;
+    }
+
     /**
      * creates a texture from a byte buffer and stores the id that points to it in the id field
      *

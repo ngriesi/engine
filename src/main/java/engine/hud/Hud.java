@@ -1,11 +1,14 @@
 package engine.hud;
 
+import engine.general.GameEngine;
 import engine.general.MouseInput;
 import engine.general.Transformation;
 import engine.general.Window;
+import engine.graph.items.Texture;
 import engine.hud.actions.Action;
 import engine.hud.animations.Animation;
 import engine.hud.animations.DefaultAnimations;
+import engine.hud.assets.Quad;
 import engine.hud.components.ContentComponent;
 import engine.hud.components.MainComponent;
 import engine.hud.components.SceneComponent;
@@ -15,10 +18,21 @@ import engine.hud.events.DragEvent;
 import engine.render.ShaderProgram;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import static engine.general.GameEngine.pTime;
+import static engine.hud.components.Component.MAX_IDS;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL21.GL_PIXEL_PACK_BUFFER;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Hud {
 
@@ -79,6 +93,20 @@ public class Hud {
     /** actions from another thread / to be performed in the update cycle*/
     private List<Action> actions;
 
+    /** framebuffer for the depth rendering */
+    private int framebuffer;
+
+    /** stencil for the depth rendering */
+    private int stencil;
+
+    /** depthBuffer for the depth rendering */
+    private int depth;
+
+    /**
+     * contains Shaders used by the hud
+     */
+    private HudShaderManager shaderManager;
+
     /**
      * sets window
      *
@@ -98,6 +126,12 @@ public class Hud {
 
         new DefaultAnimations(this);
 
+        try {
+            shaderManager = new HudShaderManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -106,15 +140,26 @@ public class Hud {
      * @param window needed for mainComponent
      */
 
-    public void init(Window window) {
+    public void init(Window window) throws Exception{
         mainComponent = new MainComponent(window,this);
         mainComponent.setContent(new SceneComponent());
+        shaderManager.init();
+        createFramebuffer();
+
     }
 
     /**
      * updates the bounds of all components
      */
     public void updateBounds() {
+
+        glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
+
+        glBindRenderbuffer(GL_RENDERBUFFER,depth);
+        glRenderbufferStorage(GL_RENDERBUFFER,GL_DEPTH24_STENCIL8,window.getWidth(),window.getHeight());
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER,GL_DEPTH_STENCIL_ATTACHMENT,GL_RENDERBUFFER,depth);
+
+
         mainComponent.updateBounds();
     }
 
@@ -125,8 +170,11 @@ public class Hud {
      * @param mouseInput input
      */
     public void input(Window window, MouseInput mouseInput) {
+
         lastMousePositionRelative = mouseInput.getRelativePos();
+
         mainComponent.input(window,mouseInput);
+
         mainComponent.getContent().handleKeyInput(window);
         if(currentKeyInputTarget != null) {
             currentKeyInputTarget.handleKeyInput(window);
@@ -212,10 +260,68 @@ public class Hud {
      *
      * @param ortho orthographic projection matrix
      * @param transformation transformation object
-     * @param hudShaderProgram shader
      */
-    public void render(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram) {
-        mainComponent.render(ortho,transformation,hudShaderProgram);
+    public void render(Matrix4f ortho, Transformation transformation) {
+        glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
+        glStencilMask(1);
+        glColorMask(false,false,false,false);
+        shaderManager.setShaderProgram(shaderManager.getMaskShader());
+        mainComponent.render(ortho,transformation,shaderManager);
+
+
+        glBindFramebuffer(GL_READ_FRAMEBUFFER,framebuffer);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
+        glBlitFramebuffer(0,0,window.getWidth(),window.getHeight(),0,0,window.getWidth(),window.getHeight(),GL_DEPTH_BUFFER_BIT,GL_NEAREST);
+
+        glColorMask(true,true,true,true);
+        glDepthFunc(GL_EQUAL);
+        glStencilFunc(GL_ALWAYS,0,0);
+        glDepthMask(false);
+        shaderManager.renderFrame(ortho,transformation);
+
+    }
+
+    /**
+     * returns an int color value for the pixel color at the window coordinates x and y
+     *
+     * @param x x coordinate starting right of the window
+     * @param y y coordinate starting bottom of the window
+     * @return color
+     */
+    public int getPixelColor(int x, int y) {
+
+
+        glBindBuffer(GL_FRAMEBUFFER,framebuffer);
+        GameEngine.pTime("read test 2");
+        ByteBuffer rgb = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder());
+
+        GameEngine.pTime("read test 3");
+        glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT,rgb);
+
+        float t = rgb.getFloat(0);
+        pTime("read test 4");
+
+        return (int) (t * MAX_IDS);
+    }
+
+    /**
+     * creates a framebuffer texture for the depth rendering of the hud
+     */
+    private void createFramebuffer() {
+        framebuffer = glGenFramebuffers();
+        depth = glGenRenderbuffers();
+        stencil = glGenRenderbuffers();
+
+        glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
+
+        glBindRenderbuffer(GL_RENDERBUFFER,depth);
+        glRenderbufferStorage(GL_RENDERBUFFER,GL_DEPTH24_STENCIL8,window.getWidth(),window.getHeight());
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER,GL_DEPTH_STENCIL_ATTACHMENT,GL_RENDERBUFFER,depth);
+
+
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE) {
+            System.out.println("works");
+        }
     }
 
     /**
@@ -228,6 +334,7 @@ public class Hud {
      * clears the finished animations list
      */
     private void executeAnimations() {
+
 
 
 
@@ -319,14 +426,14 @@ public class Hud {
      *
      * @param ortho transformation matrix
      * @param transformation transformation object
-     * @param hudShaderProgram shader of this hud
+     * @param shaderManager of this hud
      */
-    public void renderDragEvents(Matrix4f ortho, Transformation transformation,ShaderProgram hudShaderProgram) {
+    public void renderDragEvents(Matrix4f ortho, Transformation transformation,HudShaderManager shaderManager) {
         if(rightDragEvent != null && rightDragEvent.getDragVisual() != null) {
-            rightDragEvent.getDragVisual().renderComponent(ortho, transformation, hudShaderProgram, 1);
+            rightDragEvent.getDragVisual().renderComponent(ortho, transformation,shaderManager);
         }
         if(leftDragEvent != null && leftDragEvent.getDragVisual() != null) {
-            leftDragEvent.getDragVisual().renderComponent(ortho,transformation,hudShaderProgram,1);
+            leftDragEvent.getDragVisual().renderComponent(ortho,transformation,shaderManager);
         }
     }
 
@@ -400,6 +507,10 @@ public class Hud {
     }
 
 
+
+
+
+
     public DragEvent getLeftDragEvent() {
         return leftDragEvent;
     }
@@ -410,6 +521,7 @@ public class Hud {
 
     public void cleanup() {
         mainComponent.cleanup();
+        shaderManager.cleanUp();
     }
 
     public Vector2f getLastMousePositionRelative() {
@@ -439,5 +551,7 @@ public class Hud {
         return currentKeyInputTarget;
     }
 
-
+    public HudShaderManager getShaderManager() {
+        return shaderManager;
+    }
 }

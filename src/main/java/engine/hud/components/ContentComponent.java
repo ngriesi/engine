@@ -4,6 +4,7 @@ import engine.general.MouseInput;
 import engine.general.Transformation;
 import engine.general.Window;
 import engine.hud.Hud;
+import engine.hud.HudShaderManager;
 import engine.hud.actions.Action;
 import engine.hud.actions.KeyAction;
 import engine.render.ShaderProgram;
@@ -46,6 +47,9 @@ public abstract class ContentComponent extends Component {
     /** if true the component can be selected */
     private boolean selectable;
 
+    /** id of the component */
+    protected int id;
+
     /**
      * constructor creates list object
      */
@@ -53,6 +57,7 @@ public abstract class ContentComponent extends Component {
         content = new CopyOnWriteArrayList<>();
         selectable = true;
     }
+
 
     /**
      * calculates the bounds of the component in the getValue() methods of the constraints and for all content components
@@ -65,18 +70,29 @@ public abstract class ContentComponent extends Component {
     /**
      * calls the render component method for all content components
      *
-     * @param ortho orthographic transformation
+     * @param orthographic orthographic transformation
      * @param transformation transformation object
-     * @param hudShaderProgram shader
-     * @param level mask level
+     * @param shaderManager shaderManager of the Hud
      */
-    @Override
-    public void renderNext(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram, int level) {
+    public void renderNext(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
         content.forEach(contentComponent -> {
             if(contentComponent.isVisible() && !contentComponent.isRemoved()) {
-                contentComponent.renderComponent(ortho, transformation, hudShaderProgram, level);
+                contentComponent.renderComponent(orthographic, transformation, shaderManager);
             }
         });
+    }
+
+    /**
+     * returns the id of this component which has the same value as the depth buffer at the pixels where this component
+     * is drawn at the top with an alpha value greater than 0
+     * @return components id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    protected void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -292,4 +308,6 @@ public abstract class ContentComponent extends Component {
         super.setWriteToDepthBuffer(writeToDepthBuffer);
         content.forEach(subComponent -> subComponent.setWriteToDepthBuffer(writeToDepthBuffer));
     }
+
+
 }

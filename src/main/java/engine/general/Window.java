@@ -1,13 +1,19 @@
 package engine.general;
 
 import engine.hud.actions.Action;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.GL_BGRA;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
@@ -70,6 +76,7 @@ public class Window {
 
     /** determines if the window can be closed */
     private boolean closeable;
+
 
     /**
      * Constructor sets all parameters except windowHandle and update mode
@@ -346,14 +353,24 @@ public class Window {
      * the rendering of the next frame happens
      */
     void swapBuffers() {
+
+
+
+
         glfwSwapBuffers(windowHandle);
+
+
+
     }
 
     /**
      * method handles the way the events are used
      */
     void events(){
+
         glfwPollEvents();
+
+
     }
 
     /**returns true if the window should be close (user tried to close it)

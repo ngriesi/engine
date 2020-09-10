@@ -1,9 +1,11 @@
 package engine.hud.components;
 
+import engine.general.GameEngine;
 import engine.general.MouseInput;
 import engine.general.Transformation;
 import engine.general.Window;
 import engine.graph.items.Mesh;
+import engine.hud.HudShaderManager;
 import engine.hud.assets.Quad;
 import engine.render.ShaderProgram;
 import org.joml.Matrix4f;
@@ -11,13 +13,16 @@ import org.joml.Vector4f;
 
 import java.util.HashMap;
 
-public class SceneComponent extends ContentComponent {
+import static engine.general.GameEngine.pTime;
+import static org.lwjgl.opengl.GL11.glColorMask;
 
-    /** background of the scene */
-    private Quad background;
+public class SceneComponent extends ContentComponent {
 
     /** id for given to last added content component */
     private int lastId = 0;
+
+    /** id of currently selected component */
+    private int currentId = 0;
 
     /**content of the scene and its ids */
     private HashMap<Integer,SubComponent> subComponents;
@@ -39,8 +44,6 @@ public class SceneComponent extends ContentComponent {
      */
     public SceneComponent() {
         subComponents = new HashMap<>();
-        background = new Quad();
-        background.setPosition(0.5f,0.5f,0);
         setBeMask(false);
         setWriteToDepthBuffer(true);
         setOnScreenHeight(1);
@@ -66,16 +69,16 @@ public class SceneComponent extends ContentComponent {
      *
      * @param ortho transformation matrix
      * @param transformation class
-     * @param hudShaderProgram shader used for the hud
+     * @param shaderManager of the Hud
      */
-    public void render(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram) {
-        super.renderComponent(ortho,transformation,hudShaderProgram,0);
-        super.renderNext(ortho,transformation,hudShaderProgram,0);
+    public void render(Matrix4f ortho, Transformation transformation, HudShaderManager shaderManager) {
+
+        super.renderNext(ortho,transformation,shaderManager);
         if(renderedOnTop != null) {
 
-            renderedOnTop.renderComponent(ortho,transformation,hudShaderProgram,1);
+            renderedOnTop.renderComponent(ortho,transformation,shaderManager);
         }
-        hud.renderDragEvents(ortho,transformation,hudShaderProgram);
+        hud.renderDragEvents(ortho,transformation,shaderManager);
     }
 
     /**
@@ -166,40 +169,6 @@ public class SceneComponent extends ContentComponent {
         subComponents = temp;
     }
 
-    @Override
-    public void drawMesh(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram, RenderMode renderMode) {
-
-        Mesh mesh = background.getMesh();
-        Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(background, ortho);
-        hudShaderProgram.setUniform("projModelMatrix", projModelMatrix);
-        hudShaderProgram.setUniform("depth",0);
-        hudShaderProgram.setUniform("isText",0);
-        if(renderMode == RenderMode.NORMAL) {
-            hudShaderProgram.setUniform("colors",new Vector4f[]{new Vector4f(0,0,0,1)});
-            hudShaderProgram.setUniform("useColorShade", 0);
-            hudShaderProgram.setUniform("hasTexture", mesh.getMaterial().isTexture() ? 1 : 0);
-            hudShaderProgram.setUniform("keepCornerProportion", 0);
-
-            hudShaderProgram.setUniform("maskMode", 0);
-            hudShaderProgram.setUniform("cornerSize", 0);
-            hudShaderProgram.setUniform("keepEdgeProportion",0);
-
-        } else {
-            hudShaderProgram.setUniform("colors", new Vector4f[] {new Vector4f(1,1,1,1)});
-            hudShaderProgram.setUniform("useColorShade",0);
-            hudShaderProgram.setUniform("hasTexture", 0);
-
-            hudShaderProgram.setUniform("maskMode", 0);
-            hudShaderProgram.setUniform("cornerSize", 0);
-            hudShaderProgram.setUniform("edgeSize",0);
-            hudShaderProgram.setUniform("keepEdgeProportion",0);
-        }
-
-
-        //mesh.render();
-        super.drawMesh(ortho, transformation, hudShaderProgram, renderMode);
-    }
-
 
     /**
      * starts the input chain at the sub component that currently contains the mouse
@@ -209,31 +178,44 @@ public class SceneComponent extends ContentComponent {
      */
     public void input(Window window, MouseInput mouseInput) {
         SubComponent currentComponent;
-        if(mouseInput.isInWindow()) {
-            int id = Component.getPixelColor((int) mouseInput.getCurrentPos().x, (int) (window.getHeight() - mouseInput.getCurrentPos().y));
 
-            currentComponent = subComponents.get(id);
+        if(mouseInput.isInWindow()) {
+
+
+
+           SceneComponent.this.currentId = hud.getPixelColor((int) mouseInput.getCurrentPos().x, (int) (window.getHeight() - mouseInput.getCurrentPos().y));
+
+            pTime("input read");
+
+
+
+            currentComponent = subComponents.get(currentId);
+
+            System.out.println(currentId);
 
         } else {
             currentComponent = null;
         }
 
 
+
         if(currentComponent != null && lastComponent != null) {
 
             if (!lastComponent.equals(currentComponent)) {
 
+
                 lastComponent.mouseExitedRecursiveSave();
-
+                pTime("input 2");
                 currentComponent.mouseEnteredRecursiveSave();
-
+                pTime("input 3");
                 lastComponent.mouseExited(mouseInput);
-
+                pTime("input 4");
                 currentComponent.mouseEntered(mouseInput);
-
+                pTime("input 5");
                 lastComponent = currentComponent;
             }
             currentComponent.mouseActionStart(mouseInput);
+            pTime("input 6");
         } else if(currentComponent == null && lastComponent != null) {
             lastComponent.mouseExitedRecursiveSave();
             lastComponent.mouseExited(mouseInput);
@@ -336,9 +318,6 @@ public class SceneComponent extends ContentComponent {
         super.cleanup();
     }
 
-    public void setBackground(Quad background) {
-        this.background = background;
-    }
 
     public void setRenderedOnTop(SubComponent renderedOnTop) {
         this.renderedOnTop = renderedOnTop;

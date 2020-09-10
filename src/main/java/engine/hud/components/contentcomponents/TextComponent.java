@@ -2,6 +2,7 @@ package engine.hud.components.contentcomponents;
 
 import engine.general.Transformation;
 import engine.graph.items.Mesh;
+import engine.hud.HudShaderManager;
 import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
 import engine.hud.components.Component;
@@ -107,8 +108,8 @@ public class TextComponent extends SubComponent {
      * @param transformation transformation object
      * @param hudShaderProgram shader
      */
-    @Override
-    public void drawMesh(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram, Component.RenderMode renderMode) {
+   // @Override
+    public void drawMesh(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram, RenderMode renderMode) {
 
         Mesh mesh = textItem.getMesh();
         Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(textItem, ortho);
@@ -116,7 +117,7 @@ public class TextComponent extends SubComponent {
         hudShaderProgram.setUniform("depth",getId());
         hudShaderProgram.setUniform("isText",1);
         hudShaderProgram.setUniform("full",0.5f);
-        if(renderMode == Component.RenderMode.NORMAL) {
+        if(renderMode == RenderMode.NORMAL) {
             hudShaderProgram.setUniform("colors", colors.getVectorArray());
 
             hudShaderProgram.setUniform("useColorShade", useColorShade ? 1 : 0);
@@ -133,6 +134,26 @@ public class TextComponent extends SubComponent {
 
 
         mesh.render();
+    }
+
+    @Override
+    public void setDepthValue(float depthValue) {
+
+    }
+
+    @Override
+    public void renderSimpleStencil(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
+
+    }
+
+    @Override
+    public void addToShaderList(HudShaderManager hudShaderManager) {
+
+    }
+
+    @Override
+    public void drawMesh() {
+
     }
 
     /**

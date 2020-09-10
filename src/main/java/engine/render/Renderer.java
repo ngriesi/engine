@@ -19,6 +19,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.List;
 import java.util.Map;
 
+import static engine.general.GameEngine.pTime;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengles.GLES20.GL_COLOR_BUFFER_BIT;
 
@@ -166,9 +167,11 @@ public class Renderer {
         transformation.updateProjectionMatrix(FOV, window.getWidth(),window.getHeight(),Z_NEAR,Z_FAR);
         transformation.updateViewMatrix(camera);
 
-        //renderScene(scene);
+        //renderScene(scene)
+
 
         renderHud(window, hud);
+
 
         //renderSkyBox(scene);
     }
@@ -209,8 +212,6 @@ public class Renderer {
         sceneShaderProgram.unbind();
 
 
-
-        sceneShaderProgram.unbind();
     }
 
     /**
@@ -250,12 +251,10 @@ public class Renderer {
      */
     @SuppressWarnings("unused")
     private void renderHud(Window window, Hud hud) {
-        hudShaderProgram.bind();
-
 
         Matrix4f ortho = transformation.getOrthoProjectionMatrix(0,1,1,0,0,-Component.MAX_IDS);
 
-        hud.render(ortho,transformation,hudShaderProgram);
+        hud.render(ortho,transformation);
 
         /*for(GameItem gameItem : hud.getGameItems()){
             Mesh mesh = gameItem.getMesh();
@@ -268,21 +267,6 @@ public class Renderer {
         }*/
 
 
-
-        glStencilFunc(GL_EQUAL,1,0xFF);
-
-        Mesh mesh = temp.getMesh();
-        Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(temp,ortho);
-        hudShaderProgram.setUniform("projModelMatrix",projModelMatrix);
-        //hudShaderProgram.setUniform("colorUni",temp.getMesh().getMaterial().getAmbientColor());
-        hudShaderProgram.setUniform("hasTexture",temp.getMesh().getMaterial().isTexture() ? 1 : 0);
-        hudShaderProgram.setUniform("keepCornerProportion",1);
-        hudShaderProgram.setUniform("colors",new Vector4f[] {new Vector4f(1,1,1,1)});
-        hudShaderProgram.setUniform("useColorShade",0);
-
-        //mesh.render();
-
-        hudShaderProgram.unbind();
     }
 
     /**

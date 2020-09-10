@@ -4,6 +4,7 @@ import engine.general.MouseInput;
 import engine.general.Transformation;
 import engine.general.Window;
 import engine.hud.Hud;
+import engine.hud.HudShaderManager;
 import engine.render.ShaderProgram;
 import org.joml.Matrix4f;
 
@@ -33,10 +34,12 @@ public class MainComponent extends Component {
      *
      * @param ortho transformation matrix
      * @param transformation class
-     * @param hudShaderProgram shader for hud components
+     * @param shaderManager of the hud
      */
-    public void render(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram) {
-        content.render(ortho,transformation,hudShaderProgram);
+    public void render(Matrix4f ortho, Transformation transformation, HudShaderManager shaderManager) {
+        shaderManager.setShaderProgram(shaderManager.getMaskShader());
+
+        content.render(ortho,transformation,shaderManager);
     }
 
     /**
@@ -54,7 +57,7 @@ public class MainComponent extends Component {
     }
 
     /**
-     * method called in hud starts the mouse input
+     * method called in hud, starts the mouse input
      *
      * @param window of this main component
      * @param mouseInput mouse input of this window

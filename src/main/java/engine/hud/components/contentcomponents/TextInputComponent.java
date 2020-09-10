@@ -106,7 +106,7 @@ public class TextInputComponent extends TextComponent {
      * @param renderMode render mode
      */
     @Override
-    public void drawMesh(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram, Component.RenderMode renderMode) {
+    public void drawMesh(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram, RenderMode renderMode) {
 
         if(hud.getCurrentKeyInputTarget().equals(this)) {
             Mesh mesh = cursor.getMesh();

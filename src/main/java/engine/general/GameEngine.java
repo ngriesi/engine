@@ -4,6 +4,13 @@ import engine.hud.Hud;
 
 public class GameEngine implements Runnable{
 
+    public static long lastTime;
+
+    public static void pTime(String msg) {
+        //System.out.println( System.currentTimeMillis() - lastTime + " " + msg);
+        lastTime = System.currentTimeMillis();
+    }
+
     /**frames per second (rendering and input) */
     @SuppressWarnings("WeakerAccess")
     public static final int TARGET_FPS = 60;
@@ -112,12 +119,18 @@ public class GameEngine implements Runnable{
         elapsedTime = timer.getElapsedTime();
         accumulator += elapsedTime;
 
+        pTime("input");
+
         input();
+
+        pTime("update");
 
         while (accumulator >= interval){
             update(interval);
             accumulator -= interval;
         }
+
+        pTime("render");
 
         render();
     }
@@ -126,6 +139,7 @@ public class GameEngine implements Runnable{
      * used to calculate the waiting time if vSync isn't used
      */
     private void sync(){
+
         float loopSlot = 1f/TARGET_FPS;
         double endTime = timer.getLastLoopTime() + loopSlot;
         while (timer.getTime() < endTime){
@@ -140,6 +154,7 @@ public class GameEngine implements Runnable{
         mouseInput.input(window);
         gameLogic.input(window,mouseInput);
         hud.input(window,mouseInput);
+
     }
 
     /**
@@ -162,16 +177,20 @@ public class GameEngine implements Runnable{
      */
     protected void render(){
 
+
         hud.removeComponents();
         if(window.isRenderAlways() || hud.isNeedsRendering() || window.isResized()) {
+
             gameLogic.render(window);
             window.swapBuffers();
             hud.wasRendered();
 
         }
+
         window.events();
 
 
+        hud.needsNextRendering();
 
     }
 

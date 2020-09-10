@@ -1,6 +1,8 @@
 package engine.hud.components;
 
 import engine.general.MouseInput;
+import engine.general.Transformation;
+import engine.hud.HudShaderManager;
 import engine.hud.actions.DragAction;
 import engine.hud.actions.MouseAction;
 import engine.hud.actions.ReturnAction;
@@ -10,9 +12,27 @@ import engine.hud.constraints.positionConstraints.RelativeToWindowPosition;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.RelativeToWindowSize;
 import engine.hud.constraints.sizeConstraints.SizeConstraint;
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
-public class SubComponent extends ContentComponent {
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_EQUAL;
+
+public abstract class SubComponent extends ContentComponent {
+
+    /**
+     * determines what effect transparent pixels have on the mask
+     */
+    public enum MaskMode {
+        DISPOSE_TRANSPARENT, USE_TRANSPARENT
+    }
+
+    /**
+     * defines the rendering mode used
+     */
+    protected enum RenderMode {
+        NORMAL,ONE_COLOR
+    }
 
     /** Action, executed when the mouse enters the component */
     private MouseAction mouseEnteredAction;
@@ -143,11 +163,23 @@ public class SubComponent extends ContentComponent {
     /** Constraint to determine component height */
     private SizeConstraint height;
 
-    /** color used to identify component after rendering */
-    private int id;
-
     /**Parent of that contains this component,set in add method */
     private ContentComponent parent;
+
+    /**Mask of this component */
+    private ContentComponent maskComponent;
+
+    /** if true the component is a mask for other components */
+    private boolean beMask;
+
+    /** if true the component uses a mask */
+    private boolean useMask;
+
+    /** if true the component writes to the depth buffer */
+    private boolean writeToDepthBuffer;
+
+    /** decides of transparent pixels should be a mask */
+    private MaskMode maskMode;
 
     public SubComponent() {
         this(new RelativeToWindowPosition(0.5f),new RelativeToWindowPosition(0.5f),new RelativeToWindowSize(0.5f),new RelativeToWindowSize(0.5f));
@@ -159,6 +191,90 @@ public class SubComponent extends ContentComponent {
         this.width = width;
         this.height = height;
         lastMousePosition = new Vector2f();
+        beMask = true;
+        useMask = true;
+        writeToDepthBuffer = true;
+        maskMode = MaskMode.USE_TRANSPARENT;
+    }
+
+    /**
+     * sets the depth value of the component
+     * @param depthValue new depth value (z cord)
+     */
+    public abstract void setDepthValue(float depthValue);
+
+    /**
+     * renders only the shape of the component to the stencil buffer
+     */
+    public abstract void renderSimpleStencil(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager);
+
+    /**
+     * adds the component to the rendering list of the shaderManager
+     *
+     * @param hudShaderManager shader Manager of the hud
+     */
+    public abstract void addToShaderList(HudShaderManager hudShaderManager);
+
+    /**
+     * renders the components mesh
+     */
+    public abstract void drawMesh();
+
+    /**
+     * sets the buffers and calls the methods for the rendering
+     *
+     * @param orthographic orthographic projection matrix
+     * @param transformation transformation object
+     * @param shaderManager shaderManager of the hud
+     */
+    public void renderComponent(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
+
+        if( beMask ) {
+
+            if(useMask && maskComponent != null) {
+
+                glDepthMask(false);
+                glStencilFunc(GL_ALWAYS,1,1);
+                setDepthValue(maskComponent.getId());
+                glDepthFunc(GL_EQUAL);
+                glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
+
+                renderSimpleStencil(orthographic,transformation,shaderManager);
+            }
+
+
+            if(useMask && maskComponent != null) {
+
+                glDepthMask(writeToDepthBuffer);
+                glStencilFunc(GL_EQUAL,1,1);
+                setDepthValue(getId());
+                glDepthFunc(GL_ALWAYS);
+                glStencilOp(GL_KEEP,GL_KEEP,GL_DECR);
+
+                renderSimpleStencil(orthographic, transformation, shaderManager);
+            } else {
+                glDepthFunc(GL_ALWAYS);
+                glStencilFunc(GL_ALWAYS,0,0);
+                glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP);
+                glDepthMask(writeToDepthBuffer);
+                setDepthValue(getId());
+
+
+                renderSimpleStencil(orthographic, transformation, shaderManager);
+
+            }
+
+
+
+            super.renderNext(orthographic,transformation,shaderManager);
+
+            addToShaderList(shaderManager);
+
+        } else {
+
+
+        }
+
     }
 
     /**
@@ -189,6 +305,7 @@ public class SubComponent extends ContentComponent {
     public void addComponent(SubComponent component) {
         super.addComponent(component);
         addToScene(getSceneComponent());
+        component.setMaskComponent(this);
     }
 
     /**
@@ -758,19 +875,6 @@ public class SubComponent extends ContentComponent {
     }
 
     /**
-     * returns the id of this component which has the same value as the depth buffer at the pixels where this component
-     * is drawn at the top with an alpha value greater than 0
-     * @return components id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    protected void setId(int id) {
-        this.id = id;
-    }
-
-    /**
      * used to change the value of the constraint
      * used for animations (movement/resizing)
      */
@@ -939,5 +1043,13 @@ public class SubComponent extends ContentComponent {
 
     public SizeConstraint getHeight() {
         return height;
+    }
+
+    public void setMaskComponent(ContentComponent maskComponent) {
+        this.maskComponent = maskComponent;
+    }
+
+    public MaskMode getMaskMode() {
+        return maskMode;
     }
 }

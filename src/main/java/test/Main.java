@@ -12,7 +12,7 @@ public class Main {
         GameEngine gameEngine = null;
 
         try {
-            gameEngine = new GameEngine("Burg Spiel",1200,600,true,mainGame, Window.WindowPreset.NORMAL);
+            gameEngine = new GameEngine("Burg Spiel",300,300,true,mainGame, Window.WindowPreset.NORMAL);
         } catch (Exception e) {
             e.printStackTrace();
         }

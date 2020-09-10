@@ -50,7 +50,7 @@ public class ShaderProgram {
      * @param shaderCode code of the vertex shader
      * @throws Exception if shader cant be created
      */
-    void createVertexShader(String shaderCode) throws Exception{
+    public void createVertexShader(String shaderCode) throws Exception{
         vertexShaderId = createShader(shaderCode,GL_VERTEX_SHADER);
     }
 
@@ -60,7 +60,7 @@ public class ShaderProgram {
      * @param shaderCode code of the fragment shader
      * @throws Exception if shader cant be created
      */
-    void createFragmentShader(String shaderCode) throws Exception{
+    public void createFragmentShader(String shaderCode) throws Exception{
         vertexShaderId = createShader(shaderCode,GL_FRAGMENT_SHADER);
     }
 
@@ -94,7 +94,7 @@ public class ShaderProgram {
      * links a program (refereed to with id) with a shader
      * @throws Exception if shader cant be linked or validated
      */
-    void link() throws Exception {
+    public void link() throws Exception {
         glLinkProgram(programId);
         if(glGetProgrami(programId, GL_LINK_STATUS)==0){
             throw new Exception("Error linking shader code: "+ glGetProgramInfoLog(programId,1024));
@@ -116,14 +116,14 @@ public class ShaderProgram {
     /**
      * binds th shader program
      */
-    void bind(){
+    public void bind(){
         glUseProgram(programId);
     }
 
     /**
      * unbinds the shader program
      */
-    void unbind(){
+    public void unbind(){
         glUseProgram(0);
     }
 
@@ -438,4 +438,6 @@ public class ShaderProgram {
             createUniforms(uniformName + "["+i+"]");
         }
     }
+
+
 }
