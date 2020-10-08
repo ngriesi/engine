@@ -7,6 +7,9 @@ import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.RelativeToScreenSize;
 import engine.hud.events.DragEvent;
+import engine.hud.mouse.MouseAction;
+import engine.hud.mouse.MouseEvent;
+import engine.hud.mouse.MouseListener;
 import org.joml.Vector2f;
 
 public class VerticalScrollView extends QuadComponent implements DragEvent {
@@ -48,41 +51,55 @@ public class VerticalScrollView extends QuadComponent implements DragEvent {
 
         bar.setSelectable(false);
 
-        bar.setOnLeftDragStarted(() -> {
-            hud.setLeftDragEvent(VerticalScrollView.this);
-            return true;
+        bar.getMouseListener().addMouseAction(new MouseAction() {
+            @Override
+            public boolean action(MouseEvent e) {
+                if(e.getEvent()== MouseEvent.Event.DRAG_STARTED && e.getMouseButton() == MouseListener.MouseButton.LEFT) {
+                    hud.setLeftDragEvent(VerticalScrollView.this);
+                    return true;
+                }
+                return false;
+            }
         });
 
-        barBack.setOnLeftClickAction(() -> {
-            float yValue = (hud.getLastMousePositionRelative().y) / (barBack.getOnScreenHeight()) - getOnScreenYPosition() - 2 * bar.getOnScreenHeight();
+        barBack.getMouseListener().addMouseAction(new MouseAction() {
+            @Override
+            public boolean action(MouseEvent e) {
+                if(e.getEvent() == MouseEvent.Event.CLICK_RELEASED && e.getMouseButton()== MouseListener.MouseButton.LEFT) {
+                    float yValue = (hud.getLastMousePositionRelative().y) / (barBack.getOnScreenHeight()) - getOnScreenYPosition() - 2 * bar.getOnScreenHeight();
 
-            float value = (yValue) > 0?Math.min(1,yValue):0;
+                    float value = (yValue) > 0?Math.min(1,yValue):0;
 
-            bar.changeYValue(value);
-            scrollPosition = value;
-            updateContentPosition();
-            return false;
+                    bar.changeYValue(value);
+                    scrollPosition = value;
+                    updateContentPosition();
+                    return false;
+                }
+                return false;
+            }
         });
 
         barBack.addComponent(bar);
 
         scrollPosition = 0;
 
-        this.setMouseAction(mouseInput -> {
-
-            float yOffset = mouseInput.getYOffsetScroll();
-            if(yOffset != 0) {
-                if(contentBack.getOnScreenHeight() > getOnScreenHeight()) {
-                    float value = scrollPosition + ((yOffset * 0.5f) / (contentBack.getOnScreenHeight() / getOnScreenHeight()));
-                    value = value > 0 ? Math.min(value, 1) : 0;
-                    scrollPosition = value;
-                    bar.changeYValue(value);
-                    updateContentPosition();
-                    updateBounds();
-                    hud.needsNextRendering();
+        this.getMouseListener().addMouseAction(new MouseAction() {
+            @Override
+            public boolean action(MouseEvent e) {
+                float yOffset = e.getMouseInput().getYOffsetScroll();
+                if(yOffset != 0) {
+                    if(contentBack.getOnScreenHeight() > getOnScreenHeight()) {
+                        float value = scrollPosition + ((yOffset * 0.5f) / (contentBack.getOnScreenHeight() / getOnScreenHeight()));
+                        value = value > 0 ? Math.min(value, 1) : 0;
+                        scrollPosition = value;
+                        bar.changeYValue(value);
+                        updateContentPosition();
+                        updateBounds();
+                        hud.needsNextRendering();
+                    }
                 }
+                return false;
             }
-            return false;
         });
     }
 

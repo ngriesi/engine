@@ -1,10 +1,10 @@
 package engine.hud.animations;
 
-import engine.hud.components.Component;
+import engine.hud.components.ContentComponent;
 
 public interface AnimationAction<T> {
 
-    void execute(T nextValue, Component component);
+    void execute(T nextValue, ContentComponent component);
 
-    T getProgress(Component component);
+    T getProgress(ContentComponent component);
 }

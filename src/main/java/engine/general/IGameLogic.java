@@ -1,6 +1,7 @@
 package engine.general;
 
 import engine.hud.Hud;
+import engine.hud.mouse.MouseInput;
 
 public interface IGameLogic {
 

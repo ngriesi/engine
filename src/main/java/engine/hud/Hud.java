@@ -1,24 +1,20 @@
 package engine.hud;
 
 import engine.general.GameEngine;
-import engine.general.MouseInput;
+import engine.hud.mouse.MouseInput;
 import engine.general.Transformation;
 import engine.general.Window;
-import engine.graph.items.Texture;
 import engine.hud.actions.Action;
 import engine.hud.animations.Animation;
 import engine.hud.animations.DefaultAnimations;
-import engine.hud.assets.Quad;
 import engine.hud.components.ContentComponent;
-import engine.hud.components.MainComponent;
 import engine.hud.components.SceneComponent;
 import engine.hud.components.SubComponent;
 import engine.hud.constraints.positionConstraints.RelativeToWindowPosition;
 import engine.hud.events.DragEvent;
-import engine.render.ShaderProgram;
+import engine.hud.mouse.MouseListener;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -27,20 +23,20 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static engine.general.GameEngine.pTime;
-import static engine.hud.components.Component.MAX_IDS;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL21.GL_PIXEL_PACK_BUFFER;
+import static org.lwjgl.opengl.GL15.glBindBuffer;
 import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Hud {
+
+    /** maximum number of components the depth buffer (24 bit) can distinguish */
+    public static final int MAX_IDS = 16777215;
 
     /** window that uses this hud */
     private final Window window;
 
     /** main Component of the hud */
-    private MainComponent mainComponent;
+    private SceneComponent scene;
 
     /** if true the window re-renders its (hud) content every rendering frame */
     private boolean alwaysRender;
@@ -79,10 +75,10 @@ public class Hud {
     private DragEvent rightDragEvent;
 
     /** stores mask behaviour of the right drag event */
-    private boolean rightDragEventMaskSave;
+    private ContentComponent rightDragEventMaskSave;
 
     /** stores mask behaviour of the left drag event */
-    private boolean leftDragEventMaskSave;
+    private ContentComponent leftDragEventMaskSave;
 
     /** stores the last mouse position*/
     private Vector2f lastMousePositionRelative;
@@ -95,9 +91,6 @@ public class Hud {
 
     /** framebuffer for the depth rendering */
     private int framebuffer;
-
-    /** stencil for the depth rendering */
-    private int stencil;
 
     /** depthBuffer for the depth rendering */
     private int depth;
@@ -114,7 +107,6 @@ public class Hud {
      */
     public Hud(Window window) {
         this.window = window;
-        mainComponent = new MainComponent(window,this);
         alwaysRender = window.isRenderAlways();
         newAnimations = new ArrayList<>();
         animations = new ArrayList<>();
@@ -137,12 +129,11 @@ public class Hud {
 
     /**
      * initialises Hud
-     * @param window needed for mainComponent
      */
 
-    public void init(Window window) throws Exception{
-        mainComponent = new MainComponent(window,this);
-        mainComponent.setContent(new SceneComponent());
+    public void init() throws Exception{
+        SceneComponent scene = new SceneComponent();
+        setScene(scene);
         shaderManager.init();
         createFramebuffer();
 
@@ -160,7 +151,7 @@ public class Hud {
         glFramebufferRenderbuffer(GL_FRAMEBUFFER,GL_DEPTH_STENCIL_ATTACHMENT,GL_RENDERBUFFER,depth);
 
 
-        mainComponent.updateBounds();
+        scene.updateBounds();
     }
 
     /**
@@ -173,17 +164,17 @@ public class Hud {
 
         lastMousePositionRelative = mouseInput.getRelativePos();
 
-        mainComponent.input(window,mouseInput);
+        scene.input(window,mouseInput);
 
-        mainComponent.getContent().handleKeyInput(window);
+        scene.getKeyListener().handleKeyInput(window);
         if(currentKeyInputTarget != null) {
-            currentKeyInputTarget.handleKeyInput(window);
+            currentKeyInputTarget.getKeyListener().handleKeyInput(window);
         }
 
-        if(rightDragEvent != null && !mouseInput.isRightButtonPressed()) {
+        if(rightDragEvent != null && !mouseInput.isPressed(MouseListener.MouseButton.RIGHT)) {
             dropRightDragEvent();
         }
-        if(leftDragEvent != null && !mouseInput.isLeftButtonPressed()) {
+        if(leftDragEvent != null && !mouseInput.isPressed(MouseListener.MouseButton.LEFT)) {
             dropLeftDragEvent();
         }
     }
@@ -247,7 +238,7 @@ public class Hud {
 
         if(!alwaysRender) {
             return (animations.size() > 0 || newAnimations.size() > 0 || finishedAnimations.size() > 0) ||
-                    (window.getLastPressed() != 0) ||
+                    (window.getLastPressed().size() != 0) ||
                     (rightDragEvent != null || leftDragEvent != null) ||
                     needsNextRendering;
         }
@@ -262,11 +253,12 @@ public class Hud {
      * @param transformation transformation object
      */
     public void render(Matrix4f ortho, Transformation transformation) {
+
         glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
         glStencilMask(1);
         glColorMask(false,false,false,false);
         shaderManager.setShaderProgram(shaderManager.getMaskShader());
-        mainComponent.render(ortho,transformation,shaderManager);
+        scene.render(ortho,transformation,shaderManager);
 
 
         glBindFramebuffer(GL_READ_FRAMEBUFFER,framebuffer);
@@ -279,6 +271,8 @@ public class Hud {
         glDepthMask(false);
         shaderManager.renderFrame(ortho,transformation);
 
+
+
     }
 
     /**
@@ -289,6 +283,7 @@ public class Hud {
      * @return color
      */
     public int getPixelColor(int x, int y) {
+
 
 
         glBindBuffer(GL_FRAMEBUFFER,framebuffer);
@@ -310,7 +305,6 @@ public class Hud {
     private void createFramebuffer() {
         framebuffer = glGenFramebuffers();
         depth = glGenRenderbuffers();
-        stencil = glGenRenderbuffers();
 
         glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
 
@@ -319,8 +313,8 @@ public class Hud {
         glFramebufferRenderbuffer(GL_FRAMEBUFFER,GL_DEPTH_STENCIL_ATTACHMENT,GL_RENDERBUFFER,depth);
 
 
-        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE) {
-            System.out.println("works");
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+            System.out.println("failed to create framebuffer");
         }
     }
 
@@ -374,7 +368,10 @@ public class Hud {
      * @param scene new hud-scene in the window
      */
     public void setScene(SceneComponent scene) {
-        mainComponent.setContent(scene);
+        scene.setWindow(window);
+        scene.setHud(this);
+        scene.updateBounds();
+        this.scene = scene;
         needsNextRendering();
     }
 
@@ -382,8 +379,8 @@ public class Hud {
      * @return main Component of the hud
      */
     @SuppressWarnings("unused")
-    public MainComponent getMainComponent() {
-        return mainComponent;
+    public SceneComponent getScene() {
+        return scene;
     }
 
     public boolean isNeedsRendering() {
@@ -400,8 +397,11 @@ public class Hud {
 
         if(this.currentKeyInputTarget != null && !currentKeyInputTarget.equals(this.currentKeyInputTarget)) {
             this.currentKeyInputTarget.deselected();
+            currentKeyInputTarget.selected();
         }
         this.currentKeyInputTarget = currentKeyInputTarget;
+
+        System.out.println(currentKeyInputTarget);
     }
 
     /**
@@ -444,8 +444,7 @@ public class Hud {
         if(rightDragEvent != null) {
             rightDragEvent.dropAction();
             if(rightDragEvent.getDragVisual() != null) {
-                rightDragEvent.getDragVisual().setWriteToDepthBuffer(true);
-                rightDragEvent.getDragVisual().setUseMask(rightDragEventMaskSave);
+                rightDragEvent.getDragVisual().setMaskComponent(rightDragEventMaskSave);
             }
             rightDragEvent = null;
             needsNextRendering();
@@ -456,8 +455,7 @@ public class Hud {
         if(leftDragEvent != null) {
             leftDragEvent.dropAction();
             if(leftDragEvent.getDragVisual() != null) {
-                leftDragEvent.getDragVisual().setWriteToDepthBuffer(true);
-                leftDragEvent.getDragVisual().setUseMask(leftDragEventMaskSave);
+                leftDragEvent.getDragVisual().setMaskComponent(leftDragEventMaskSave);
             }
             leftDragEvent = null;
             needsNextRendering();
@@ -472,9 +470,8 @@ public class Hud {
     public void setLeftDragEvent(DragEvent leftDragEvent) {
         this.leftDragEvent = leftDragEvent;
         if(leftDragEvent != null && leftDragEvent.getDragVisual() != null) {
-            leftDragEvent.getDragVisual().setWriteToDepthBuffer(false);
-            leftDragEventMaskSave = leftDragEvent.getDragVisual().useMask();
-            leftDragEvent.getDragVisual().setUseMask(false);
+            leftDragEventMaskSave = leftDragEvent.getDragVisual().getMaskComponent();
+            leftDragEvent.getDragVisual().setMaskComponent(null);
             leftDragEvent.getDragVisual().setxPositionConstraint(new RelativeToWindowPosition(lastMousePositionRelative.x));
             leftDragEvent.getDragVisual().setyPositionConstraint(new RelativeToWindowPosition(lastMousePositionRelative.y));
         }
@@ -491,9 +488,8 @@ public class Hud {
         this.rightDragEvent = rightDragEvent;
 
         if(rightDragEvent != null && rightDragEvent.getDragVisual() != null) {
-            rightDragEvent.getDragVisual().setWriteToDepthBuffer(false);
-            rightDragEventMaskSave = rightDragEvent.getDragVisual().useMask();
-            rightDragEvent.getDragVisual().setUseMask(false);
+            rightDragEventMaskSave = rightDragEvent.getDragVisual().getMaskComponent();
+            rightDragEvent.getDragVisual().setMaskComponent(null);
             rightDragEvent.getDragVisual().setxPositionConstraint(new RelativeToWindowPosition(lastMousePositionRelative.x));
             rightDragEvent.getDragVisual().setyPositionConstraint(new RelativeToWindowPosition(lastMousePositionRelative.y));
         }
@@ -520,7 +516,7 @@ public class Hud {
     }
 
     public void cleanup() {
-        mainComponent.cleanup();
+        scene.cleanup();
         shaderManager.cleanUp();
     }
 

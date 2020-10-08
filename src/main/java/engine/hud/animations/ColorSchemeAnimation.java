@@ -4,7 +4,7 @@ import engine.hud.Hud;
 import engine.hud.actions.Action;
 import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
-import engine.hud.components.Component;
+import engine.hud.components.ContentComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
 
 public class ColorSchemeAnimation extends Animation<ColorScheme> {
@@ -23,24 +23,24 @@ public class ColorSchemeAnimation extends Animation<ColorScheme> {
     public ColorSchemeAnimation(Hud hud, int duration, ColorScheme startValue, ColorScheme endValue) {
         super(hud, duration, startValue, endValue, new AnimationAction<ColorScheme>() {
             @Override
-            public void execute(ColorScheme nextValue, Component component) {
+            public void execute(ColorScheme nextValue, ContentComponent component) {
 
             }
 
             @Override
-            public ColorScheme getProgress(Component component) {
+            public ColorScheme getProgress(ContentComponent component) {
                 return null;
             }
         });
 
         right = new ColorAnimation(hud, duration, startValue.getRight(), endValue.getRight(), new AnimationAction<Color>() {
             @Override
-            public void execute(Color nextValue, Component component) {
+            public void execute(Color nextValue, ContentComponent component) {
                 ((QuadComponent)component).setColor(nextValue, ColorScheme.ColorSide.RIGHT);
             }
 
             @Override
-            public Color getProgress(Component component) {
+            public Color getProgress(ContentComponent component) {
                 return ((QuadComponent)component).getColor(ColorScheme.ColorSide.RIGHT);
             }
         });
@@ -48,36 +48,36 @@ public class ColorSchemeAnimation extends Animation<ColorScheme> {
 
         left = new ColorAnimation(hud, duration, startValue.getLeft(), endValue.getLeft(), new AnimationAction<Color>() {
             @Override
-            public void execute(Color nextValue, Component component) {
+            public void execute(Color nextValue, ContentComponent component) {
                 ((QuadComponent)component).setColor(nextValue, ColorScheme.ColorSide.LEFT);
             }
 
             @Override
-            public Color getProgress(Component component) {
+            public Color getProgress(ContentComponent component) {
                 return ((QuadComponent)component).getColor(ColorScheme.ColorSide.LEFT);
             }
         });
 
         top = new ColorAnimation(hud, duration, startValue.getTop(), endValue.getTop(), new AnimationAction<Color>() {
             @Override
-            public void execute(Color nextValue, Component component) {
+            public void execute(Color nextValue, ContentComponent component) {
                 ((QuadComponent)component).setColor(nextValue, ColorScheme.ColorSide.TOP);
             }
 
             @Override
-            public Color getProgress(Component component) {
+            public Color getProgress(ContentComponent component) {
                 return ((QuadComponent)component).getColor(ColorScheme.ColorSide.TOP);
             }
         });
 
         bottom = new ColorAnimation(hud, duration, startValue.getBottom(), endValue.getBottom(), new AnimationAction<Color>() {
             @Override
-            public void execute(Color nextValue, Component component) {
+            public void execute(Color nextValue, ContentComponent component) {
                 ((QuadComponent)component).setColor(nextValue, ColorScheme.ColorSide.BOTTOM);
             }
 
             @Override
-            public Color getProgress(Component component) {
+            public Color getProgress(ContentComponent component) {
                 return ((QuadComponent)component).getColor(ColorScheme.ColorSide.BOTTOM);
             }
         });
@@ -119,14 +119,16 @@ public class ColorSchemeAnimation extends Animation<ColorScheme> {
         left.setDuration(duration);
         top.setDuration(duration);
         bottom.setDuration(duration);
+        super.setDuration(duration);
     }
 
     @Override
-    public void setComponent(Component component) {
+    public void setComponent(ContentComponent component) {
         right.setComponent(component);
         left.setComponent(component);
         top.setComponent(component);
         bottom.setComponent(component);
+        super.setComponent(component);
     }
 
     @Override
@@ -141,16 +143,6 @@ public class ColorSchemeAnimation extends Animation<ColorScheme> {
 
     @Override
     public Animation getInverted() {
-        ColorSchemeAnimation result = (ColorSchemeAnimation) copy();
-
-        result.right = (ColorAnimation) right.getInverted();
-        result.left = (ColorAnimation) left.getInverted();
-        result.top = (ColorAnimation) top.getInverted();
-        result.bottom = (ColorAnimation) bottom.getInverted();
-
-        result.endValue = startValue;
-        result.startValue = endValue;
-        result.calculateStep();
-        return result;
+        return new ColorSchemeAnimation(hud,duration,endValue,startValue);
     }
 }

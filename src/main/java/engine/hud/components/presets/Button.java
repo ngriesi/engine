@@ -1,5 +1,7 @@
 package engine.hud.components.presets;
 
+import engine.hud.mouse.MouseAction;
+import engine.hud.mouse.MouseEvent;
 import engine.hud.actions.ReturnAction;
 import engine.hud.animations.DefaultAnimations;
 import engine.hud.assets.Edge;
@@ -9,11 +11,11 @@ import engine.hud.components.SubComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.contentcomponents.TextComponent;
 import engine.hud.constraints.elementSizeConstraints.RelativeToScreenSizeE;
-import engine.hud.constraints.elementSizeConstraints.RelativeToWindowSizeE;
 import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.TextAspectRatio;
 import engine.hud.events.DragEvent;
+import engine.hud.mouse.MouseListener;
 import engine.hud.text.FontTexture;
 import org.joml.Vector2f;
 
@@ -90,61 +92,72 @@ public class Button extends QuadComponent implements DragEvent {
         entered = DefaultAnimations.buttonEnteredAnimation.createForComponent(this);
         exited = DefaultAnimations.buttonExitedAnimation.createForComponent(this);
 
-        super.setMouseEnteredAction(mouseInput1 -> enteredAction(mouseInput1.isLeftButtonPressed()));
+        getMouseListener().addMouseAction(new MouseAction() {
+            @Override
+            public boolean action(MouseEvent e) {
+                switch (e.getEvent()) {
+                    case ENTERED:
+                        return enteredAction(e.getMouseInput().isPressed(MouseListener.MouseButton.LEFT));
+                    case EXITED:
+                        if(enabled) {
+                            if (pressed) {
+                                Button.this.setColorScheme(normalColor);
+                                textComponent.setColorScheme(textColor);
+                                hud.needsNextRendering();
+                                pressed = false;
+                                entered.endAnimation();
+                            } else {
+                                entered.endAnimation();
+                                exited.startAnimation();
+                            }
 
-        super.setMouseExitedAction(mouseInput -> {
+                        }
+                        return true;
 
-            if(enabled) {
-                if (pressed) {
-                    this.setColorScheme(normalColor);
-                    textComponent.setColorScheme(textColor);
-                    hud.needsNextRendering();
-                    pressed = false;
-                    entered.endAnimation();
-                } else {
-                    entered.endAnimation();
-                    exited.startAnimation();
+                    case DRAG_STARTED:
+                        if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
+                            hud.setLeftDragEvent(Button.this);
+                            return true;
+                        }
+
+                    case CLICK_STARTED:
+                        if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
+                            if (activated && enabled) {
+                                entered.endAnimation();
+                                Button.this.setColorScheme(clickedColor);
+                                textComponent.setColorScheme(textClickedColor);
+                                pressed = true;
+                                hud.needsNextRendering();
+                            }
+                            return true;
+                        }
+
+                    case DRAG_RELEASED:
+                        if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
+                            if (e.getComponent().getHud().getLeftDragEvent() != null) {
+                                if (e.getComponent().getHud().getLeftDragEvent().equals(Button.this)) {
+                                    clickedAction();
+                                    return true;
+                                } else {
+                                    enteredAction(false);
+                                    return false;
+                                }
+                            } else {
+                                enteredAction(false);
+                                return false;
+                            }
+                        }
+
+                    case CLICK_RELEASED:
+                        if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
+                            return clickedAction();
+                        }
+
+
                 }
-
-            }
-            return true;
-        });
-
-        super.setOnLeftDragStarted(() -> {
-            hud.setLeftDragEvent(Button.this);
-            return true;
-        });
-
-        super.setOnLeftClickStarted(() -> {
-
-            if(activated && enabled) {
-                entered.endAnimation();
-                this.setColorScheme(clickedColor);
-                textComponent.setColorScheme(textClickedColor);
-                pressed = true;
-                hud.needsNextRendering();
-            }
-            return true;
-        });
-
-        super.setLeftDragEnterRelease(dragEvent -> {
-            if(dragEvent != null) {
-                if (dragEvent.equals(Button.this)) {
-                    clickedAction();
-                    return true;
-                } else {
-                    enteredAction(false);
-                    return false;
-                }
-            } else {
-                enteredAction(false);
                 return false;
             }
         });
-
-        super.setOnLeftClickAction(this::clickedAction);
-
-
     }
 
     private boolean clickedAction() {
@@ -187,8 +200,6 @@ public class Button extends QuadComponent implements DragEvent {
 
     }
 
-
-    @Override
     public void setOnLeftClickAction(ReturnAction onLeftClickAction) {
         clickedAction = onLeftClickAction;
     }

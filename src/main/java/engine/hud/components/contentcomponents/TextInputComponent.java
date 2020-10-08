@@ -1,12 +1,11 @@
 package engine.hud.components.contentcomponents;
 
-import engine.general.MouseInput;
 import engine.general.Transformation;
 import engine.graph.items.Mesh;
 import engine.hud.actions.Action;
+import engine.hud.actions.KeyAction;
 import engine.hud.assets.Quad;
 import engine.hud.color.Color;
-import engine.hud.components.Component;
 import engine.hud.text.FontTexture;
 import engine.render.ShaderProgram;
 import org.joml.Matrix4f;
@@ -50,9 +49,127 @@ public class TextInputComponent extends TextComponent {
         cursorPosition = new Vector2i(0,0);
         cursor = new Quad();
         setCursorPosition();
-        setUseMask(true);
-        setOnLeftClickAction(() -> false);
         setText("");
+
+        getKeyListener().setKeyAction(new KeyAction() {
+
+            @Override
+            public void execute(int key) {
+
+                    switch(key) {
+
+                        case GLFW_KEY_SPACE:
+                        {
+                            if(!onlyNumbers) {
+                                getTextItem().addLetter(cursorPosition.y,cursorPosition.x,' ');
+                                cursorPosition.x ++;
+                                changed();
+                            }
+                        }
+                        break;
+
+                        case GLFW_KEY_LEFT:
+                        {
+                            if(cursorPosition.x > 0) {
+                                cursorPosition.x --;
+                            } else {
+                                if(cursorPosition.y > 0) {
+                                    cursorPosition.y --;
+                                    cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
+                                }
+                            }
+                        }
+                        break;
+
+                        case GLFW_KEY_RIGHT:
+                        {
+                            if(cursorPosition.x < getTextItem().getLineLength(cursorPosition.y)) {
+                                cursorPosition.x ++;
+                            } else {
+                                if(cursorPosition.y < getTextItem().getLines() - 1) {
+                                    cursorPosition.y ++;
+                                    cursorPosition.x = 0;
+                                }
+                            }
+                        }
+                        break;
+
+                        case GLFW_KEY_DOWN:
+                        {
+                            if(cursorPosition.y < getTextItem().getLines() - 1) {
+                                cursorPosition.y ++;
+                                if(getTextItem().getLineLength(cursorPosition.y) < cursorPosition.x) {
+                                    cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
+                                }
+                            }
+                        }
+                        break;
+
+                        case GLFW_KEY_UP:
+                        {
+                            if(cursorPosition.y > 0) {
+                                cursorPosition.y --;
+                                if(getTextItem().getLineLength(cursorPosition.y) < cursorPosition.x) {
+                                    cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
+                                }
+                            }
+                        }
+                        break;
+
+                        case GLFW_KEY_BACKSPACE:
+                        {
+                            if(cursorPosition.x>0) {
+                                getTextItem().removeLetter(cursorPosition.y,cursorPosition.x-1);
+                                cursorPosition.x--;
+                                changed();
+                            } else {
+                                if(cursorPosition.y > 0) {
+                                    cursorPosition.x = getTextItem().getLineLength(cursorPosition.y-1);
+                                    getTextItem().removeLine(cursorPosition.y);
+                                    cursorPosition.y --;
+                                    changed();
+                                }
+                            }
+                        }
+                        break;
+
+                        case GLFW_KEY_ENTER:
+                        {
+                            if(allowNewLine) {
+                                getTextItem().addLine(cursorPosition.y,cursorPosition.x);
+                                cursorPosition.y ++;
+                                cursorPosition.x = 0;
+                                changed();
+                            }
+                        }
+                        break;
+
+                        default:
+                        {
+                            if (window.isKeyPressed(key)) {
+
+                                String temp = glfwGetKeyName(key, glfwGetKeyScancode(key));
+                                if (temp != null) {
+                                    if (!onlyNumbers || Character.isDigit(temp.charAt(0))) {
+                                        if (window.isKeyPressed(GLFW_KEY_LEFT_SHIFT) || window.isKeyPressed(GLFW_KEY_RIGHT_SHIFT)) {
+                                            getTextItem().addLetter(cursorPosition.y, cursorPosition.x, Character.toUpperCase(temp.charAt(0)));
+                                            cursorPosition.x++;
+                                            changed();
+                                        } else {
+                                            getTextItem().addLetter(cursorPosition.y, cursorPosition.x, temp.charAt(0));
+                                            cursorPosition.x++;
+                                            changed();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    updateBounds();
+
+                }
+        });
 
     }
 
@@ -173,128 +290,7 @@ public class TextInputComponent extends TextComponent {
         cursor.getMesh().getMaterial().setAmbientColor(color.getColor());
     }
 
-    /**
-     * action, happening when the component gets a key
-     * event (changes the text)
-     *
-     * @param key next key
-     */
-    @Override
-    protected void keyPressedAction(int key) {
-        switch(key) {
 
-            case GLFW_KEY_SPACE:
-            {
-                if(!onlyNumbers) {
-                    getTextItem().addLetter(cursorPosition.y,cursorPosition.x,' ');
-                    cursorPosition.x ++;
-                    changed();
-                }
-            }
-            break;
-
-            case GLFW_KEY_LEFT:
-            {
-                if(cursorPosition.x > 0) {
-                    cursorPosition.x --;
-                } else {
-                    if(cursorPosition.y > 0) {
-                        cursorPosition.y --;
-                        cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
-                    }
-                }
-            }
-            break;
-
-            case GLFW_KEY_RIGHT:
-            {
-                if(cursorPosition.x < getTextItem().getLineLength(cursorPosition.y)) {
-                    cursorPosition.x ++;
-                } else {
-                    if(cursorPosition.y < getTextItem().getLines() - 1) {
-                        cursorPosition.y ++;
-                        cursorPosition.x = 0;
-                    }
-                }
-            }
-            break;
-
-            case GLFW_KEY_DOWN:
-            {
-                if(cursorPosition.y < getTextItem().getLines() - 1) {
-                    cursorPosition.y ++;
-                    if(getTextItem().getLineLength(cursorPosition.y) < cursorPosition.x) {
-                        cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
-                    }
-                }
-            }
-            break;
-
-            case GLFW_KEY_UP:
-            {
-                if(cursorPosition.y > 0) {
-                    cursorPosition.y --;
-                    if(getTextItem().getLineLength(cursorPosition.y) < cursorPosition.x) {
-                        cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
-                    }
-                }
-            }
-            break;
-
-            case GLFW_KEY_BACKSPACE:
-            {
-                if(cursorPosition.x>0) {
-                    getTextItem().removeLetter(cursorPosition.y,cursorPosition.x-1);
-                    cursorPosition.x--;
-                    changed();
-                } else {
-                    if(cursorPosition.y > 0) {
-                        cursorPosition.x = getTextItem().getLineLength(cursorPosition.y-1);
-                        getTextItem().removeLine(cursorPosition.y);
-                        cursorPosition.y --;
-                        changed();
-                    }
-                }
-            }
-            break;
-
-            case GLFW_KEY_ENTER:
-            {
-                if(allowNewLine) {
-                    getTextItem().addLine(cursorPosition.y,cursorPosition.x);
-                    cursorPosition.y ++;
-                    cursorPosition.x = 0;
-                    changed();
-                }
-            }
-            break;
-
-            default:
-            {
-                if (window.isKeyPressed(key)) {
-
-                    String temp = glfwGetKeyName(key, glfwGetKeyScancode(key));
-                    if (temp != null) {
-                        if (!onlyNumbers || Character.isDigit(temp.charAt(0))) {
-                            if (window.isKeyPressed(GLFW_KEY_LEFT_SHIFT) || window.isKeyPressed(GLFW_KEY_RIGHT_SHIFT)) {
-                                getTextItem().addLetter(cursorPosition.y, cursorPosition.x, Character.toUpperCase(temp.charAt(0)));
-                                cursorPosition.x++;
-                                changed();
-                            } else {
-                                getTextItem().addLetter(cursorPosition.y, cursorPosition.x, temp.charAt(0));
-                                cursorPosition.x++;
-                                changed();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        updateBounds();
-
-        super.keyPressedAction(key);
-    }
 
     /**
      * executes changed Action
@@ -303,16 +299,6 @@ public class TextInputComponent extends TextComponent {
         if(onChangedAction != null) {
             onChangedAction.execute();
         }
-    }
-
-    /**
-     * action that happens when teh component gets left clicked
-     */
-    @Override
-    public void leftClickAction(MouseInput mouseInput) {
-        hud.setCurrentKeyInputTarget(this);
-        hud.needsNextRendering();
-        super.leftClickAction(mouseInput);
     }
 
     /**

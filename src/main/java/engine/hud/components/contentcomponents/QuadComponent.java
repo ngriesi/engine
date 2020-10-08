@@ -7,7 +7,6 @@ import engine.hud.assets.Edge;
 import engine.hud.assets.Quad;
 import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
-import engine.hud.components.Component;
 import engine.hud.components.SubComponent;
 import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
 import engine.hud.constraints.elementSizeConstraints.RelativeToComponentSizeE;

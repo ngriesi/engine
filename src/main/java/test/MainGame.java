@@ -1,7 +1,10 @@
 package test;
 
 import engine.general.IGameLogic;
-import engine.general.MouseInput;
+import engine.hud.actions.KeyAction;
+import engine.hud.mouse.MouseAction;
+import engine.hud.mouse.MouseEvent;
+import engine.hud.mouse.MouseInput;
 import engine.general.Window;
 import engine.graph.general.Camera;
 import engine.graph.general.Scene;
@@ -9,7 +12,6 @@ import engine.graph.light.LightHandler;
 import engine.hud.Hud;
 import engine.hud.animations.Animation;
 import engine.hud.animations.ColorSchemeAnimation;
-import engine.hud.assets.Quad;
 import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
 import engine.hud.components.contentcomponents.QuadComponent;
@@ -42,18 +44,20 @@ public class MainGame implements IGameLogic {
         background.getColorSheme().setAllColors(Color.VERY_LIGHT_GRAY);
         background.setUseColorShade(false);
 
-        quads = new QuadComponent[1];
+        ColorSchemeAnimation colorAnimation = new ColorSchemeAnimation(hud,60,new ColorScheme(Color.RED,Color.BLUE,Color.GREEN,Color.RED),
+                new ColorScheme(Color.GREEN,Color.BLUE,Color.RED,Color.WHITE));
+
+
+        quads = new QuadComponent[0];
         for(QuadComponent quad : quads) {
             quad = new QuadComponent();
             quad.setHeightConstraint(0.2f);
             quad.setWidthConstraint(0.2f);
             quad.setxPositionConstraint((float) Math.random());
             quad.setyPositionConstraint((float)Math.random());
-            quad.setColorScheme(new ColorScheme(Color.BLUE, Color.WHITE, Color.RED, Color.ORANGE));
+            quad.setColorScheme(new ColorScheme(Color.RED, Color.BLUE, Color.GREEN, Color.RED));
             quad.setUseColorShade(true);
 
-            ColorSchemeAnimation colorAnimation = new ColorSchemeAnimation(hud,60,new ColorScheme(Color.RED,Color.GREEN,Color.YELLOW,Color.RED),
-                    new ColorScheme(Color.BLUE,Color.WHITE,Color.RED,Color.ORANGE));
 
             Animation start = colorAnimation.createForComponent(quad);
             Animation end = colorAnimation.getInverted().createForComponent(quad);
@@ -75,6 +79,51 @@ public class MainGame implements IGameLogic {
         quad2.setColorScheme(new ColorScheme(Color.BLUE,Color.BLUE,Color.BLUE,Color.RED));
         quad2.setUseColorShade(false);
 
+        quad2.getMouseListener().addLeftButtonAction(new MouseAction() {
+            @Override
+            public boolean action(MouseEvent e) {
+
+                if (e.getEvent() == MouseEvent.Event.ENTERED) {
+                    quad2.setColors(Color.RED);
+                    hud.needsNextRendering();
+                }
+                if (e.getEvent() == MouseEvent.Event.DRAG_STARTED) {
+                    quad2.setColors(Color.WHITE);
+                    hud.needsNextRendering();
+                    return true;
+                }
+                if (e.getEvent() == MouseEvent.Event.EXITED) {
+                    quad2.setColors(Color.BLUE);
+                    hud.needsNextRendering();
+                }
+                if (e.getEvent() == MouseEvent.Event.CLICK_STARTED) {
+                    quad2.setColors(Color.GREY);
+                    hud.needsNextRendering();
+                }
+                if (e.getEvent() == MouseEvent.Event.CLICK_RELEASED) {
+                    quad2.setColors(Color.YELLOW);
+                    hud.needsNextRendering();
+                }
+                if (e.getEvent() == MouseEvent.Event.PRESS_STARTED) {
+                    quad2.setColors(Color.PINK);
+                    hud.needsNextRendering();
+                }
+                if (e.getEvent() == MouseEvent.Event.PRESS_RELEASED) {
+                    quad2.setColors(Color.GREEN);
+                    hud.needsNextRendering();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        quad2.getKeyListener().setKeyAction(new KeyAction() {
+            @Override
+            public void execute(int keyCode) {
+                System.out.println(keyCode);
+            }
+        });
+
         QuadComponent quad3 = new QuadComponent();
         quad3.setHeightConstraint(0.5f);
         quad3.setWidthConstraint(0.5f);
@@ -86,7 +135,13 @@ public class MainGame implements IGameLogic {
         quad2.addComponent(quad3);
         background.addComponent(quad2);
 
-        hud.getMainComponent().getContent().addComponent(background);
+
+
+
+        Button btn = new Button(0.5f,0.5f,0.5f,0.5f,"test",FontTexture.STANDARD_FONT_TEXTURE);
+        background.addComponent(btn);
+
+        hud.getScene().addComponent(background);
 
 
 

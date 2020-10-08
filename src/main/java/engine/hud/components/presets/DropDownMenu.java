@@ -1,9 +1,6 @@
 package engine.hud.components.presets;
 
-import engine.general.MouseInput;
 import engine.hud.actions.Action;
-import engine.hud.actions.MouseAction;
-import engine.hud.actions.ReturnAction;
 import engine.hud.color.Color;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.contentcomponents.TextComponent;
@@ -13,10 +10,14 @@ import engine.hud.constraints.sizeConstraints.AbsoluteAspectRatio;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.RelativeToScreenSize;
 import engine.hud.constraints.sizeConstraints.TextAspectRatio;
+import engine.hud.mouse.MouseAction;
+import engine.hud.mouse.MouseEvent;
 import engine.hud.text.FontTexture;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static engine.hud.mouse.MouseListener.MouseButton.LEFT;
 
 public class DropDownMenu<T> extends QuadComponent {
 
@@ -95,7 +96,7 @@ public class DropDownMenu<T> extends QuadComponent {
         scrollView.setyPositionConstraint(new RelativeInParent(0));
         scrollView.setxPositionConstraint(new RelativeInParent(0.5f));
 
-        scrollView.setUseMask(false);
+        scrollView.setMaskComponent(null);
 
         scrollView.setVisible(false);
 
@@ -103,15 +104,20 @@ public class DropDownMenu<T> extends QuadComponent {
 
         this.addComponent(scrollView);
 
-        this.setOnLeftClickAction(() -> {
-
-            if(getSceneComponent().getRenderedOnTop() != null && getSceneComponent().getRenderedOnTop().equals(scrollView)) {
-                getSceneComponent().setRenderedOnTop(null);
-            } else {
-                getSceneComponent().setRenderedOnTop(scrollView);
+        this.getMouseListener().addMouseAction(new MouseAction() {
+            @Override
+            public boolean action(MouseEvent e) {
+                if(e.getEvent() == MouseEvent.Event.CLICK_RELEASED && e.getMouseButton() == LEFT) {
+                    if(getSceneComponent().getRenderedOnTop() != null && getSceneComponent().getRenderedOnTop().equals(scrollView)) {
+                        getSceneComponent().setRenderedOnTop(null);
+                    } else {
+                        getSceneComponent().setRenderedOnTop(scrollView);
+                    }
+                    hud.needsNextRendering();
+                    return true;
+                }
+                return false;
             }
-            hud.needsNextRendering();
-            return true;
         });
 
         this.setDeselectedAction(() -> {
@@ -310,34 +316,30 @@ public class DropDownMenu<T> extends QuadComponent {
 
             this.addComponent(textComponent);
 
-            this.setOnLeftClickAction(new ReturnAction() {
+            this.getMouseListener().addMouseAction(new MouseAction() {
                 @Override
-                public boolean execute() {
-                    dropDownMenu.setSelected(text);
-                    hud.needsNextRendering();
-                    return true;
-                }
-            });
-
-            this.setMouseEnteredAction(new MouseAction() {
-                @Override
-                public boolean action(MouseInput mouseInput) {
-                    DropDownElement.this.setColors(dropDownMenu.getEffectColor());
-                    textComponent.setColors(dropDownMenu.getEffectTextColor());
-                    hud.needsNextRendering();
-                    return true;
-                }
-            });
-
-            this.setMouseExitedAction(new MouseAction() {
-                @Override
-                public boolean action(MouseInput mouseInput) {
-                    if(!selected) {
-                        DropDownElement.this.setColors(dropDownMenu.getBackGroundColor());
-                        textComponent.setColors(dropDownMenu.getTextColor());
-                        hud.needsNextRendering();
+                public boolean action(MouseEvent e) {
+                    switch (e.getEvent()) {
+                        case CLICK_RELEASED:
+                            if(e.getMouseButton() == LEFT) {
+                                dropDownMenu.setSelected(text);
+                                hud.needsNextRendering();
+                                return true;
+                            }
+                        case ENTERED:
+                            DropDownElement.this.setColors(dropDownMenu.getEffectColor());
+                            textComponent.setColors(dropDownMenu.getEffectTextColor());
+                            hud.needsNextRendering();
+                            return true;
+                        case EXITED:
+                            if(!selected) {
+                                DropDownElement.this.setColors(dropDownMenu.getBackGroundColor());
+                                textComponent.setColors(dropDownMenu.getTextColor());
+                                hud.needsNextRendering();
+                            }
+                            return true;
                     }
-                    return true;
+                    return false;
                 }
             });
         }

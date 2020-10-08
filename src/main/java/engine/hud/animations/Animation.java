@@ -2,7 +2,8 @@ package engine.hud.animations;
 
 import engine.hud.Hud;
 import engine.hud.actions.Action;
-import engine.hud.components.Component;
+
+import engine.hud.components.ContentComponent;
 
 public abstract class Animation <T> {
 
@@ -13,7 +14,7 @@ public abstract class Animation <T> {
     int duration;
 
     /** component that uses this animation */
-    Component component;
+    ContentComponent component;
 
     /** action which contains a method that gets executed when the animation is finished */
     @SuppressWarnings("unused")
@@ -92,7 +93,7 @@ public abstract class Animation <T> {
      * @param component to use this animation on
      * @return Animation made for the component
      */
-    public Animation createForComponent(Component component) {
+    public Animation createForComponent(ContentComponent component) {
         Animation result = copy();
         result.setComponent(component);
         return result;
@@ -126,7 +127,7 @@ public abstract class Animation <T> {
      *
      * @param component new component
      */
-    public void setComponent(Component component) {
+    public void setComponent(ContentComponent component) {
         this.component = component;
         progress = action.getProgress(component);
     }

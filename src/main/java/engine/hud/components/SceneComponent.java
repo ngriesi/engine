@@ -1,20 +1,14 @@
 package engine.hud.components;
 
-import engine.general.GameEngine;
-import engine.general.MouseInput;
+import engine.hud.mouse.MouseInput;
 import engine.general.Transformation;
 import engine.general.Window;
-import engine.graph.items.Mesh;
 import engine.hud.HudShaderManager;
-import engine.hud.assets.Quad;
-import engine.render.ShaderProgram;
 import org.joml.Matrix4f;
-import org.joml.Vector4f;
 
 import java.util.HashMap;
 
 import static engine.general.GameEngine.pTime;
-import static org.lwjgl.opengl.GL11.glColorMask;
 
 public class SceneComponent extends ContentComponent {
 
@@ -26,11 +20,6 @@ public class SceneComponent extends ContentComponent {
 
     /**content of the scene and its ids */
     private HashMap<Integer,SubComponent> subComponents;
-
-    /**
-     * main component witch is the only possible parent of this component
-     */
-    private MainComponent parent;
 
     /** last component that contained the mouse */
     private SubComponent lastComponent;
@@ -44,13 +33,10 @@ public class SceneComponent extends ContentComponent {
      */
     public SceneComponent() {
         subComponents = new HashMap<>();
-        setBeMask(false);
-        setWriteToDepthBuffer(true);
-        setOnScreenHeight(1);
-        setOnScreenWidth(1);
-        setOnScreenXPosition(0.5f);
-        setOnScreenYPosition(0.5f);
-
+        onScreenHeight = 1;
+        onScreenWidth = 1;
+        onScreenXPosition = 0.5f;
+        onScreenYPosition = 0.5f;
     }
 
     /**
@@ -73,6 +59,8 @@ public class SceneComponent extends ContentComponent {
      */
     public void render(Matrix4f ortho, Transformation transformation, HudShaderManager shaderManager) {
 
+        shaderManager.setShaderProgram(shaderManager.getMaskShader());
+
         super.renderNext(ortho,transformation,shaderManager);
         if(renderedOnTop != null) {
 
@@ -90,23 +78,7 @@ public class SceneComponent extends ContentComponent {
         return lastId;
     }
 
-    /**
-     * returns the parent of this component
-     * @return main component
-     */
-    @SuppressWarnings("unused")
-    public MainComponent getParent() {
-        return parent;
-    }
 
-    /**
-     * sets the parent (main Component) of this scene
-     * @param parent main component
-     */
-    @SuppressWarnings("WeakerAccess")
-    public void setParent(MainComponent parent) {
-        this.parent = parent;
-    }
 
     /**
      * adds a sub component to the hash map for the mouse picking
@@ -191,11 +163,13 @@ public class SceneComponent extends ContentComponent {
 
             currentComponent = subComponents.get(currentId);
 
-            System.out.println(currentId);
 
         } else {
             currentComponent = null;
+            window.forceEvents();
+
         }
+
 
 
 
@@ -204,113 +178,31 @@ public class SceneComponent extends ContentComponent {
             if (!lastComponent.equals(currentComponent)) {
 
 
-                lastComponent.mouseExitedRecursiveSave();
+                lastComponent.getMouseListener().mouseExitedRecursiveSave();
                 pTime("input 2");
-                currentComponent.mouseEnteredRecursiveSave();
+                currentComponent.getMouseListener().mouseEnteredRecursiveSave();
                 pTime("input 3");
-                lastComponent.mouseExited(mouseInput);
+                lastComponent.getMouseListener().mouseExited(mouseInput);
                 pTime("input 4");
-                currentComponent.mouseEntered(mouseInput);
+                currentComponent.getMouseListener().mouseEntered(mouseInput);
                 pTime("input 5");
                 lastComponent = currentComponent;
             }
-            currentComponent.mouseActionStart(mouseInput);
+            currentComponent.getMouseListener().mouseActionStart(mouseInput);
             pTime("input 6");
         } else if(currentComponent == null && lastComponent != null) {
-            lastComponent.mouseExitedRecursiveSave();
-            lastComponent.mouseExited(mouseInput);
+            lastComponent.getMouseListener().mouseExitedRecursiveSave();
+            lastComponent.getMouseListener().mouseExited(mouseInput);
             lastComponent = null;
+            System.out.println("test");
 
         } else if(currentComponent != null) {
 
-            currentComponent.mouseEnteredRecursiveSave();
-            currentComponent.mouseEntered(mouseInput);
+            currentComponent.getMouseListener().mouseEnteredRecursiveSave();
+            currentComponent.getMouseListener().mouseEntered(mouseInput);
             lastComponent = currentComponent;
-            currentComponent.mouseActionStart(mouseInput);
+            currentComponent.getMouseListener().mouseActionStart(mouseInput);
         }
-    }
-
-    /**
-     * Empty mouse action methods
-     *
-     * @see SubComponent for implementation
-     * @see ContentComponent for abstract methods
-     */
-
-    @Override
-    protected void mouseExited(MouseInput mouseInput) {}
-
-    @Override
-    protected void mouseEntered(MouseInput mouseInput) {}
-
-    @Override
-    protected void mouseActionStart(MouseInput mouseInput) {}
-
-    @Override
-    protected void mouseAction(MouseInput mouseInput) {
-
-    }
-
-    @Override
-    protected void startRightDrag() {
-
-    }
-
-    @Override
-    protected void startLeftDrag() {
-
-    }
-
-    @Override
-    protected boolean rightDragReleasedAction() {
-
-        return false;
-    }
-
-    @Override
-    protected boolean leftDragReleasedAction() {
-
-        return false;
-    }
-
-    @Override
-    protected void rightClickStartedAction() {
-
-    }
-
-    @Override
-    protected void leftClickStartedAction() {
-
-    }
-
-    @Override
-    protected void rightPressStartedAction() {
-
-    }
-
-    @Override
-    protected void leftPressStartedAction() {
-
-    }
-
-    @Override
-    protected void rightPressedAction() {
-
-    }
-
-    @Override
-    protected void leftPressedAction() {
-
-    }
-
-    @Override
-    protected void rightClickAction(MouseInput mouseInput) {
-
-    }
-
-    @Override
-    protected void leftClickAction(MouseInput mouseInput) {
-
     }
 
     @Override
@@ -326,4 +218,5 @@ public class SceneComponent extends ContentComponent {
     public SubComponent getRenderedOnTop() {
         return renderedOnTop;
     }
+
 }

@@ -1,5 +1,6 @@
-package engine.general;
+package engine.hud.mouse;
 
+import engine.general.Window;
 import org.joml.Vector2d;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFWScrollCallback;
@@ -23,11 +24,7 @@ public class MouseInput {
     /** true if mouse is inside the window */
     private boolean inWindow = false;
 
-    /** true while left mouse button is pressed */
-    private boolean leftButtonPressed = false;
-
-    /** true while right mouse button is pressed */
-    private boolean rightButtonPressed = false;
+    private boolean[] buttonsPressed;
 
     /**stores the rotation of the mouse wheel */
     private float mouseWheelRotation = 0;
@@ -40,6 +37,7 @@ public class MouseInput {
         currentPos = new Vector2d(0,0);
         relativePos = new Vector2f();
         displVec = new Vector2f();
+        buttonsPressed = new boolean[8];
 
     }
 
@@ -48,7 +46,7 @@ public class MouseInput {
      *
      * @param window the mouse listener is used in
      */
-    void init(Window window){
+    public void init(Window window){
 
         glfwSetCursorPosCallback(window.getWindowHandle(),((window1, xpos, ypos) -> {
             currentPos.x = xpos;
@@ -61,8 +59,17 @@ public class MouseInput {
         }));
 
         glfwSetMouseButtonCallback(window.getWindowHandle(),((window1, button, action, mods) -> {
-            leftButtonPressed = button==GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS;
-            rightButtonPressed = button==GLFW_MOUSE_BUTTON_2 && action == GLFW_PRESS;
+            buttonsPressed[0] = button==GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS;
+            buttonsPressed[1] = button==GLFW_MOUSE_BUTTON_2 && action == GLFW_PRESS;
+            buttonsPressed[2] = button==GLFW_MOUSE_BUTTON_3 && action == GLFW_PRESS;
+            buttonsPressed[3] = button==GLFW_MOUSE_BUTTON_4 && action == GLFW_PRESS;
+            buttonsPressed[4] = button==GLFW_MOUSE_BUTTON_5 && action == GLFW_PRESS;
+            buttonsPressed[5] = button==GLFW_MOUSE_BUTTON_6 && action == GLFW_PRESS;
+            buttonsPressed[6] = button==GLFW_MOUSE_BUTTON_7 && action == GLFW_PRESS;
+            buttonsPressed[7] = button==GLFW_MOUSE_BUTTON_8 && action == GLFW_PRESS;
+
+
+
         }));
 
         glfwSetScrollCallback(window.getWindowHandle(), new GLFWScrollCallback() {
@@ -137,20 +144,6 @@ public class MouseInput {
     }
 
     /**
-     * @return returns true if the left mouse button is currently pressed
-     */
-    public boolean isLeftButtonPressed() {
-        return leftButtonPressed;
-    }
-
-    /**
-     * @return returns true if the right mouse button is currently pressed
-     */
-    public boolean isRightButtonPressed() {
-        return rightButtonPressed;
-    }
-
-    /**
      * returns how much the wheel has been scrolled since the last frame and resets the value
      *
      * @return distance scrolled
@@ -160,5 +153,9 @@ public class MouseInput {
         float t = mouseWheelRotation;
         mouseWheelRotation = 0;
         return t;
+    }
+
+    public boolean isPressed(MouseListener.MouseButton button) {
+        return buttonsPressed[button.ordinal()];
     }
 }

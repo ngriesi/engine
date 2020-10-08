@@ -11,7 +11,6 @@ import engine.graph.items.Mesh;
 import engine.graph.light.LightHandler;
 import engine.hud.Hud;
 import engine.hud.assets.Quad;
-import engine.hud.components.Component;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
@@ -19,7 +18,6 @@ import org.lwjgl.opengl.GL11;
 import java.util.List;
 import java.util.Map;
 
-import static engine.general.GameEngine.pTime;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengles.GLES20.GL_COLOR_BUFFER_BIT;
 
@@ -252,7 +250,7 @@ public class Renderer {
     @SuppressWarnings("unused")
     private void renderHud(Window window, Hud hud) {
 
-        Matrix4f ortho = transformation.getOrthoProjectionMatrix(0,1,1,0,0,-Component.MAX_IDS);
+        Matrix4f ortho = transformation.getOrthoProjectionMatrix(0,1,1,0,0,-Hud.MAX_IDS);
 
         hud.render(ortho,transformation);
 

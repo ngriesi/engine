@@ -1,6 +1,5 @@
 package engine.hud.components.presets;
 
-import engine.general.MouseInput;
 import engine.hud.color.Color;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.contentcomponents.TextInputComponent;
@@ -8,6 +7,9 @@ import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.positionConstraints.RelativeToParentPosition;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.TextAspectRatio;
+import engine.hud.mouse.MouseAction;
+import engine.hud.mouse.MouseEvent;
+import engine.hud.mouse.MouseListener;
 import engine.hud.text.FontTexture;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -29,7 +31,26 @@ public class TextInputBox extends QuadComponent {
         this.setCornerProportion(CornerProportion.KEEP_Y);
 
         setColors(Color.RED);
-        setOnLeftClickAction(() -> false);
+
+        getMouseListener().addMouseAction(new MouseAction() {
+            @Override
+            public boolean action(MouseEvent e) {
+                if(e.getEvent() == MouseEvent.Event.CLICK_RELEASED && e.getMouseButton()== MouseListener.MouseButton.LEFT) {
+                    hud.setCurrentKeyInputTarget(textInputComponent);
+                    hud.needsNextRendering();
+                    float x = e.getMouseInput().getRelativePos().x - (textInputComponent.getOnScreenXPosition() + textInputComponent.getxOffset() + textInputComponent.getAutoXOffset() - textInputComponent.getOnScreenWidth()/2);
+                    float y = e.getMouseInput().getRelativePos().y - (textInputComponent.getOnScreenYPosition() + textInputComponent.getyOffset() + textInputComponent.getAutoYOffset() - textInputComponent.getOnScreenHeight()/2);
+
+                    Vector2i newCursorPos = textInputComponent.getTextItem().getCursorPosition(x/textInputComponent.getOnScreenWidth(),y/textInputComponent.getOnScreenHeight());
+
+                    textInputComponent.setCursor(newCursorPos);
+
+                    updateBounds();
+                    return false;
+                }
+                return false;
+            }
+        });
     }
 
     /**
@@ -74,22 +95,6 @@ public class TextInputBox extends QuadComponent {
         }
 
 
-    }
-
-    @Override
-    public void leftClickAction(MouseInput mouseInput) {
-        hud.setCurrentKeyInputTarget(textInputComponent);
-        hud.needsNextRendering();
-        float x = mouseInput.getRelativePos().x - (textInputComponent.getOnScreenXPosition() + textInputComponent.getxOffset() + textInputComponent.getAutoXOffset() - textInputComponent.getOnScreenWidth()/2);
-        float y = mouseInput.getRelativePos().y - (textInputComponent.getOnScreenYPosition() + textInputComponent.getyOffset() + textInputComponent.getAutoYOffset() - textInputComponent.getOnScreenHeight()/2);
-
-        Vector2i newCursorPos = textInputComponent.getTextItem().getCursorPosition(x/textInputComponent.getOnScreenWidth(),y/textInputComponent.getOnScreenHeight());
-
-        textInputComponent.setCursor(newCursorPos);
-
-        updateBounds();
-
-        super.leftClickAction(mouseInput);
     }
 
 

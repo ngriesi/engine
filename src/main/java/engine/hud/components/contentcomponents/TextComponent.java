@@ -5,7 +5,6 @@ import engine.graph.items.Mesh;
 import engine.hud.HudShaderManager;
 import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
-import engine.hud.components.Component;
 import engine.hud.components.SubComponent;
 import engine.hud.constraints.sizeConstraints.RelativeToWindowSize;
 import engine.hud.constraints.sizeConstraints.TextAspectRatio;

@@ -1,6 +1,7 @@
 package engine.general;
 
 import engine.hud.Hud;
+import engine.hud.mouse.MouseInput;
 
 public class GameEngine implements Runnable{
 
@@ -88,7 +89,7 @@ public class GameEngine implements Runnable{
         window.init();
         timer.init();
         mouseInput.init(window);
-        hud.init(window);
+        hud.init();
         gameLogic.init(window,hud);
         hud.needsNextRendering();
     }
@@ -166,7 +167,7 @@ public class GameEngine implements Runnable{
 
         gameLogic.update(interval,mouseInput);
         if(window.isResized()) {
-            hud.getMainComponent().updateBounds();
+            hud.getScene().updateBounds();
         }
         hud.update(interval);
 
@@ -184,13 +185,15 @@ public class GameEngine implements Runnable{
             gameLogic.render(window);
             window.swapBuffers();
             hud.wasRendered();
+            window.forceEvents();
 
         }
 
+        window.forceEvents();
         window.events();
 
 
-        hud.needsNextRendering();
+        //hud.needsNextRendering();
 
     }
 

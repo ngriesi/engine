@@ -1,48 +1,58 @@
 package engine.hud.components;
 
-import engine.general.MouseInput;
 import engine.general.Transformation;
 import engine.general.Window;
 import engine.hud.Hud;
 import engine.hud.HudShaderManager;
 import engine.hud.actions.Action;
-import engine.hud.actions.KeyAction;
-import engine.render.ShaderProgram;
+import engine.hud.keys.KeyListener;
+import engine.hud.mouse.MouseAction;
+import engine.hud.mouse.MouseEvent;
+import engine.hud.mouse.MouseListener;
 import org.joml.Matrix4f;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public abstract class ContentComponent extends Component {
+public abstract class ContentComponent {
 
-    /* delay before the key spam starts (input frames) */
-    @SuppressWarnings("WeakerAccess")
-    public static final int START_PAUSE = 0;
+    /** stores components x Position of Component on screen (except for offset, the xOffset is applied after the calculation of onScreenXPosition) */
+    float onScreenXPosition;
 
-    /* interval the key spam uses (input frames) */
-    @SuppressWarnings("WeakerAccess")
-    public static final int PRESSED_INTERVAL = 0;
+    /** stores components y Position of Component on screen (except for offset, the yOffset is applied after the calculation of onScreenYPosition) */
+    float onScreenYPosition;
+
+    /** stores the on Screen Height of the Component */
+    float onScreenHeight;
+
+    /** stores the on screen Width of the component */
+    float onScreenWidth;
+
+    /** offset on x Axis used to move the component; offset 1 means the component was moved its own width to the left */
+    private float xOffset;
+
+    /** offset on y Axis used to move the component; offset 1 means the component was moved its own height down */
+    private float yOffset;
+
+    /** window that contains the hud component */
+    protected Window window;
+
+    /** hud that contains the component */
+    protected Hud hud;
+
+    /** if false the component and its children are not drawn */
+    private boolean visible;
+
+    /** used to temporarily hide a component during its removal */
+    private boolean removed;
 
     /** content of the hud component */
     protected CopyOnWriteArrayList<SubComponent> content;
 
-    /* last used key */
-    private int lastUsed;
-
-    /* true if key start delay is over */
-    private boolean pressed;
-
-    /* determines if the spam of keys should be enabled */
-    @SuppressWarnings("FieldCanBeLocal")
-    private boolean useKeySpam = true;
-
-    /* timer for multiple key actions of one key in a row (when pressed) */
-    private int timer;
-
-    @SuppressWarnings("unused")
-    private KeyAction onKeyPressedAction;
-
     /** executed when component gets deselected */
     private Action deselectedAction;
+
+    /** executed when component gets selected */
+    private Action selectedAction;
 
     /** if true the component can be selected */
     private boolean selectable;
@@ -50,19 +60,28 @@ public abstract class ContentComponent extends Component {
     /** id of the component */
     protected int id;
 
+    /**Mouse listener for the component */
+    protected MouseListener mouseListener;
+
+    /** Key listener for the component */
+    private KeyListener keyListener;
+
     /**
      * constructor creates list object
      */
     ContentComponent() {
         content = new CopyOnWriteArrayList<>();
         selectable = true;
+        visible = true;
+        keyListener = new KeyListener();
+        mouseListener = new MouseListener(this);
     }
 
 
     /**
      * calculates the bounds of the component in the getValue() methods of the constraints and for all content components
      */
-    protected void updateBounds() {
+    public void updateBounds() {
         content.forEach(SubComponent::updateBounds);
     }
 
@@ -141,9 +160,8 @@ public abstract class ContentComponent extends Component {
      *
      * @param window that contains the hud
      */
-    @Override
     public void setWindow(Window window) {
-        super.setWindow(window);
+        this.window = window;
         content.forEach(subComponent -> subComponent.setWindow(window));
     }
 
@@ -152,9 +170,8 @@ public abstract class ContentComponent extends Component {
      *
      * @param hud that contains the component
      */
-    @Override
     public void setHud(Hud hud) {
-        super.setHud(hud);
+        this.hud = hud;
         content.forEach(subComponent -> subComponent.setHud(hud));
     }
 
@@ -173,51 +190,6 @@ public abstract class ContentComponent extends Component {
      */
     public abstract SceneComponent getSceneComponent();
 
-    /**
-     * overwritten by subComponent
-     *
-     * @param mouseInput tracks mouse actions
-     * @see SubComponent
-     */
-    protected abstract void mouseExited(MouseInput mouseInput);
-
-    protected abstract void mouseEntered(MouseInput mouseInput);
-
-    protected abstract void mouseActionStart(MouseInput mouseInput);
-
-    /**
-     * handles the key input
-     *
-     * @param window to get the last pressed key
-     */
-    public void handleKeyInput(Window window) {
-        int key = window.getLastPressed();
-
-        if(key!=0) {
-            if(key != lastUsed || (useKeySpam && (!pressed && timer > START_PAUSE)) || (useKeySpam && (pressed && timer > PRESSED_INTERVAL))) {
-                lastUsed = key;
-                timer = 0;
-
-                keyPressedAction(window.getLastPressed());
-
-            } else {
-                timer++;
-                if(timer==START_PAUSE) {
-                    pressed = true;
-                }
-            }
-        } else {
-            lastUsed = 0;
-            timer = 0;
-            pressed = false;
-        }
-    }
-
-    protected void keyPressedAction(int keyCode) {
-        if(onKeyPressedAction != null) {
-            onKeyPressedAction.execute(keyCode);
-        }
-    }
 
     /**
      * calls all contents cleanup methods
@@ -226,68 +198,33 @@ public abstract class ContentComponent extends Component {
         content.forEach(SubComponent::cleanup);
     }
 
-    /**
-     * Methods to determine in which components the mouse currently is
-     */
-    public void mouseEnteredRecursiveSave(){}
-
-    public void mouseExitedRecursiveSave(){}
-
-    /**
-     * abstract mouse action methods used in SubComponent
-     *
-     * @see SubComponent for implementation
-     */
-
-    protected abstract void mouseAction(MouseInput mouseInput);
-
-    protected abstract void startRightDrag();
-
-    protected abstract void startLeftDrag();
-
-    protected abstract boolean rightDragReleasedAction();
-
-    protected abstract boolean leftDragReleasedAction();
-
-    protected abstract void rightClickStartedAction();
-
-    protected abstract void leftClickStartedAction();
-
-    protected abstract void rightPressStartedAction();
-
-    protected abstract void leftPressStartedAction();
-
-    protected abstract void rightPressedAction();
-
-    protected abstract void leftPressedAction();
-
-    protected abstract void rightClickAction(MouseInput mouseInput);
-
-    protected abstract void leftClickAction(MouseInput mouseInput);
-
-    public void setUseKeySpam(boolean useKeySpam) {
-        this.useKeySpam = useKeySpam;
-    }
-
-    public void setOnKeyPressedAction(KeyAction onKeyPressedAction) {
-        this.onKeyPressedAction = onKeyPressedAction;
-    }
-
-    @Override
     public void setxOffset(float xOffset) {
-        super.setxOffset(xOffset);
+        this.xOffset = xOffset;
         updateBounds();
     }
 
-    @Override
     public void setyOffset(float yOffset) {
-        super.setyOffset(yOffset);
+        this.yOffset = yOffset;
         updateBounds();
+    }
+
+    public void select() {
+        if(selectable) {
+            hud.setCurrentKeyInputTarget(this);
+        }
     }
 
     public void deselected() {
+
         if(deselectedAction != null) {
             deselectedAction.execute();
+        }
+    }
+
+    public void selected() {
+
+        if(selectedAction != null) {
+            selectedAction.execute();
         }
     }
 
@@ -303,11 +240,72 @@ public abstract class ContentComponent extends Component {
         this.selectable = selectable;
     }
 
-    @Override
-    public void setWriteToDepthBuffer(boolean writeToDepthBuffer) {
-        super.setWriteToDepthBuffer(writeToDepthBuffer);
-        content.forEach(subComponent -> subComponent.setWriteToDepthBuffer(writeToDepthBuffer));
+    public MouseListener getMouseListener() {
+        return mouseListener;
     }
 
+    public KeyListener getKeyListener() {
+        return keyListener;
+    }
+
+    public void setKeyListener(KeyListener keyListener) {
+        this.keyListener = keyListener;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
+    }
+
+    public float getOnScreenXPosition() {
+        return onScreenXPosition;
+    }
+
+    public float getOnScreenYPosition() {
+        return onScreenYPosition;
+    }
+
+    public float getOnScreenHeight() {
+        return onScreenHeight;
+    }
+
+    public float getOnScreenWidth() {
+        return onScreenWidth;
+    }
+
+    public float getxOffset() {
+        return xOffset;
+    }
+
+    public float getyOffset() {
+        return yOffset;
+    }
+
+    public Action getSelectedAction() {
+        return selectedAction;
+    }
+
+    public void setSelectedAction(Action selectedAction) {
+        this.selectedAction = selectedAction;
+    }
+
+    public Window getWindow() {
+        return window;
+    }
+
+    public Hud getHud() {
+        return hud;
+    }
 
 }

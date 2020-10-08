@@ -5,11 +5,14 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -51,7 +54,7 @@ public class Window {
     private WindowPreset preset;
 
     /** saves the key that was the last pressed an is currently still pressed, default value 0 */
-    private int lastPressed;
+    private List<Integer> lastPressed;
 
     /** if false, window only gets rendered if necessary */
     private boolean renderAlways;
@@ -98,6 +101,7 @@ public class Window {
         this.resized = false;
         this.renderAlways = false;
         this.closeable = true;
+        this.lastPressed = new ArrayList<>();
     }
 
     /**
@@ -136,16 +140,19 @@ public class Window {
 
 
                 //setup key callback
-                glfwSetKeyCallback(windowHandle,(window,key,scancode,action,mods) -> {
-                    if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE){
-                        glfwSetWindowShouldClose(window,true);
-                    }
-                    if(action == GLFW_PRESS) {
-                        lastPressed = key;
-                    }
+                glfwSetKeyCallback(windowHandle, new GLFWKeyCallbackI() {
+                    @Override
+                    public void invoke(long window, int key, int scancode, int action, int mods) {
+                        if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+                            glfwSetWindowShouldClose(window, true);
+                        }
+                        if (action == GLFW_PRESS) {
+                            lastPressed.add(key);
+                        }
 
-                    if(action == GLFW_RELEASE && key == lastPressed) {
-                        lastPressed = 0;
+                        if (action == GLFW_RELEASE && lastPressed.contains(key)) {
+                            lastPressed.remove((Integer) key);
+                        }
                     }
                 });
 
@@ -254,12 +261,12 @@ public class Window {
                     if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE){
                         //glfwSetWindowShouldClose(window,true);
                     }
-                    if(action == GLFW_PRESS) {
-                        lastPressed = key;
+                    if (action == GLFW_PRESS) {
+                        lastPressed.add(key);
                     }
 
-                    if(action == GLFW_RELEASE && key == lastPressed) {
-                        lastPressed = 0;
+                    if (action == GLFW_RELEASE && lastPressed.contains(key)) {
+                        lastPressed.remove(key);
                     }
                 });
 
@@ -363,12 +370,19 @@ public class Window {
 
     }
 
+    public void forceEvents() {
+        glfwPostEmptyEvent();
+    }
+
     /**
      * method handles the way the events are used
      */
     void events(){
 
-        glfwPollEvents();
+        //glfwPollEvents();
+
+        glfwWaitEvents();
+
 
 
     }
@@ -499,7 +513,7 @@ public class Window {
     /**
      * @return last Pressed key if its is still pressed
      */
-    public int getLastPressed() {
+    public List<Integer> getLastPressed() {
         return lastPressed;
     }
 
