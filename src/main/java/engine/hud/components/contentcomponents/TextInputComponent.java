@@ -287,7 +287,7 @@ public class TextInputComponent extends TextComponent {
     @Override
     public void setColors(Color color) {
         super.setColors(color);
-        cursor.getMesh().getMaterial().setAmbientColor(color.getColor());
+        cursor.getMesh().getMaterial().setAmbientColor(color.getVector4f());
     }
 
 

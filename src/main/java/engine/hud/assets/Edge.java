@@ -1,6 +1,8 @@
 package engine.hud.assets;
 
 import engine.hud.color.Color;
+import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
+import engine.hud.constraints.elementSizeConstraints.RelativeToComponentSizeE;
 
 public class Edge {
 
@@ -8,38 +10,40 @@ public class Edge {
         REPLACE,MULTIPLY
     }
 
-    private float size,position;
+    private ElementSizeConstraint size;
 
     private Color startColor,endColor;
 
     private BlendMode blendMode;
 
-    public Edge(float size, float position, Color startColor, Color endColor, BlendMode blendMode) {
+    public Edge(ElementSizeConstraint size, Color startColor, Color endColor, BlendMode blendMode) {
         this.size = size;
-        this.position = position;
+        this.startColor = startColor;
+        this.endColor = endColor;
+        this.blendMode = blendMode;
+    }
+
+    public Edge(float size, Color startColor, Color endColor, BlendMode blendMode) {
+        this.size = new RelativeToComponentSizeE(size);
         this.startColor = startColor;
         this.endColor = endColor;
         this.blendMode = blendMode;
     }
 
     public Edge() {
-        this(0,0,new Color(),new Color(),BlendMode.REPLACE);
+        this(0, new Color(),new Color(),BlendMode.REPLACE);
     }
 
-    public float getSize() {
+    public ElementSizeConstraint getSize() {
         return size;
     }
 
-    public void setSize(float size) {
+    public void setSize(ElementSizeConstraint size) {
         this.size = size;
     }
 
-    public float getPosition() {
-        return position;
-    }
-
-    public void setPosition(float position) {
-        this.position = position;
+    public void setSize(float size) {
+        this.size = new RelativeToComponentSizeE(size);
     }
 
     public Color getStartColor() {

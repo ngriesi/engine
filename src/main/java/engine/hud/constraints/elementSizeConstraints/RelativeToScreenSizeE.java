@@ -14,9 +14,9 @@ public class RelativeToScreenSizeE extends ElementSizeConstraint {
     }
 
     @Override
-    public float getValue(SubComponent component, Direction direction) {
+    public float getValue(SubComponent component, Proportion proportion) {
         if(component.getWindow() != null) {
-            if (direction == Direction.HEIGHT) {
+            if (proportion != Proportion.KEEP_HEIGHT) {
                 return (value * component.getWindow().getMonitorData().height()) / (float) component.getWindow().getHeight();
             } else {
                 return (value * component.getWindow().getMonitorData().width()) / (float) component.getWindow().getWidth();

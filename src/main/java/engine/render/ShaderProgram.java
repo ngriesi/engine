@@ -6,6 +6,7 @@ import engine.graph.light.PointLight;
 import engine.graph.light.SpotLight;
 import engine.hud.assets.Edge;
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.system.MemoryStack;
@@ -157,7 +158,7 @@ public class ShaderProgram {
      * @param uniformName name
      * @param value value
      */
-    public  void setUniform(String uniformName, Matrix4f value){
+    public void setUniform(String uniformName, Matrix4f value){
         try(MemoryStack stack = MemoryStack.stackPush()){
             FloatBuffer fb = stack.mallocFloat(16);
             value.get(fb);
@@ -196,6 +197,18 @@ public class ShaderProgram {
     }
 
     /**
+     * sets value of a Vector2f uniform
+     *
+     * @param uniformName name
+     * @param value value
+     */
+    public void setUniform(String uniformName, Vector2f value){
+        glUniform2f(uniforms.get(uniformName),value.x,value.y);
+    }
+
+
+
+    /**
      * sets value of a Vector4f uniform
      *
      * @param uniformName name
@@ -212,14 +225,6 @@ public class ShaderProgram {
         createUniforms(uniformName + ".size");
         createUniforms(uniformName + ".position");
         createUniforms(uniformName + ".blendMode");
-    }
-
-    public void setUniform(String uniformName, Edge edge) {
-        setUniform(uniformName + ".size",edge.getSize());
-        setUniform(uniformName + ".position",edge.getPosition());
-        setUniform(uniformName + ".startColor",edge.getStartColor().getColor());
-        setUniform(uniformName + ".endColor",edge.getEndColor().getColor());
-        setUniform(uniformName + ".blendMode",edge.getBlendMode().ordinal());
     }
 
     /**

@@ -11,11 +11,11 @@ public class KeyListener {
 
     /** delay before the key spam starts (input frames) */
     @SuppressWarnings("WeakerAccess")
-    public static final int START_PAUSE = 0;
+    public static final int START_PAUSE = 20;
 
     /** interval the key spam uses (input frames) */
     @SuppressWarnings("WeakerAccess")
-    public static final int PRESSED_INTERVAL = 0;
+    public static final int PRESSED_INTERVAL = 5;
 
     /** last used key */
     private HashMap<Integer,KeyInfo> lastUsed;

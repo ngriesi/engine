@@ -60,7 +60,7 @@ public class Color {
     private Vector4f color;
 
     public Color(Color color) {
-        this.color = new Vector4f(color.getColor());
+        this.color = new Vector4f(color.getVector4f());
     }
 
     public Color() {
@@ -99,7 +99,7 @@ public class Color {
         return this;
     }
 
-    public Vector4f getColor() {
+    public Vector4f getVector4f() {
         return color;
     }
 

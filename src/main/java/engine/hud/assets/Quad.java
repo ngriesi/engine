@@ -3,6 +3,8 @@ package engine.hud.assets;
 import engine.graph.items.GameItem;
 import engine.graph.items.Material;
 import engine.graph.items.Mesh;
+import engine.graph.items.Texture;
+import engine.hud.components.contentcomponents.TextureComponent;
 import org.joml.Vector4f;
 
 public class Quad extends GameItem {

@@ -15,6 +15,7 @@ import engine.hud.events.DragEvent;
 import engine.hud.mouse.MouseListener;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
+import org.lwjgl.opengl.GL11;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -135,21 +136,12 @@ public class Hud {
         SceneComponent scene = new SceneComponent();
         setScene(scene);
         shaderManager.init();
-        createFramebuffer();
-
     }
 
     /**
      * updates the bounds of all components
      */
     public void updateBounds() {
-
-        glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
-
-        glBindRenderbuffer(GL_RENDERBUFFER,depth);
-        glRenderbufferStorage(GL_RENDERBUFFER,GL_DEPTH24_STENCIL8,window.getWidth(),window.getHeight());
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER,GL_DEPTH_STENCIL_ATTACHMENT,GL_RENDERBUFFER,depth);
-
 
         scene.updateBounds();
     }
@@ -198,6 +190,10 @@ public class Hud {
         updateDragEventPositions();
 
         needsRendering = checkForUpdate();
+
+        if(needsNextRendering) {
+            window.forceEvents();
+        }
 
         for(Action action : endOfFrameActions) {
             action.execute();
@@ -254,24 +250,12 @@ public class Hud {
      */
     public void render(Matrix4f ortho, Transformation transformation) {
 
-        glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
+
+        glBindFramebuffer(GL_FRAMEBUFFER,0);
+
         glStencilMask(1);
-        glColorMask(false,false,false,false);
         shaderManager.setShaderProgram(shaderManager.getMaskShader());
         scene.render(ortho,transformation,shaderManager);
-
-
-        glBindFramebuffer(GL_READ_FRAMEBUFFER,framebuffer);
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
-        glBlitFramebuffer(0,0,window.getWidth(),window.getHeight(),0,0,window.getWidth(),window.getHeight(),GL_DEPTH_BUFFER_BIT,GL_NEAREST);
-
-        glColorMask(true,true,true,true);
-        glDepthFunc(GL_EQUAL);
-        glStencilFunc(GL_ALWAYS,0,0);
-        glDepthMask(false);
-        shaderManager.renderFrame(ortho,transformation);
-
-
 
     }
 
@@ -286,7 +270,6 @@ public class Hud {
 
 
 
-        glBindBuffer(GL_FRAMEBUFFER,framebuffer);
         GameEngine.pTime("read test 2");
         ByteBuffer rgb = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder());
 
@@ -297,25 +280,6 @@ public class Hud {
         pTime("read test 4");
 
         return (int) (t * MAX_IDS);
-    }
-
-    /**
-     * creates a framebuffer texture for the depth rendering of the hud
-     */
-    private void createFramebuffer() {
-        framebuffer = glGenFramebuffers();
-        depth = glGenRenderbuffers();
-
-        glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
-
-        glBindRenderbuffer(GL_RENDERBUFFER,depth);
-        glRenderbufferStorage(GL_RENDERBUFFER,GL_DEPTH24_STENCIL8,window.getWidth(),window.getHeight());
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER,GL_DEPTH_STENCIL_ATTACHMENT,GL_RENDERBUFFER,depth);
-
-
-        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            System.out.println("failed to create framebuffer");
-        }
     }
 
     /**

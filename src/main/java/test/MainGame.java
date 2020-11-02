@@ -1,10 +1,6 @@
 package test;
 
 import engine.general.IGameLogic;
-import engine.hud.actions.KeyAction;
-import engine.hud.mouse.MouseAction;
-import engine.hud.mouse.MouseEvent;
-import engine.hud.mouse.MouseInput;
 import engine.general.Window;
 import engine.graph.general.Camera;
 import engine.graph.general.Scene;
@@ -12,12 +8,18 @@ import engine.graph.light.LightHandler;
 import engine.hud.Hud;
 import engine.hud.animations.Animation;
 import engine.hud.animations.ColorSchemeAnimation;
+import engine.hud.assets.Edge;
 import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
+import engine.hud.components.SubComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.presets.Background;
 import engine.hud.components.presets.Button;
+import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
+import engine.hud.constraints.elementSizeConstraints.RelativeToComponentSizeE;
 import engine.hud.constraints.positionConstraints.RelativeToParentPosition;
+import engine.hud.mouse.MouseEvent;
+import engine.hud.mouse.MouseInput;
 import engine.hud.text.FontTexture;
 import engine.render.Renderer;
 
@@ -71,58 +73,54 @@ public class MainGame implements IGameLogic {
             end.startAnimation();
         }
 
+        //TextureComponent quad2 = new TextureComponent(new Texture("textures/lockClosed.png", Texture.FilterMode.NEAREST));
         QuadComponent quad2 = new QuadComponent();
+        quad2.setMaskMode(SubComponent.MaskMode.USE_TRANSPARENT);
         quad2.setHeightConstraint(0.5f);
         quad2.setWidthConstraint(0.5f);
-        quad2.setxPositionConstraint(new RelativeToParentPosition(1));
+        quad2.setxPositionConstraint(new RelativeToParentPosition(0.5f));
         quad2.setyPositionConstraint(0.5f);
         quad2.setColorScheme(new ColorScheme(Color.BLUE,Color.BLUE,Color.BLUE,Color.RED));
+        quad2.setColor(new Color(1,0,0,0.5f));
         quad2.setUseColorShade(false);
 
-        quad2.getMouseListener().addLeftButtonAction(new MouseAction() {
-            @Override
-            public boolean action(MouseEvent e) {
+        hud.setCurrentKeyInputTarget(quad2);
 
-                if (e.getEvent() == MouseEvent.Event.ENTERED) {
-                    quad2.setColors(Color.RED);
-                    hud.needsNextRendering();
-                }
-                if (e.getEvent() == MouseEvent.Event.DRAG_STARTED) {
-                    quad2.setColors(Color.WHITE);
-                    hud.needsNextRendering();
-                    return true;
-                }
-                if (e.getEvent() == MouseEvent.Event.EXITED) {
-                    quad2.setColors(Color.BLUE);
-                    hud.needsNextRendering();
-                }
-                if (e.getEvent() == MouseEvent.Event.CLICK_STARTED) {
-                    quad2.setColors(Color.GREY);
-                    hud.needsNextRendering();
-                }
-                if (e.getEvent() == MouseEvent.Event.CLICK_RELEASED) {
-                    quad2.setColors(Color.YELLOW);
-                    hud.needsNextRendering();
-                }
-                if (e.getEvent() == MouseEvent.Event.PRESS_STARTED) {
-                    quad2.setColors(Color.PINK);
-                    hud.needsNextRendering();
-                }
-                if (e.getEvent() == MouseEvent.Event.PRESS_RELEASED) {
-                    quad2.setColors(Color.GREEN);
-                    hud.needsNextRendering();
-                    return true;
-                }
-                return false;
+        quad2.getMouseListener().addLeftButtonAction(e -> {
+
+            if (e.getEvent() == MouseEvent.Event.ENTERED) {
+                quad2.setColors(Color.RED);
+                hud.needsNextRendering();
             }
+            if (e.getEvent() == MouseEvent.Event.DRAG_STARTED) {
+                quad2.setColors(Color.WHITE);
+                hud.needsNextRendering();
+                return true;
+            }
+            if (e.getEvent() == MouseEvent.Event.EXITED) {
+                quad2.setColors(Color.BLUE);
+                hud.needsNextRendering();
+            }
+            if (e.getEvent() == MouseEvent.Event.CLICK_STARTED) {
+                quad2.setColors(Color.GREY);
+                hud.needsNextRendering();
+            }
+            if (e.getEvent() == MouseEvent.Event.CLICK_RELEASED) {
+                quad2.setColors(Color.YELLOW);
+                hud.needsNextRendering();
+            }
+            if (e.getEvent() == MouseEvent.Event.PRESS_STARTED) {
+                quad2.setColors(Color.PINK);
+                hud.needsNextRendering();
+            }
+            if (e.getEvent() == MouseEvent.Event.PRESS_RELEASED) {
+                quad2.setColors(Color.GREEN);
+                hud.needsNextRendering();
+                return true;
+            }
+            return false;
         });
 
-        quad2.getKeyListener().setKeyAction(new KeyAction() {
-            @Override
-            public void execute(int keyCode) {
-                System.out.println(keyCode);
-            }
-        });
 
         QuadComponent quad3 = new QuadComponent();
         quad3.setHeightConstraint(0.5f);
@@ -130,7 +128,20 @@ public class MainGame implements IGameLogic {
         quad3.setxPositionConstraint(0.5f);
         quad3.setyPositionConstraint(new RelativeToParentPosition(0));
         quad3.setColorScheme(new ColorScheme(Color.RED,Color.BLUE,Color.GREEN,Color.RED));
+        quad3.setColor(Color.GREEN);
         quad3.setUseColorShade(false);
+        quad2.setCornerSize(new RelativeToComponentSizeE(0.3f));
+        quad2.setCornerProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
+        background.setCornerProportion(ElementSizeConstraint.Proportion.KEEP_HEIGHT);
+        quad3.setCornerProportion(ElementSizeConstraint.Proportion.KEEP_HEIGHT);
+        quad3.setCornerSize(0.3f);
+        quad2.setCornerSize(0f);
+        quad2.setEdge(new Edge(0.25f,Color.TEAL,Color.getTransparent(Color.TEAL), Edge.BlendMode.REPLACE));
+        quad2.setEdgeProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
+        quad3.setEdge(new Edge(0.5f,Color.YELLOW,Color.YELLOW, Edge.BlendMode.REPLACE));
+        quad3.setColor(Color.TRANSPARENT);
+
+
 
         quad2.addComponent(quad3);
         background.addComponent(quad2);
@@ -139,7 +150,7 @@ public class MainGame implements IGameLogic {
 
 
         Button btn = new Button(0.5f,0.5f,0.5f,0.5f,"test",FontTexture.STANDARD_FONT_TEXTURE);
-        background.addComponent(btn);
+        //background.addComponent(btn);
 
         hud.getScene().addComponent(background);
 

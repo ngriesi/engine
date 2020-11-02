@@ -12,53 +12,41 @@ import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
 import engine.hud.constraints.elementSizeConstraints.RelativeToComponentSizeE;
 import engine.render.ShaderProgram;
 import org.joml.Matrix4f;
-import org.joml.Vector4f;
+import org.joml.Vector2f;
+
+import static engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint.Proportion.*;
 
 public class QuadComponent extends SubComponent {
-
-    /**
-     * determines proportion of corners
-     */
-    public enum CornerProportion {
-        KEEP_X, KEEP_Y, FREE
-    }
-
-    /**
-     * determines proportion of edges
-     */
-    public enum EdgeProportion {
-        KEEP_X, KEEP_Y, FREE
-    }
 
 
     /**
      * mesh of the component
      */
-    private Quad quad;
+    protected Quad quad;
     /**
      * if not FREE corners are the same in both x and y direction
      */
-    private CornerProportion cornerProportion;
+    private ElementSizeConstraint.Proportion cornerProportion;
     /**
      * if not FREE edges are the same in both x and y direction
      */
-    private EdgeProportion edgeProportion;
+    private ElementSizeConstraint.Proportion edgeProportion;
     /**
      * way the mask for the children is created
      */
-    private MaskMode maskMode;
+    MaskMode maskMode;
     /**
      * size of the rounded corners relative to component size (0 disables rounded corners)
      */
-    private ElementSizeConstraint cornerSize;
+    ElementSizeConstraint cornerSize;
     /**
      * edges of the component
      */
-    private Edge outerEdge, middleEdge, innerEdge;
+    private Edge edge;
     /**
      * enables edges
      */
-    private boolean useEdges;
+    boolean useEdges;
     /**
      * colors of the quad, when color shade is off only the first one is used,
      * when its on the colors in the array are the colors at the edges of the
@@ -85,16 +73,14 @@ public class QuadComponent extends SubComponent {
     public QuadComponent() {
         super();
         quad = new Quad();
-        cornerProportion = CornerProportion.FREE;
-        edgeProportion = EdgeProportion.FREE;
+        cornerProportion = FREE;
+        edgeProportion = FREE;
         maskMode = MaskMode.USE_TRANSPARENT;
         cornerSize = new RelativeToComponentSizeE(0);
         colors = new ColorScheme();
         useColorShade = false;
         useEdges = false;
-        outerEdge = new Edge();
-        middleEdge = new Edge();
-        innerEdge = new Edge();
+        edge = new Edge();
 
 
     }
@@ -105,26 +91,64 @@ public class QuadComponent extends SubComponent {
     }
 
     @Override
-    public void renderSimpleStencil(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
+    public void setupShader(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
         Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(quad, orthographic);
         ShaderProgram shader = hud.getShaderManager().getMaskShader();
 
+
         shader.setUniform("projModelMatrix", projModelMatrix);
-        shader.setUniform("useTransparent", maskMode == MaskMode.USE_TRANSPARENT?1:0);
+        shader.setUniform("transparancyMode", maskMode.ordinal());
 
-        drawMesh();
-    }
+        shader.setUniform("useTexture",0);
 
-    @Override
-    public void addToShaderList(HudShaderManager hudShaderManager) {
-        if (quad.getMesh().getMaterial().getTexture() == null) {
-            if (cornerSize.getAbsoluteValue() == 0 && !useColorShade && !useEdges) {
-                hudShaderManager.addToSimpleQuadShaderList(this);
+        shader.setUniform("colors", getColorSheme().getVectorArray());
+        shader.setUniform("useColorShade",isUseColorShade()?1:0);
 
-            } else if (cornerSize.getAbsoluteValue() == 0 && !useEdges) {
-                hudShaderManager.addToColorShadeQuadShaderList(this);
+        shader.setUniform("edgeStartColor",edge.getStartColor().getVector4f());
+        shader.setUniform("edgeEndColor",edge.getEndColor().getVector4f());
+
+        shader.setUniform("edgeBlendMode",edge.getBlendMode().ordinal());
+
+        float cornerSizeTemp = cornerSize.getValue(this,cornerProportion);
+        shader.setUniform("cornerSize",cornerSizeTemp);
+
+        shader.setUniform("edgeSize",cornerSizeTemp!=0?cornerSizeTemp - (edge.getSize().getValue(this,edgeProportion) * cornerSizeTemp):1 - edge.getSize().getValue(this,edgeProportion));
+
+        if(cornerSize.getAbsoluteValue() > 0) {
+            switch (getCornerProportion()) {
+                case FREE:
+                    shader.setUniform("keepCornerProportion", 0);
+                    shader.setUniform("cornerScale", new Vector2f(-0.5f * ((float) getWindow().getWidth() / getWindow().getHeight()), -0.5f));
+                    break;
+                case KEEP_HEIGHT:
+                    shader.setUniform("keepCornerProportion", (getOnScreenWidth() / getOnScreenHeight()) * ((float) getWindow().getWidth() / getWindow().getHeight()));
+                    shader.setUniform("cornerScale",
+                            new Vector2f(-((getOnScreenWidth() * 0.5f) / getOnScreenHeight()) * (window.getWidth() / (float) window.getHeight()), -0.5f));
+                    break;
+                case KEEP_WIDTH:
+                    shader.setUniform("keepCornerProportion", -(getOnScreenWidth() / getOnScreenHeight()) * ((float) getWindow().getWidth() / getWindow().getHeight()));
+                    shader.setUniform("cornerScale",
+                            new Vector2f(0.5f, ((((getOnScreenHeight() * 0.5f) / getOnScreenWidth()) / (window.getWidth() / (float) window.getHeight())))));
+
+            }
+        } else if(getEdge().getSize().getAbsoluteValue() > 0){
+            switch (edgeProportion) {
+                case FREE:
+                    shader.setUniform("keepCornerProportion", 0);
+                    break;
+                case KEEP_HEIGHT:
+                    shader.setUniform("keepCornerProportion", (getOnScreenWidth() / getOnScreenHeight()) * ((float) getWindow().getWidth() / getWindow().getHeight()));
+                    break;
+                case KEEP_WIDTH:
+                    shader.setUniform("keepCornerProportion", -(getOnScreenWidth() / getOnScreenHeight()) * ((float) getWindow().getWidth() / getWindow().getHeight()));
+                    break;
+
             }
         }
+
+
+
+        drawMesh();
     }
 
     /**
@@ -176,117 +200,6 @@ public class QuadComponent extends SubComponent {
         }
     }
 
-    /**
-     * Method called before the rendering parameters are set up for this component
-     * to prepare the shader
-     *
-     * @param renderMode rendering mode
-     */
-
-
-    public void prepareShader(RenderMode renderMode, Matrix4f ortho, Transformation transformation) {
-        Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(quad, ortho);
-
-
-        if (quad.getMesh().getMaterial().getTexture() == null) {
-            if (cornerSize.getAbsoluteValue() == 0 && !useColorShade && !useEdges) {
-                ShaderProgram shader = hud.getShaderManager().getSimpleQuadShader();
-                if (renderMode == RenderMode.NORMAL) {
-
-                    hud.getShaderManager().setShaderProgram(shader);
-
-                    shader.setUniform("projModelMatrix", projModelMatrix);
-                    shader.setUniform("depth", getId());
-                    shader.setUniform("inColor", colors.getVectorArray()[0]);
-                } else {
-
-                    hud.getShaderManager().setShaderProgram(shader);
-
-                    shader.setUniform("projModelMatrix", projModelMatrix);
-                    shader.setUniform("depth", getId());
-                    shader.setUniform("inColor", new Vector4f(1, 1, 1, 1));
-                }
-
-
-            } else if (cornerSize.getAbsoluteValue() == 0 && !useEdges) {
-
-                ShaderProgram shader = hud.getShaderManager().getColorShadeQuadShader();
-
-                if (renderMode == RenderMode.NORMAL) {
-
-                    hud.getShaderManager().setShaderProgram(shader);
-
-                    shader.setUniform("projModelMatrix", projModelMatrix);
-                    shader.setUniform("depth", getId());
-                    shader.setUniform("colors",colors.getVectorArray());
-                } else {
-
-                    shader = hud.getShaderManager().getSimpleQuadShader();
-                    hud.getShaderManager().setShaderProgram(shader);
-
-                    shader.setUniform("projModelMatrix", projModelMatrix);
-                    shader.setUniform("depth", getId());
-                    shader.setUniform("inColor",Color.RED.getColor());
-
-
-                }
-
-
-
-
-            } else {
-
-                /*
-
-                hudShaderProgram.setUniform("projModelMatrix", projModelMatrix);
-                hudShaderProgram.setUniform("depth", getId());
-                hudShaderProgram.setUniform("isText", 0);
-                if (renderMode == Component.RenderMode.NORMAL) {
-                    hudShaderProgram.setUniform("colors", colors.getVectorArray());
-                    hudShaderProgram.setUniform("useColorShade", useColorShade ? 1 : 0);
-                    hudShaderProgram.setUniform("hasTexture", mesh.getMaterial().isTexture() ? 1 : 0);
-                    switch (cornerProportion) {
-                        case FREE:
-                            hudShaderProgram.setUniform("keepCornerProportion", 0);
-                            break;
-                        case KEEP_Y:
-                            hudShaderProgram.setUniform("keepCornerProportion", (super.getOnScreenWidth() / super.getOnScreenHeight()) * ((float) super.getWindow().getWidth() / super.getWindow().getHeight()));
-                            break;
-                        case KEEP_X:
-                            hudShaderProgram.setUniform("keepCornerProportion", -(super.getOnScreenWidth() / super.getOnScreenHeight()) * ((float) super.getWindow().getWidth() / super.getWindow().getHeight()));
-                    }
-
-                    hudShaderProgram.setUniform("maskMode", maskMode.ordinal());
-                    float cornerSize = this.cornerSize.getValue(this, ElementSizeConstraint.Direction.WIDTH);
-                    hudShaderProgram.setUniform("cornerSize", cornerSize);
-                    if (cornerSize == 0) {
-                        switch (edgeProportion) {
-                            case FREE:
-                                hudShaderProgram.setUniform("keepEdgeProportion", 0);
-                                break;
-                            case KEEP_Y:
-                                hudShaderProgram.setUniform("keepEdgeProportion", (super.getOnScreenWidth() / super.getOnScreenHeight()) * ((float) super.getWindow().getWidth() / super.getWindow().getHeight()));
-                                break;
-                            case KEEP_X:
-                                hudShaderProgram.setUniform("keepEdgeProportion", -(super.getOnScreenWidth() / super.getOnScreenHeight()) * ((float) super.getWindow().getWidth() / super.getWindow().getHeight()));
-                        }
-                    }
-                    hudShaderProgram.setUniform("outerEdge", outerEdge);
-                    hudShaderProgram.setUniform("middleEdge", middleEdge);
-                    hudShaderProgram.setUniform("innerEdge", innerEdge);
-
-                } else {
-                    hudShaderProgram.setUniform("colors", new Vector4f[]{new Vector4f(1, 1, 1, 1)});
-                    hudShaderProgram.setUniform("useColorShade", 0);
-                    hudShaderProgram.setUniform("hasTexture", 0);
-                }
-
-                 */
-            }
-        }
-
-
-    }
 
     /**
      * renders the quad mesh to the screen and than calls the render method of all its content components
@@ -336,8 +249,12 @@ public class QuadComponent extends SubComponent {
         colors.setColor(new Color(color), side);
     }
 
+    public void setColor(Color color) {
+        colors.setColor(color, ColorScheme.ColorSide.LEFT);
+    }
+
     @SuppressWarnings("unused")
-    public void setCornerProportion(CornerProportion cornerProportion) {
+    public void setCornerProportion(ElementSizeConstraint.Proportion cornerProportion) {
         this.cornerProportion = cornerProportion;
     }
 
@@ -388,39 +305,31 @@ public class QuadComponent extends SubComponent {
         this.rotation = rotation;
     }
 
-    public void setEdgeProportion(EdgeProportion edgeProportion) {
+    public void setEdgeProportion(ElementSizeConstraint.Proportion edgeProportion) {
         this.edgeProportion = edgeProportion;
     }
 
-    public Edge getOuterEdge() {
-        return outerEdge;
+    public Edge getEdge() {
+        return edge;
     }
 
-    public void setOuterEdge(Edge outerEdge) {
-        this.outerEdge = outerEdge;
-    }
-
-    public Edge getMiddleEdge() {
-        return middleEdge;
-    }
-
-    public void setMiddleEdge(Edge middleEdge) {
-        this.middleEdge = middleEdge;
-    }
-
-    public Edge getInnerEdge() {
-        return innerEdge;
-    }
-
-    public void setInnerEdge(Edge innerEdge) {
-        this.innerEdge = innerEdge;
+    public void setEdge(Edge edge) {
+        this.edge = edge;
     }
 
     public void setUseAbsoluteRotation(boolean useAbsoluteRotation) {
         this.useAbsoluteRotation = useAbsoluteRotation;
     }
 
+    public boolean isUseColorShade() {
+        return useColorShade;
+    }
 
+    public ElementSizeConstraint.Proportion getCornerProportion() {
+        return cornerProportion;
+    }
 
-
+    public ElementSizeConstraint getCornerSize() {
+        return cornerSize;
+    }
 }

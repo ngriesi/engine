@@ -118,7 +118,7 @@ public class ColorScheme {
 
     public Vector4f[] getVectorArray() {
 
-        return new Vector4f[] {left.getColor(),right.getColor(),top.getColor(),bottom.getColor()};
+        return new Vector4f[] {left.getVector4f(),right.getVector4f(),top.getVector4f(),bottom.getVector4f()};
     }
 
     public Color getRight() {

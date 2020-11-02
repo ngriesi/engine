@@ -8,6 +8,7 @@ import engine.hud.constraints.sizeConstraints.RelativeToWindowSize;
 public class Background extends QuadComponent {
 
     public Background(ColorScheme color) {
+        super();
         this.setxPositionConstraint(new RelativeToWindowPosition(0.5f));
         this.setyPositionConstraint(new RelativeToWindowPosition(0.5f));
         this.setHeightConstraint(new RelativeToWindowSize(1));

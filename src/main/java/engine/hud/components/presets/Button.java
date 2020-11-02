@@ -1,15 +1,12 @@
 package engine.hud.components.presets;
 
-import engine.hud.mouse.MouseAction;
-import engine.hud.mouse.MouseEvent;
 import engine.hud.actions.ReturnAction;
 import engine.hud.animations.DefaultAnimations;
-import engine.hud.assets.Edge;
-import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
 import engine.hud.components.SubComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.contentcomponents.TextComponent;
+import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
 import engine.hud.constraints.elementSizeConstraints.RelativeToScreenSizeE;
 import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
@@ -73,12 +70,9 @@ public class Button extends QuadComponent implements DragEvent {
 
         setCornerSize(new RelativeToScreenSizeE(0.015f));
 
-        setOuterEdge(new Edge(0.6f,0,Color.TEAL,Color.getTransparent(Color.TEAL), Edge.BlendMode.REPLACE));
-        setMiddleEdge(new Edge(0.15f,0.6f,Color.LIGHT_GRAY,Color.LIGHT_GRAY, Edge.BlendMode.MULTIPLY));
+        setCornerProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
 
-        setCornerProportion(CornerProportion.KEEP_X);
-
-        setEdgeProportion(EdgeProportion.KEEP_X);
+        setEdgeProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
 
         super.addComponent(textComponent);
 
@@ -92,71 +86,68 @@ public class Button extends QuadComponent implements DragEvent {
         entered = DefaultAnimations.buttonEnteredAnimation.createForComponent(this);
         exited = DefaultAnimations.buttonExitedAnimation.createForComponent(this);
 
-        getMouseListener().addMouseAction(new MouseAction() {
-            @Override
-            public boolean action(MouseEvent e) {
-                switch (e.getEvent()) {
-                    case ENTERED:
-                        return enteredAction(e.getMouseInput().isPressed(MouseListener.MouseButton.LEFT));
-                    case EXITED:
-                        if(enabled) {
-                            if (pressed) {
-                                Button.this.setColorScheme(normalColor);
-                                textComponent.setColorScheme(textColor);
-                                hud.needsNextRendering();
-                                pressed = false;
-                                entered.endAnimation();
-                            } else {
-                                entered.endAnimation();
-                                exited.startAnimation();
-                            }
+        getMouseListener().addMouseAction(e -> {
+            switch (e.getEvent()) {
+                case ENTERED:
+                    return enteredAction(e.getMouseInput().isPressed(MouseListener.MouseButton.LEFT));
+                case EXITED:
+                    if(enabled) {
+                        if (pressed) {
+                            Button.this.setColorScheme(normalColor);
+                            textComponent.setColorScheme(textColor);
+                            hud.needsNextRendering();
+                            pressed = false;
+                            entered.endAnimation();
+                        } else {
+                            entered.endAnimation();
+                            exited.startAnimation();
+                        }
 
+                    }
+                    return true;
+
+                case DRAG_STARTED:
+                    if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
+                        hud.setLeftDragEvent(Button.this);
+                        return true;
+                    }
+
+                case CLICK_STARTED:
+                    if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
+                        if (activated && enabled) {
+                            entered.endAnimation();
+                            Button.this.setColorScheme(clickedColor);
+                            textComponent.setColorScheme(textClickedColor);
+                            pressed = true;
+                            hud.needsNextRendering();
                         }
                         return true;
+                    }
 
-                    case DRAG_STARTED:
-                        if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
-                            hud.setLeftDragEvent(Button.this);
-                            return true;
-                        }
-
-                    case CLICK_STARTED:
-                        if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
-                            if (activated && enabled) {
-                                entered.endAnimation();
-                                Button.this.setColorScheme(clickedColor);
-                                textComponent.setColorScheme(textClickedColor);
-                                pressed = true;
-                                hud.needsNextRendering();
-                            }
-                            return true;
-                        }
-
-                    case DRAG_RELEASED:
-                        if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
-                            if (e.getComponent().getHud().getLeftDragEvent() != null) {
-                                if (e.getComponent().getHud().getLeftDragEvent().equals(Button.this)) {
-                                    clickedAction();
-                                    return true;
-                                } else {
-                                    enteredAction(false);
-                                    return false;
-                                }
+                case DRAG_RELEASED:
+                    if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
+                        if (e.getComponent().getHud().getLeftDragEvent() != null) {
+                            if (e.getComponent().getHud().getLeftDragEvent().equals(Button.this)) {
+                                clickedAction();
+                                return true;
                             } else {
                                 enteredAction(false);
                                 return false;
                             }
+                        } else {
+                            enteredAction(false);
+                            return false;
                         }
+                    }
 
-                    case CLICK_RELEASED:
-                        if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
-                            return clickedAction();
-                        }
+                case CLICK_RELEASED:
+                    if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
+                        return clickedAction();
+                    }
 
 
-                }
-                return false;
             }
+            return false;
         });
     }
 

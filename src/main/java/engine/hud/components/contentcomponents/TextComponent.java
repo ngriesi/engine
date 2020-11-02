@@ -141,14 +141,10 @@ public class TextComponent extends SubComponent {
     }
 
     @Override
-    public void renderSimpleStencil(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
+    public void setupShader(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
 
     }
 
-    @Override
-    public void addToShaderList(HudShaderManager hudShaderManager) {
-
-    }
 
     @Override
     public void drawMesh() {

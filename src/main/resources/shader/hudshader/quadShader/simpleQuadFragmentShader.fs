@@ -15,7 +15,6 @@ void main() {
 
 void useColor() {
     fragColor = color;
-
 }
 
 

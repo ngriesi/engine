@@ -10,9 +10,10 @@ public abstract class ElementSizeConstraint {
     /**
      * passed by the component to determine direction
      */
-    public enum Direction {
-        WIDTH,HEIGHT
+    public enum Proportion {
+        KEEP_WIDTH,KEEP_HEIGHT,FREE
     }
+
 
     /**
      * constructor sets initial value of the constraint
@@ -27,10 +28,9 @@ public abstract class ElementSizeConstraint {
      * method called by the component to get the size of itself
      *
      * @param component component that uses this constraint
-     * @param direction direction of this constraint
      * @return value for this constraint (width or height of the component)
      */
-    public abstract float getValue(SubComponent component, Direction direction);
+    public abstract float getValue(SubComponent component,Proportion proportion);
 
     /**
      * changes the value of the constraint, can be used for animations
@@ -49,5 +49,4 @@ public abstract class ElementSizeConstraint {
     public float getAbsoluteValue() {
         return value;
     }
-
 }

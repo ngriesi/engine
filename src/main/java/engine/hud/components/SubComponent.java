@@ -13,14 +13,16 @@ import org.joml.Matrix4f;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_EQUAL;
 
+@SuppressWarnings("WeakerAccess")
 public abstract class SubComponent extends ContentComponent {
 
     /**
      * determines what effect transparent pixels have on the mask
      */
     public enum MaskMode {
-        DISPOSE_TRANSPARENT, USE_TRANSPARENT
+        DISPOSE_TRANSPARENT, USE_TRANSPARENT, ONLY_EDGES
     }
+
 
     /**
      * defines the rendering mode used
@@ -47,12 +49,6 @@ public abstract class SubComponent extends ContentComponent {
     /**Mask of this component */
     private ContentComponent maskComponent;
 
-    /** if true the component is a mask for other components */
-    private boolean beMask;
-
-    /** if true the component uses a mask */
-    private boolean useMask;
-
     /** if true the component writes to the depth buffer */
     private boolean writeToDepthBuffer;
 
@@ -68,8 +64,6 @@ public abstract class SubComponent extends ContentComponent {
         this.yPosition = yPosition;
         this.width = width;
         this.height = height;
-        beMask = true;
-        useMask = true;
         writeToDepthBuffer = true;
         maskMode = MaskMode.USE_TRANSPARENT;
 
@@ -84,14 +78,7 @@ public abstract class SubComponent extends ContentComponent {
     /**
      * renders only the shape of the component to the stencil buffer
      */
-    public abstract void renderSimpleStencil(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager);
-
-    /**
-     * adds the component to the rendering list of the shaderManager
-     *
-     * @param hudShaderManager shader Manager of the hud
-     */
-    public abstract void addToShaderList(HudShaderManager hudShaderManager);
+    public abstract void setupShader(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager);
 
     /**
      * renders the components mesh
@@ -109,6 +96,8 @@ public abstract class SubComponent extends ContentComponent {
 
         if( isVisible() ) {
 
+            glColorMask(false,false,false,false);
+
             if(maskComponent != null) {
 
                 glDepthMask(false);
@@ -117,8 +106,10 @@ public abstract class SubComponent extends ContentComponent {
                 glDepthFunc(GL_EQUAL);
                 glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
 
-                renderSimpleStencil(orthographic,transformation,shaderManager);
+                setupShader(orthographic,transformation,shaderManager);
             }
+
+            glColorMask(true,true,true,true);
 
 
             if(maskComponent != null) {
@@ -129,7 +120,7 @@ public abstract class SubComponent extends ContentComponent {
                 glDepthFunc(GL_ALWAYS);
                 glStencilOp(GL_KEEP,GL_KEEP,GL_DECR);
 
-                renderSimpleStencil(orthographic, transformation, shaderManager);
+                setupShader(orthographic, transformation, shaderManager);
             } else {
                 glDepthFunc(GL_ALWAYS);
                 glStencilFunc(GL_ALWAYS,0,0);
@@ -138,18 +129,13 @@ public abstract class SubComponent extends ContentComponent {
                 setDepthValue(getId());
 
 
-                renderSimpleStencil(orthographic, transformation, shaderManager);
+                setupShader(orthographic, transformation, shaderManager);
 
             }
 
 
 
             super.renderNext(orthographic,transformation,shaderManager);
-
-            addToShaderList(shaderManager);
-
-        } else {
-
 
         }
 

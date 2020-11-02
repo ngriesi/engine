@@ -16,12 +16,11 @@ public class RelativeToParentSizeE extends ElementSizeConstraint {
      * calculates component size
      *
      * @param component component that uses this constraint
-     * @param direction direction of this constraint
      * @return size of component
      */
     @Override
-    public float getValue(SubComponent component, Direction direction) {
-        if( direction == Direction.WIDTH) {
+    public float getValue(SubComponent component, Proportion proportion) {
+        if( proportion != Proportion.KEEP_HEIGHT) {
             return component.getParent().getOnScreenWidth() * value;
         } else {
             return component.getParent().getOnScreenHeight() * value;

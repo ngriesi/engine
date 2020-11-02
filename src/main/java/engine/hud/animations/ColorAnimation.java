@@ -31,10 +31,10 @@ public class ColorAnimation extends Animation<Color> {
     @Override
     public void makeStep() {
 
-        Vector4f mov  = new Vector4f(endValue.getColor());
-        mov.sub(startValue.getColor());
-        Vector4f prog = new Vector4f(progress.getColor());
-        prog.sub(startValue.getColor());
+        Vector4f mov  = new Vector4f(endValue.getVector4f());
+        mov.sub(startValue.getVector4f());
+        Vector4f prog = new Vector4f(progress.getVector4f());
+        prog.sub(startValue.getVector4f());
 
 
         if(mov.length() > prog.length()) {

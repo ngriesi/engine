@@ -14,6 +14,4 @@ void main() {
     gl_Position = projModelMatrix * vec4(position, 1.0);
     mvPos = position;
     outTexCord = texCord;
-
-
 }

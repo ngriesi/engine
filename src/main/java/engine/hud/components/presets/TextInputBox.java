@@ -3,6 +3,7 @@ package engine.hud.components.presets;
 import engine.hud.color.Color;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.contentcomponents.TextInputComponent;
+import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
 import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.positionConstraints.RelativeToParentPosition;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
@@ -28,7 +29,7 @@ public class TextInputBox extends QuadComponent {
         textInputComponent.setSelectable(false);
         this.addComponent(textInputComponent);
         this.setCornerSize(0.2f);
-        this.setCornerProportion(CornerProportion.KEEP_Y);
+        this.setCornerProportion(ElementSizeConstraint.Proportion.KEEP_HEIGHT);
 
         setColors(Color.RED);
 

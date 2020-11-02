@@ -6,13 +6,12 @@ import engine.hud.Hud;
 import engine.hud.HudShaderManager;
 import engine.hud.actions.Action;
 import engine.hud.keys.KeyListener;
-import engine.hud.mouse.MouseAction;
-import engine.hud.mouse.MouseEvent;
 import engine.hud.mouse.MouseListener;
 import org.joml.Matrix4f;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class ContentComponent {
 
     /** stores components x Position of Component on screen (except for offset, the xOffset is applied after the calculation of onScreenXPosition) */
@@ -61,7 +60,7 @@ public abstract class ContentComponent {
     protected int id;
 
     /**Mouse listener for the component */
-    protected MouseListener mouseListener;
+    private MouseListener mouseListener;
 
     /** Key listener for the component */
     private KeyListener keyListener;

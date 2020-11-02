@@ -13,7 +13,7 @@ public class RelativeToComponentSizeE extends ElementSizeConstraint {
     }
 
     @Override
-    public float getValue(SubComponent component, Direction direction) {
+    public float getValue(SubComponent component, Proportion proportion) {
         return value;
     }
 }

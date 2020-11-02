@@ -185,15 +185,12 @@ public class GameEngine implements Runnable{
             gameLogic.render(window);
             window.swapBuffers();
             hud.wasRendered();
-            window.forceEvents();
 
         }
 
-        window.forceEvents();
+
         window.events();
 
-
-        //hud.needsNextRendering();
 
     }
 
