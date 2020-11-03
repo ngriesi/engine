@@ -2,6 +2,7 @@ package engine.general.save;
 
 import java.util.Base64;
 
+@SuppressWarnings("unused")
 public class EncoderBase64 {
 
     public static String encode(String string) {

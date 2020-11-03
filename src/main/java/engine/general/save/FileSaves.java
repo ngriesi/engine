@@ -3,6 +3,9 @@ package engine.general.save;
 import java.io.*;
 import java.nio.charset.Charset;
 
+
+
+@SuppressWarnings("unused")
 public class FileSaves {
 
     /**
@@ -13,13 +16,29 @@ public class FileSaves {
      * @param name of the file
      */
     public static void saveString(String content, String location, String name) {
-        saveString(content,location+name);
+        saveString(content,location+name+".sf");
     }
 
-    public static void createFolders(String path) {
+    public static boolean createFolders(String path) {
         File temp = new File(path + "temp.sf");
         if(!temp.getParentFile().exists()) {
-            temp.getParentFile().mkdirs();
+            return temp.getParentFile().mkdirs();
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * creates the parent folders for a file
+     *
+     * @param file of which the parent folders should be created
+     * @return if true the folders existed already or were created
+     */
+    private static boolean createFolders(File file) {
+        if(!file.getParentFile().exists()) {
+            return file.getParentFile().mkdirs();
+        } else {
+            return true;
         }
     }
 
@@ -27,31 +46,38 @@ public class FileSaves {
      * saves a string in a file, default location: jar folder
      *
      * @param content of the file
-     * @param name of the file
+     * @param path of the file with name and extension
      */
-    public static void saveString(String content,String name) {
-        File saveFile = new File(name+".sf");
-        if(!saveFile.getParentFile().exists()) {
-            saveFile.getParentFile().mkdirs();
+    @SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
+    public static FileWriteReadResult saveString(String content, String path) {
+        File saveFile = new File(path);
+        if(!createFolders(saveFile)) {
+            return new FileWriteReadResult(FileWriteReadResult.ResultKind.CANT_CREATE_FOLDERS,"One of the parent folders could not be created");
         }
+
         if(saveFile.exists()) {
             try(BufferedWriter bw = new BufferedWriter(new FileWriter(saveFile))) {
                 bw.write(content);
             } catch (IOException e) {
-                e.printStackTrace();
+                return new FileWriteReadResult(FileWriteReadResult.ResultKind.FAILED_TO_WRITE_DATA,e.getMessage());
             }
         } else {
             try {
+                //noinspection ResultOfMethodCallIgnored
                 saveFile.createNewFile();
+
                 try(BufferedWriter bw = new BufferedWriter(new FileWriter(saveFile))) {
                     bw.write(content);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    return new FileWriteReadResult(FileWriteReadResult.ResultKind.FAILED_TO_WRITE_DATA,e.getMessage());
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                return new FileWriteReadResult(FileWriteReadResult.ResultKind.CANT_CREATE_FILE,e.getMessage());
+
             }
         }
+
+        return new FileWriteReadResult(FileWriteReadResult.ResultKind.SUCCESS,"String saved successfully");
     }
 
     /**
@@ -62,11 +88,11 @@ public class FileSaves {
      * @param name of the file (no extension)
      * @return content of the file or an empty string if an error occurs
      */
-    public static String loadString(String location,String name,String extension) {
+    public static FileWriteReadResult loadString(String location,String name,String extension) {
         return loadString(location + name,extension);
     }
 
-    public static String loadSaveFile(String location,String name) {
+    public static FileWriteReadResult loadSaveFile(String location,String name) {
         return loadString(location + name,".sf");
     }
 
@@ -76,8 +102,9 @@ public class FileSaves {
      * @param name of the file
      * @return content of the file or an empty string if an error occurs
      */
-    public static String loadString(String name, String extention) {
-        File saveFile = new File(name+extention);
+    @SuppressWarnings("WeakerAccess")
+    public static FileWriteReadResult loadString(String name, String extension) {
+        File saveFile = new File(name+extension);
         if(saveFile.exists()) {
             StringBuilder result = new StringBuilder();
             try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(saveFile), Charset.forName("ISO-8859-15")))) {
@@ -87,11 +114,11 @@ public class FileSaves {
                     result.append(line);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                new FileWriteReadResult(FileWriteReadResult.ResultKind.CANT_READ_FILE,e.getMessage());
             }
-            return result.toString();
+            return new FileWriteReadResult(FileWriteReadResult.ResultKind.SUCCESS,result.toString());
         } else {
-            return "";
+            return new FileWriteReadResult(FileWriteReadResult.ResultKind.FILE_DOES_NOT_EXIST,"cant find file at this location");
         }
     }
 
@@ -109,11 +136,12 @@ public class FileSaves {
     /**
      * lists the content of a folder in the jars directory
      *
-     * @param name of the folder
+     * @param path of the folder
      * @return string list of the directories content
      */
-    public static String[] listFolderContent(String name) {
-        File file = new File(name);
+    @SuppressWarnings("WeakerAccess")
+    public static String[] listFolderContent(String path) {
+        File file = new File(path);
         return file.list();
     }
 
@@ -122,10 +150,15 @@ public class FileSaves {
      *
      * @param name of the file
      */
-    public static void deleteFile(String name) {
+    @SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
+    public static FileWriteReadResult deleteFile(String name) {
 
         File f = new File(name+".sf");
-        f.delete();
+        if(f.delete()) {
+            return new FileWriteReadResult(FileWriteReadResult.ResultKind.SUCCESS,"File deleted successfully");
+        }
+
+        return new FileWriteReadResult(FileWriteReadResult.ResultKind.FAILED_TO_DELETE_FILE,"could not delete this file");
     }
 
     /**
@@ -134,8 +167,9 @@ public class FileSaves {
      * @param location of the file
      * @param name of the file
      */
-    public static void deleteSaveGame(String location,String name) {
+    public static void deleteSaveFile(String location,String name) {
         deleteFile(location + name);
     }
+
 
 }

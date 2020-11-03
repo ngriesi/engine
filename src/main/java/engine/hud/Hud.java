@@ -1,7 +1,6 @@
 package engine.hud;
 
 import engine.general.GameEngine;
-import engine.hud.mouse.MouseInput;
 import engine.general.Transformation;
 import engine.general.Window;
 import engine.hud.actions.Action;
@@ -12,10 +11,10 @@ import engine.hud.components.SceneComponent;
 import engine.hud.components.SubComponent;
 import engine.hud.constraints.positionConstraints.RelativeToWindowPosition;
 import engine.hud.events.DragEvent;
+import engine.hud.mouse.MouseInput;
 import engine.hud.mouse.MouseListener;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
-import org.lwjgl.opengl.GL11;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -25,8 +24,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static engine.general.GameEngine.pTime;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.glBindBuffer;
-import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
+import static org.lwjgl.opengl.GL30.glBindFramebuffer;
 
 public class Hud {
 
@@ -190,10 +189,6 @@ public class Hud {
         updateDragEventPositions();
 
         needsRendering = checkForUpdate();
-
-        if(needsNextRendering) {
-            window.forceEvents();
-        }
 
         for(Action action : endOfFrameActions) {
             action.execute();
@@ -465,11 +460,6 @@ public class Hud {
     public void addAction(Action action) {
         newActions.add(action);
     }
-
-
-
-
-
 
     public DragEvent getLeftDragEvent() {
         return leftDragEvent;

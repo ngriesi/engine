@@ -21,8 +21,8 @@ public class HudShaderManager {
     public void setupMaskShader() throws Exception {
 
         maskShader = new ShaderProgram();
-        maskShader.createVertexShader(Resources.loadResource("/shader/hudshader/maskShader/maskShader.vs"));
-        maskShader.createFragmentShader(Resources.loadResource("/shader/hudshader/maskShader/maskShader.fs"));
+        maskShader.createVertexShader(Resources.loadResource("/shader/hudshader/maskShader/maskVertexShader.shader"));
+        maskShader.createFragmentShader(Resources.loadResource("/shader/hudshader/maskShader/maskFragmentShader.shader"));
         maskShader.link();
 
         maskShader.createUniforms("projModelMatrix");

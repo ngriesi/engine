@@ -361,12 +361,7 @@ public class Window {
      */
     void swapBuffers() {
 
-
-
-
         glfwSwapBuffers(windowHandle);
-
-
 
     }
 
@@ -380,11 +375,6 @@ public class Window {
     void events(){
 
         glfwPollEvents();
-
-        //glfwWaitEvents();
-
-
-
     }
 
     /**returns true if the window should be close (user tried to close it)

@@ -20,8 +20,7 @@ public class Resources {
     public static String getResourcePath(String filename) throws FileNotFoundException {
         URL url = (Resources.class.getClassLoader()).getResource(filename);
         if(url != null) {
-            String result = new File(url.getFile()).getAbsolutePath();
-            return result;
+            return new File(url.getFile()).getAbsolutePath();
         } else {
             throw new FileNotFoundException();
         }

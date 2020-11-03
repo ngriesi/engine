@@ -22,7 +22,7 @@ public class QuadComponent extends SubComponent {
     /**
      * mesh of the component
      */
-    protected Quad quad;
+    Quad quad;
     /**
      * if not FREE corners are the same in both x and y direction
      */
@@ -43,10 +43,6 @@ public class QuadComponent extends SubComponent {
      * edges of the component
      */
     private Edge edge;
-    /**
-     * enables edges
-     */
-    boolean useEdges;
     /**
      * colors of the quad, when color shade is off only the first one is used,
      * when its on the colors in the array are the colors at the edges of the
@@ -79,7 +75,6 @@ public class QuadComponent extends SubComponent {
         cornerSize = new RelativeToComponentSizeE(0);
         colors = new ColorScheme();
         useColorShade = false;
-        useEdges = false;
         edge = new Edge();
 
 
@@ -261,10 +256,6 @@ public class QuadComponent extends SubComponent {
 
     public Quad getQuad() {
         return quad;
-    }
-
-    public void setQuad(Quad quad) {
-        this.quad = quad;
     }
 
     @SuppressWarnings("unused")
