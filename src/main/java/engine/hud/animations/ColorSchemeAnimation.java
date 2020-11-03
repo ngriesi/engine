@@ -90,6 +90,7 @@ public class ColorSchemeAnimation extends Animation<ColorScheme> {
 
     @Override
     public void makeStep() {
+
         right.makeStep();
         left.makeStep();
         top.makeStep();

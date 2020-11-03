@@ -11,9 +11,9 @@ public class ColorScheme {
 
     public static ColorScheme getStandardColorScheme(StandardColorSchemes colorScheme) {
         switch (colorScheme) {
-            case BUTTON_STANDARD: return new ColorScheme(Color.WHITE,Color.WHITE,Color.WHITE,Color.DARK_GRAY);
-            case BUTTON_ENTERED: return new ColorScheme(Color.WHITE,Color.WHITE,Color.WHITE,Color.GREY);
-            case BUTTON_PRESSED: return new ColorScheme(Color.GREY,Color.GREY,Color.WHITE,Color.GREY);
+            case BUTTON_STANDARD: return new ColorScheme(Color.DARK_GRAY,Color.DARK_GRAY,Color.LIGHT_GRAY,Color.VERY_DARK_GREY);
+            case BUTTON_ENTERED: return new ColorScheme(Color.GREY,Color.GREY,Color.GREY,Color.VERY_DARK_GREY);
+            case BUTTON_PRESSED: return new ColorScheme(Color.DARK_GRAY,Color.DARK_GRAY,Color.GREY,Color.GREY);
             case BUTTON_TEXT_STANDARD:
             case BUTTON_TEXT_PRESSED:
                 return new ColorScheme(Color.BLACK);

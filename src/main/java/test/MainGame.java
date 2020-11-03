@@ -8,15 +8,18 @@ import engine.graph.light.LightHandler;
 import engine.hud.Hud;
 import engine.hud.animations.Animation;
 import engine.hud.animations.ColorSchemeAnimation;
+import engine.hud.animations.DefaultAnimations;
 import engine.hud.assets.Edge;
 import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
 import engine.hud.components.SubComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
+import engine.hud.components.contentcomponents.TextComponent;
 import engine.hud.components.presets.Background;
 import engine.hud.components.presets.Button;
 import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
 import engine.hud.constraints.elementSizeConstraints.RelativeToComponentSizeE;
+import engine.hud.constraints.elementSizeConstraints.RelativeToScreenSizeE;
 import engine.hud.constraints.positionConstraints.RelativeToParentPosition;
 import engine.hud.mouse.MouseEvent;
 import engine.hud.mouse.MouseInput;
@@ -80,16 +83,15 @@ public class MainGame implements IGameLogic {
         quad2.setWidthConstraint(0.5f);
         quad2.setxPositionConstraint(new RelativeToParentPosition(0.5f));
         quad2.setyPositionConstraint(0.5f);
-        quad2.setColorScheme(new ColorScheme(Color.BLUE,Color.BLUE,Color.BLUE,Color.RED));
-        quad2.setColor(new Color(1,0,0,0.5f));
-        quad2.setUseColorShade(false);
+        quad2.setColorScheme(new ColorScheme(Color.DARK_GRAY,Color.DARK_GRAY,Color.LIGHT_GRAY,Color.DARK_GRAY));
+        quad2.setUseColorShade(true);
 
         hud.setCurrentKeyInputTarget(quad2);
 
         quad2.getMouseListener().addLeftButtonAction(e -> {
 
             if (e.getEvent() == MouseEvent.Event.ENTERED) {
-                quad2.setColors(Color.RED);
+                DefaultAnimations.buttonEnteredAnimation.createForComponent(quad2).startAnimation();
                 hud.needsNextRendering();
             }
             if (e.getEvent() == MouseEvent.Event.DRAG_STARTED) {
@@ -136,7 +138,7 @@ public class MainGame implements IGameLogic {
         quad3.setCornerProportion(ElementSizeConstraint.Proportion.KEEP_HEIGHT);
         quad3.setCornerSize(0.3f);
         quad2.setCornerSize(0f);
-        quad2.setEdge(new Edge(0.25f,Color.TEAL,Color.getTransparent(Color.TEAL), Edge.BlendMode.REPLACE));
+        quad2.setEdge(new Edge(new RelativeToScreenSizeE(0.01f),Color.TEAL,(Color.TEAL), Edge.BlendMode.REPLACE));
         quad2.setEdgeProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
         quad3.setEdge(new Edge(0.5f,Color.YELLOW,Color.YELLOW, Edge.BlendMode.REPLACE));
         quad3.setColor(Color.TRANSPARENT);
@@ -144,13 +146,16 @@ public class MainGame implements IGameLogic {
 
 
         quad2.addComponent(quad3);
-        background.addComponent(quad2);
+        //background.addComponent(quad2);
 
 
+        TextComponent text = new TextComponent(FontTexture.STANDARD_FONT_TEXTURE);
+        text.setText("test");
+        //quad2.addComponent(text);
 
 
         Button btn = new Button(0.5f,0.5f,0.5f,0.5f,"test",FontTexture.STANDARD_FONT_TEXTURE);
-        //background.addComponent(btn);
+        background.addComponent(btn);
 
         hud.getScene().addComponent(background);
 

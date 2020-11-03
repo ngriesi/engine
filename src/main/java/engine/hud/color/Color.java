@@ -24,6 +24,7 @@ public class Color {
     public static final Color VERY_LIGHT_GRAY = new Color(0.9f,0.9f,0.9f,1f);
     public static final Color LIGHT_GRAY = new Color(0.7f,0.7f,0.7f,1f);
     public static final Color DARK_GRAY = new Color(0.3f,0.3f,0.3f,1f);
+    public static final Color VERY_DARK_GREY = new Color(0.15f,0.15f,0.15f,1f);
 
     public static Color getTransparent(Color color) {
         return new Color(color.getRed(),color.getGreen(),color.getBlue(),0);

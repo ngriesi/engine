@@ -12,6 +12,7 @@ import engine.hud.text.FontTexture;
 import engine.hud.text.TextItem;
 import engine.render.ShaderProgram;
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 public class TextComponent extends SubComponent {
@@ -137,18 +138,37 @@ public class TextComponent extends SubComponent {
 
     @Override
     public void setDepthValue(float depthValue) {
-
+        textItem.setPosition(textItem.getPosition().x,textItem.getPosition().y,depthValue);
     }
 
     @Override
     public void setupShader(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
+        Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(textItem, orthographic);
+        ShaderProgram shader = hud.getShaderManager().getMaskShader();
 
+
+        shader.setUniform("projModelMatrix", projModelMatrix);
+        shader.setUniform("transparancyMode", maskMode.ordinal());
+
+        shader.setUniform("useTexture",2);
+
+        shader.setUniform("colors", colors.getVectorArray());
+        shader.setUniform("useColorShade",useColorShade?1:0);
+
+
+
+        shader.setUniform("cornerSize",0);
+
+        shader.setUniform("edgeSize",1);
+
+        drawMesh();
     }
 
 
     @Override
     public void drawMesh() {
-
+        Mesh mesh = textItem.getMesh();
+        mesh.render();
     }
 
     /**

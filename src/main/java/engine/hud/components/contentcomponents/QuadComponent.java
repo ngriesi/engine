@@ -118,7 +118,8 @@ public class QuadComponent extends SubComponent {
             switch (getCornerProportion()) {
                 case FREE:
                     shader.setUniform("keepCornerProportion", 0);
-                    shader.setUniform("cornerScale", new Vector2f(-0.5f * ((float) getWindow().getWidth() / getWindow().getHeight()), -0.5f));
+                    shader.setUniform("cornerScale",
+                            new Vector2f(0.5f, 0.5f));
                     break;
                 case KEEP_HEIGHT:
                     shader.setUniform("keepCornerProportion", (getOnScreenWidth() / getOnScreenHeight()) * ((float) getWindow().getWidth() / getWindow().getHeight()));

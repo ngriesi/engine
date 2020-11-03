@@ -2,11 +2,14 @@ package engine.hud.components.presets;
 
 import engine.hud.actions.ReturnAction;
 import engine.hud.animations.DefaultAnimations;
+import engine.hud.assets.Edge;
+import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
 import engine.hud.components.SubComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.contentcomponents.TextComponent;
 import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
+import engine.hud.constraints.elementSizeConstraints.RelativeToComponentSizeE;
 import engine.hud.constraints.elementSizeConstraints.RelativeToScreenSizeE;
 import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
@@ -35,6 +38,8 @@ public class Button extends QuadComponent implements DragEvent {
     private engine.hud.animations.Animation exited;
 
     public ColorScheme normalColor,enteredColor,clickedColor,pressedColor,textColor,textClickedColor,disabledColor,textDisabledColor;
+
+    private QuadComponent mainBack;
 
     public Button(float width, float height, float x, float y, String text, FontTexture fontTexture) {
 
@@ -68,23 +73,56 @@ public class Button extends QuadComponent implements DragEvent {
 
         textComponent.setColorScheme(textColor);
 
+
         setCornerSize(new RelativeToScreenSizeE(0.015f));
 
         setCornerProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
 
         setEdgeProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
 
-        super.addComponent(textComponent);
+        setEdge(new Edge((0.5f), Color.getTransparent(Color.GREY),Color.GREY, Edge.BlendMode.REPLACE));
 
-        super.setUseColorShade(true);
+        this.setColors(Color.TRANSPARENT);
 
-        super.setColorScheme(normalColor);
+        mainBack = new QuadComponent();
+        mainBack.setWidthConstraint(1f);
+        mainBack.setHeightConstraint(1f);
+        mainBack.setxPositionConstraint(0.5f);
+        mainBack.setyPositionConstraint(0.5f);
+        mainBack.setWriteToDepthBuffer(true);
+        mainBack.setMaskMode(MaskMode.DISPOSE_TRANSPARENT);
+        mainBack.setMaskComponent(null);
+        mainBack.setEdgeProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
+        mainBack.setEdge(new Edge((0.5f),Color.TRANSPARENT,Color.TRANSPARENT, Edge.BlendMode.REPLACE));
+        mainBack.setCornerSize(new RelativeToScreenSizeE(0.015f));
+        mainBack.setCornerProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
+        this.addComponent(mainBack);
+
+        QuadComponent effect = new QuadComponent();
+        effect.setWidthConstraint(1);
+        effect.setHeightConstraint(1);
+        effect.setxPositionConstraint(0.5f);
+        effect.setyPositionConstraint(0.5f);
+        effect.setColors(Color.TRANSPARENT);
+        effect.setMaskMode(MaskMode.DISPOSE_TRANSPARENT);
+        effect.setWriteToDepthBuffer(false);
+        effect.setCornerSize(new RelativeToScreenSizeE(0.02f));
+        effect.setCornerProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
+        effect.setEdge(new Edge(0.9f,Color.TEAL,Color.getTransparent(Color.TEAL), Edge.BlendMode.MULTIPLY));
+        mainBack.addComponent(effect);
+
+
+        mainBack.addComponent(textComponent);
+
+        mainBack.setUseColorShade(true);
+
+        mainBack.setColorScheme(normalColor);
 
         activated = true;
 
 
-        entered = DefaultAnimations.buttonEnteredAnimation.createForComponent(this);
-        exited = DefaultAnimations.buttonExitedAnimation.createForComponent(this);
+        entered = DefaultAnimations.buttonEnteredAnimation.createForComponent(mainBack);
+        exited = DefaultAnimations.buttonExitedAnimation.createForComponent(mainBack);
 
         getMouseListener().addMouseAction(e -> {
             switch (e.getEvent()) {
@@ -93,7 +131,7 @@ public class Button extends QuadComponent implements DragEvent {
                 case EXITED:
                     if(enabled) {
                         if (pressed) {
-                            Button.this.setColorScheme(normalColor);
+                            mainBack.setColorScheme(normalColor);
                             textComponent.setColorScheme(textColor);
                             hud.needsNextRendering();
                             pressed = false;
@@ -116,7 +154,7 @@ public class Button extends QuadComponent implements DragEvent {
                     if(e.getMouseButton()== MouseListener.MouseButton.LEFT) {
                         if (activated && enabled) {
                             entered.endAnimation();
-                            Button.this.setColorScheme(clickedColor);
+                            mainBack.setColorScheme(clickedColor);
                             textComponent.setColorScheme(textClickedColor);
                             pressed = true;
                             hud.needsNextRendering();
@@ -155,7 +193,7 @@ public class Button extends QuadComponent implements DragEvent {
 
         if(activated && enabled) {
             entered.endAnimation();
-            this.setColorScheme(normalColor);
+            mainBack.setColorScheme(normalColor);
             hud.needsNextRendering();
             textComponent.setColorScheme(textColor);
             pressed = false;
@@ -180,7 +218,7 @@ public class Button extends QuadComponent implements DragEvent {
                 return false;
             }
         } else if (hud.getLeftDragEvent().equals(this)) {
-            this.setColorScheme(clickedColor);
+            mainBack.setColorScheme(clickedColor);
             textComponent.setColorScheme(textClickedColor);
             pressed = true;
             return true;
@@ -205,14 +243,14 @@ public class Button extends QuadComponent implements DragEvent {
 
     public void enable() {
         textComponent.setColorScheme(textColor);
-        this.setColorScheme(normalColor);
+        mainBack.setColorScheme(normalColor);
         enabled = true;
 
     }
 
     public void disable() {
         textComponent.setColorScheme(textDisabledColor);
-        this.setColorScheme(disabledColor);
+        mainBack.setColorScheme(disabledColor);
         enabled = false;
     }
 

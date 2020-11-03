@@ -5,6 +5,9 @@ import engine.hud.color.Color;
 import org.joml.Vector4f;
 
 public class ColorAnimation extends Animation<Color> {
+
+    private Vector4f endSave;
+
     /**
      * constructor sets duration,hud,start and end value and the action of the animation
      *
@@ -15,11 +18,15 @@ public class ColorAnimation extends Animation<Color> {
      * @param action     animation action
      */
     public ColorAnimation(Hud hud, int duration, Color startValue, Color endValue, AnimationAction<Color> action) {
-        super(hud, duration, startValue, endValue, action);
+        super(hud, duration, new Color(startValue), new Color(endValue), action);
+
+
+
     }
 
     @Override
     protected Color calculateStep() {
+
         Color result = new Color();
         result.setRed((endValue.getRed() - startValue.getRed())/duration);
         result.setGreen((endValue.getGreen() - startValue.getGreen())/duration);
@@ -43,6 +50,7 @@ public class ColorAnimation extends Animation<Color> {
             progress = new Color(action.getProgress(component));
 
         } else {
+
             action.execute(endValue,component);
             endAnimation();
         }

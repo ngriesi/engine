@@ -379,9 +379,9 @@ public class Window {
      */
     void events(){
 
-        //glfwPollEvents();
+        glfwPollEvents();
 
-        glfwWaitEvents();
+        //glfwWaitEvents();
 
 
 

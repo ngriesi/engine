@@ -1,6 +1,7 @@
 package engine.hud.animations;
 
 import engine.hud.Hud;
+import engine.hud.color.Color;
 import engine.hud.color.ColorScheme;
 
 public class DefaultAnimations {

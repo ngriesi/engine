@@ -114,7 +114,7 @@ public abstract class SubComponent extends ContentComponent {
 
             if(maskComponent != null) {
 
-                glDepthMask(true);
+                glDepthMask(writeToDepthBuffer);
                 glStencilFunc(GL_EQUAL,1,1);
                 setDepthValue(getId());
                 glDepthFunc(GL_ALWAYS);
@@ -343,4 +343,7 @@ public abstract class SubComponent extends ContentComponent {
         return maskComponent;
     }
 
+    public void setWriteToDepthBuffer(boolean writeToDepthBuffer) {
+        this.writeToDepthBuffer = writeToDepthBuffer;
+    }
 }
