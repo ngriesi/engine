@@ -3,10 +3,17 @@ package engine.general;
 import engine.hud.Hud;
 import engine.hud.mouse.MouseInput;
 
+/**
+ * main engine class: contains the main loop and calls all
+ * the necessary methods every frame for updating, rendering and
+ * input handling.
+ */
 public class GameEngine implements Runnable{
 
-    public static long lastTime;
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
+    private static long lastTime;
 
+    @SuppressWarnings("unused")
     public static void pTime(String msg) {
         //System.out.println( System.currentTimeMillis() - lastTime + " " + msg);
         lastTime = System.currentTimeMillis();
@@ -35,7 +42,7 @@ public class GameEngine implements Runnable{
     /**hud of the window */
     private final Hud hud;
 
-    /** value needed for time calculations */
+    /** values needed for time calculations */
     private float accumulator;
     @SuppressWarnings("FieldCanBeLocal")
     private float interval = 1f/TARGET_UPS;
@@ -115,6 +122,9 @@ public class GameEngine implements Runnable{
         }
     }
 
+    /**
+     * action performed every frame
+     */
     void frameAction() {
 
         elapsedTime = timer.getElapsedTime();
@@ -150,7 +160,9 @@ public class GameEngine implements Runnable{
         }
     }
 
-    /**calls the input of the objects */
+    /**
+     * calls the input of the objects
+     */
     protected void input(){
         mouseInput.input(window);
         gameLogic.input(window,mouseInput);
@@ -159,11 +171,11 @@ public class GameEngine implements Runnable{
     }
 
     /**
-     * updates the game
+     * updates the program
      *
      * @param interval used to pass the time it took since the last update cycle
      */
-    protected  void update(float interval){
+    private void update(float interval){
 
         gameLogic.update(interval,mouseInput);
         if(window.isResized()) {
@@ -174,7 +186,7 @@ public class GameEngine implements Runnable{
     }
 
     /**
-     * renders the game
+     * renders the program
      */
     protected void render(){
 
@@ -195,7 +207,7 @@ public class GameEngine implements Runnable{
     }
 
     /**
-     * calls the cleanup method of the game
+     * calls the cleanup method of the program
      */
     private void cleanup(){
         gameLogic.cleanup();

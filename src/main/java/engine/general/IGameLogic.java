@@ -3,6 +3,9 @@ package engine.general;
 import engine.hud.Hud;
 import engine.hud.mouse.MouseInput;
 
+/**
+ * Interface implemented by the main class of the program
+ */
 public interface IGameLogic {
 
     /**

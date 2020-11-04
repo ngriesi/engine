@@ -2,8 +2,10 @@ package engine.general;
 
 import java.util.List;
 
+/**
+ * class contains only static methods with various uses
+ */
 public class Utils {
-
 
     /**
      * converts a list of floats int an array with equal size and content

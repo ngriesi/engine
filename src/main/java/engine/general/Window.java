@@ -1,24 +1,19 @@
 package engine.general;
 
 import engine.hud.actions.Action;
-import org.joml.Vector2f;
-import org.joml.Vector2i;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.GL_BGRA;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+@SuppressWarnings("unused")
 public class Window {
 
 
@@ -140,19 +135,16 @@ public class Window {
 
 
                 //setup key callback
-                glfwSetKeyCallback(windowHandle, new GLFWKeyCallbackI() {
-                    @Override
-                    public void invoke(long window, int key, int scancode, int action, int mods) {
-                        if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
-                            glfwSetWindowShouldClose(window, true);
-                        }
-                        if (action == GLFW_PRESS) {
-                            lastPressed.add(key);
-                        }
+                glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> {
+                    if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+                        glfwSetWindowShouldClose(window, true);
+                    }
+                    if (action == GLFW_PRESS) {
+                        lastPressed.add(key);
+                    }
 
-                        if (action == GLFW_RELEASE && lastPressed.contains(key)) {
-                            lastPressed.remove((Integer) key);
-                        }
+                    if (action == GLFW_RELEASE && lastPressed.contains(key)) {
+                        lastPressed.remove((Integer) key);
                     }
                 });
 
@@ -213,9 +205,7 @@ public class Window {
                 GL.createCapabilities();
 
                 //resize Callback
-                glfwSetFramebufferSizeCallback(windowHandle,(window,width,height) ->{
-                    engine.frameAction();
-                });
+                glfwSetFramebufferSizeCallback(windowHandle,(window,width,height) -> engine.frameAction());
 
                 //support for transparent textures
                 glEnable(GL_BLEND);
@@ -259,7 +249,7 @@ public class Window {
                 //setup key callback
                 glfwSetKeyCallback(windowHandle,(window,key,scancode,action,mods) -> {
                     if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE){
-                        //glfwSetWindowShouldClose(window,true);
+                        glfwSetWindowShouldClose(window,true);
                     }
                     if (action == GLFW_PRESS) {
                         lastPressed.add(key);
@@ -284,12 +274,7 @@ public class Window {
 
                 PointerBuffer monitors = glfwGetMonitors();
 
-                if(false) {
-
-                    glfwSetWindowMonitor(windowHandle, monitors.get(2), 0, 0, monitorData.width(), monitorData.height(), monitorData.refreshRate());
-                } else {
-                    glfwSetWindowSize(windowHandle,monitorData.width()/2,monitorData.height()/2);
-                }
+                glfwSetWindowSize(windowHandle,monitorData.width()/2,monitorData.height()/2);
 
 
                 //make opengl context current
@@ -332,9 +317,7 @@ public class Window {
                 GL.createCapabilities();
 
                 //resize Callback
-                glfwSetFramebufferSizeCallback(windowHandle,(window,width,height) ->{
-                    engine.frameAction();
-                });
+                glfwSetFramebufferSizeCallback(windowHandle,(window,width,height) -> engine.frameAction());
 
                 //support for transparent textures
                 glEnable(GL_BLEND);

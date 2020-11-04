@@ -10,6 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * class used to load models from obj files
+ * only supports triangles
+ */
+@SuppressWarnings("unused")
 public class OBJLoader {
 
     /**
@@ -66,7 +71,7 @@ public class OBJLoader {
 
 
         for(Face face : faces){
-            for(IdxGroup idxGroup : face.getVaceVertexIndices()){
+            for(IdxGroup idxGroup : face.getFaceVertexIndices()){
                 if(verticesInd.get(idxGroup.idxPos+""+Math.max(idxGroup.idxTexCord,0)+""+Math.max(idxGroup.idxVecNormal,0)) == null) {
                     index++;
                     verticesInd.put(idxGroup.idxPos+""+Math.max(idxGroup.idxTexCord,0)+""+Math.max(idxGroup.idxVecNormal,0),index);
@@ -188,7 +193,7 @@ public class OBJLoader {
 
 
         for(Face face : faces){
-            for(IdxGroup idxGroup : face.getVaceVertexIndices()){
+            for(IdxGroup idxGroup : face.getFaceVertexIndices()){
                 if(verticesInd.get(idxGroup.idxPos+""+Math.max(idxGroup.idxTexCord,0)+""+Math.max(idxGroup.idxVecNormal,0)) == null) {
                     index++;
                     verticesInd.put(idxGroup.idxPos+""+Math.max(idxGroup.idxTexCord,0)+""+Math.max(idxGroup.idxVecNormal,0),index);
@@ -252,6 +257,7 @@ public class OBJLoader {
         return new Mesh(posArr,texArr,normArr,indicesArr);
     }
 
+    @SuppressWarnings({"unused", "WeakerAccess"})
     private static class IndexData{
         private int index;
         private int pos,tex,norm;
@@ -280,6 +286,7 @@ public class OBJLoader {
         }
     }
 
+    @SuppressWarnings("unused")
     private static class VertexData{
         private Vector3f postion,normal;
         private Vector2f texture;
@@ -357,6 +364,7 @@ public class OBJLoader {
     /**
      * help class for method loadMesh
      */
+    @SuppressWarnings("WeakerAccess")
     protected static class IdxGroup {
         public static final int NO_VALUE = -1;
 
@@ -374,9 +382,10 @@ public class OBJLoader {
      * help class for method loadMesh
      */
     protected static class Face{
-        private IdxGroup[] idxGroups = new IdxGroup[3];
+        private IdxGroup[] idxGroups;
 
-        public Face(String v1,String v2,String v3){
+        @SuppressWarnings("WeakerAccess")
+        public Face(String v1, String v2, String v3){
             idxGroups = new IdxGroup[3];
             idxGroups[0] = parseLine(v1);
             idxGroups[1] = parseLine(v2);
@@ -399,7 +408,8 @@ public class OBJLoader {
             return idxGroup;
         }
 
-        public IdxGroup[] getVaceVertexIndices(){
+        @SuppressWarnings("WeakerAccess")
+        public IdxGroup[] getFaceVertexIndices(){
             return idxGroups;
         }
     }
@@ -430,7 +440,7 @@ public class OBJLoader {
         float[] normArr = new float[posList.size() * 3];
 
         for(Face face : faceList){
-            IdxGroup[] faceVertexIndices = face.getVaceVertexIndices();
+            IdxGroup[] faceVertexIndices = face.getFaceVertexIndices();
             for(IdxGroup indValue : faceVertexIndices){
                 processVertex(indValue,texList,normList,indices,texCords,normArr);
             }

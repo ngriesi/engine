@@ -5,6 +5,9 @@ import engine.graph.items.GameItem;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
+/**
+ * class containing the methods for the matrix calculations for the 2d and 3d rendering
+ */
 public class Transformation {
 
     /** determines the way the scene is visible depending of the field of view and the window size */

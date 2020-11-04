@@ -1,6 +1,10 @@
 package engine.general;
 
-public class Timer {
+/**
+ * contains timing methods used in the GameEngine class
+ * for the loop
+ */
+class Timer {
 
     /**
      * time when init() or getElapsedTime() were called last
