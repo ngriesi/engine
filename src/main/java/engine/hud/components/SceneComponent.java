@@ -163,10 +163,6 @@ public class SceneComponent extends ContentComponent {
 
             currentComponent = subComponents.get(currentId);
 
-            if(currentId != 0) {
-                //System.out.println(currentId);
-            }
-
 
         } else {
             currentComponent = null;
@@ -198,7 +194,6 @@ public class SceneComponent extends ContentComponent {
             lastComponent.getMouseListener().mouseExitedRecursiveSave();
             lastComponent.getMouseListener().mouseExited(mouseInput);
             lastComponent = null;
-            System.out.println("test");
 
         } else if(currentComponent != null) {
 
