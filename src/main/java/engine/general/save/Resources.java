@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * this class contains only static methods to read resource files.
+ * it can get the resource path, read a resource file to a single string
+ * or read it to a list of strings with one string per line.
+ */
 public class Resources {
 
     /**

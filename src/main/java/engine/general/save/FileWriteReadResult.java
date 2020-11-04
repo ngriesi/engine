@@ -1,5 +1,12 @@
 package engine.general.save;
 
+/**
+ * This class is used as a return value for save, load and delete operations.
+ * It always contains a ResultKind to easily compare it and a description with more detailed
+ * information about the result: in case of a failure it contains the reason or the exception
+ * message and in case of a success it contains a success message ore the information the was
+ * loaded
+ */
 @SuppressWarnings("unused")
 public class FileWriteReadResult {
 
@@ -16,7 +23,7 @@ public class FileWriteReadResult {
     private final ResultKind resultKind;
 
     /**
-     * description of the result
+     * more detailed description of the result
      */
     private final String description;
 

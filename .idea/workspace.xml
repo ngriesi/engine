@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/engine/general/save/FileWriteReadResult.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/general/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/general/Window.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/engine/general/save/EncoderBase64.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/general/save/EncoderBase64.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/engine/general/save/FileSaves.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/general/save/FileSaves.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/HudShaderManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/HudShaderManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/QuadComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/QuadComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/maskShader/maskShader.fs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/shader/hudshader/maskShader/maskFragmentShader.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/maskShader/maskShader.vs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/shader/hudshader/maskShader/maskVertexShader.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/Window.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/Window.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/general/save/FileWriteReadResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/general/save/FileWriteReadResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/general/save/Resources.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/general/save/Resources.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -186,7 +178,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604398515695</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="started code cleanup">
+      <created>1604416617857</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1604416617858</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -214,6 +213,7 @@
     <MESSAGE value="new mouse listener" />
     <MESSAGE value="back to opd rendering with better shader" />
     <MESSAGE value="reworked text and color rendering with single shader rendering" />
-    <option name="LAST_COMMIT_MESSAGE" value="reworked text and color rendering with single shader rendering" />
+    <MESSAGE value="started code cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="started code cleanup" />
   </component>
 </project>

@@ -4,7 +4,36 @@ import java.io.*;
 import java.nio.charset.Charset;
 
 
-
+/**
+ * class contains only static methods for the following operations:
+ *
+ * saving strings to files at a specific location (automatically creating
+ * the necessary folders)
+ *
+ * creating a specified folder chain
+ *
+ * loading a string from a file
+ *
+ * deleting a file
+ *
+ * All of the actions return a FileWriteReadResult as a feedback whether the
+ * operation was successful or not. This object als contains either more specific
+ * information about the failure or the result of the operation e.g. the loaded string
+ *
+ * PARAMETER FORMAT:
+ *
+ *      path:   contains out of the complete path (in case of files with extension),
+ *              relative to the jar file:
+ *              dir/dir/dir/filename.extension
+ *
+ *      name:   contains the full name of the folder or file (in case of files with extension),
+ *              filename.extension
+ *
+ *      location:   contains the location of a file or directory, always ends with /:
+ *                  dir/dir/dir/
+ *
+ * @see FileWriteReadResult
+ */
 @SuppressWarnings("unused")
 public class FileSaves {
 
@@ -13,12 +42,19 @@ public class FileSaves {
      *
      * @param content of the file
      * @param location of the file: "dir/dir/"
-     * @param name of the file
+     * @param name of the file with extension
+     * @return FileWriteReadResult containing information about the saving operation
      */
-    public static void saveString(String content, String location, String name) {
-        saveString(content,location+name+".sf");
+    public static FileWriteReadResult saveString(String content, String location, String name) {
+        return saveString(content,location+name);
     }
 
+    /**
+     * creates Folders up to the last name mentioned in the path
+     *
+     * @param path of the folders: "dir/dir/"
+     * @return true if the folder exists now
+     */
     public static boolean createFolders(String path) {
         File temp = new File(path + "temp.sf");
         if(!temp.getParentFile().exists()) {
@@ -47,8 +83,9 @@ public class FileSaves {
      *
      * @param content of the file
      * @param path of the file with name and extension
+     * @return FileWriteReadResultObject containing information about the operation
      */
-    @SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
+    @SuppressWarnings({"WeakerAccess"})
     public static FileWriteReadResult saveString(String content, String path) {
         File saveFile = new File(path);
         if(!createFolders(saveFile)) {
@@ -85,26 +122,25 @@ public class FileSaves {
      * relative to the jars directory
      *
      * @param location of the file relative to the jar: "dir/dir/"
-     * @param name of the file (no extension)
-     * @return content of the file or an empty string if an error occurs
+     * @param name of the file with extension
+     * @return FileWriteReadResult object containing either a failure reason or the loaded string in
+     *          the description
+     * @see FileWriteReadResult
      */
-    public static FileWriteReadResult loadString(String location,String name,String extension) {
-        return loadString(location + name,extension);
-    }
-
-    public static FileWriteReadResult loadSaveFile(String location,String name) {
-        return loadString(location + name,".sf");
+    public static FileWriteReadResult loadFile(String location,String name) {
+        return loadString(location + name);
     }
 
     /**
      * loads a file from the jar directory
      *
-     * @param name of the file
-     * @return content of the file or an empty string if an error occurs
+     * @param path of the file
+     * @return FileWriteReadResult object containing either a failure reason or the loaded string in
+     *         the description
      */
     @SuppressWarnings("WeakerAccess")
-    public static FileWriteReadResult loadString(String name, String extension) {
-        File saveFile = new File(name+extension);
+    public static FileWriteReadResult loadString(String path) {
+        File saveFile = new File(path);
         if(saveFile.exists()) {
             StringBuilder result = new StringBuilder();
             try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(saveFile), Charset.forName("ISO-8859-15")))) {
@@ -127,7 +163,7 @@ public class FileSaves {
      *
      * @param location of the folder
      * @param name of the folder
-     * @return string list of the directories content
+     * @return string array of the directories content
      */
     public static String[] listFolderContent(String location,String name) {
         return  listFolderContent(location + name);
@@ -137,7 +173,7 @@ public class FileSaves {
      * lists the content of a folder in the jars directory
      *
      * @param path of the folder
-     * @return string list of the directories content
+     * @return string array of the directories content
      */
     @SuppressWarnings("WeakerAccess")
     public static String[] listFolderContent(String path) {
@@ -149,11 +185,12 @@ public class FileSaves {
      * deletes a file with a specific name in the jars folder
      *
      * @param name of the file
+     * @return FileWriteReadResult containing the result of the operation
      */
-    @SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
+    @SuppressWarnings({"WeakerAccess"})
     public static FileWriteReadResult deleteFile(String name) {
 
-        File f = new File(name+".sf");
+        File f = new File(name);
         if(f.delete()) {
             return new FileWriteReadResult(FileWriteReadResult.ResultKind.SUCCESS,"File deleted successfully");
         }
@@ -165,10 +202,11 @@ public class FileSaves {
      * deletes a file
      *
      * @param location of the file
-     * @param name of the file
+     * @param name of the file with extension
+     * @return FileWriteReadResult containing the result of the operation
      */
-    public static void deleteSaveFile(String location,String name) {
-        deleteFile(location + name);
+    public static FileWriteReadResult deleteSaveFile(String location,String name) {
+        return deleteFile(location + name);
     }
 
 
