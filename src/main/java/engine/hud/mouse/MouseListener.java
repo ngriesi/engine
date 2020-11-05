@@ -143,11 +143,11 @@ public class MouseListener {
             if(mouseState.wasPressedOnLastFrame(mouseButton) && !mouseState.isPressed(mouseButton)) {
                 if(mouseState.isPressedSinceEntered(mouseButton)) {
                     mouseAction(mouseInput,mouseButton,DRAG_RELEASED);
-                    component.getHud().dropRightDragEvent();
+                    component.getHud().dropDragEvent(mouseButton);
                 } else {
-                    if(component.getHud().getRightDragEvent() != null) {
+                    if(component.getHud().getDragEvent(mouseButton) != null) {
                         mouseAction(mouseInput,mouseButton,DRAG_RELEASED);
-                        component.getHud().dropRightDragEvent();
+                        component.getHud().dropDragEvent(mouseButton);
                     } else {
                         if(mouseState.getButtonTimer(mouseButton) >= pressedTime) {
                             mouseAction(mouseInput,mouseButton,PRESS_RELEASED,CLICK_RELEASED);

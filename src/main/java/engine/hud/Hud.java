@@ -89,12 +89,6 @@ public class Hud {
     /** actions from another thread / to be performed in the update cycle*/
     private List<Action> actions;
 
-    /** framebuffer for the depth rendering */
-    private int framebuffer;
-
-    /** depthBuffer for the depth rendering */
-    private int depth;
-
     /**
      * contains Shaders used by the hud
      */
@@ -399,6 +393,15 @@ public class Hud {
     /**
      * Methods that get executed if a drag event gets dropped (used or not used)
      */
+    public void dropDragEvent(MouseListener.MouseButton mouseButton) {
+        switch (mouseButton) {
+            case LEFT:
+                dropLeftDragEvent();break;
+            case RIGHT:
+                dropRightDragEvent();break;
+        }
+    }
+
     public void dropRightDragEvent() {
         if(rightDragEvent != null) {
             rightDragEvent.dropAction();
@@ -459,6 +462,13 @@ public class Hud {
      */
     public void addAction(Action action) {
         newActions.add(action);
+    }
+
+    public DragEvent getDragEvent(MouseListener.MouseButton mouseButton) {
+        switch (mouseButton) {
+            case RIGHT:return getRightDragEvent();
+            default: return getLeftDragEvent();
+        }
     }
 
     public DragEvent getLeftDragEvent() {

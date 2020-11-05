@@ -17,6 +17,7 @@ import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.contentcomponents.TextComponent;
 import engine.hud.components.presets.Background;
 import engine.hud.components.presets.Button;
+import engine.hud.components.presets.VerticalScrollView;
 import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
 import engine.hud.constraints.elementSizeConstraints.RelativeToComponentSizeE;
 import engine.hud.constraints.elementSizeConstraints.RelativeToScreenSizeE;
@@ -153,9 +154,25 @@ public class MainGame implements IGameLogic {
         text.setText("test");
         //quad2.addComponent(text);
 
+        VerticalScrollView vs = new VerticalScrollView();
+        vs.setWidthConstraint(0.5f);
+        vs.setHeightConstraint(0.5f);
+        QuadComponent back = new QuadComponent();
+        back.setHeightConstraint(4);
+        back.setWidthConstraint(1);
+        back.setxPositionConstraint(0.5f);
+        back.setyPositionConstraint(0);
+
+        for(int i = 0; i < 10 ; i++) {
+            Button bt = new Button(0.5f,0.1f,0.5f,0f + i * 0.1f,"btn " + i,FontTexture.STANDARD_FONT_TEXTURE);
+            back.addComponent(bt);
+        }
+
+        vs.setContent(back);
+
 
         Button btn = new Button(0.5f,0.5f,0.5f,0.5f,"test",FontTexture.STANDARD_FONT_TEXTURE);
-        background.addComponent(btn);
+        background.addComponent(vs);
 
         hud.getScene().addComponent(background);
 
