@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/HorizontalScrollView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/ScrollBar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/ScrollView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/VerticalScrollView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/VerticalScrollView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseInput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/test/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/VerticalScrollView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/VerticalScrollView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/test/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/test/MainGame.class" afterDir="false" />
     </list>
@@ -209,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604484389633</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="fixed vertical scroll view">
+      <created>1604575065214</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1604575065214</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -241,6 +250,7 @@
     <MESSAGE value="cleanup of save and load classes" />
     <MESSAGE value="cleanup of main engine classes" />
     <MESSAGE value="fixed relative to screen size Element constraint" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed relative to screen size Element constraint" />
+    <MESSAGE value="fixed vertical scroll view" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed vertical scroll view" />
   </component>
 </project>

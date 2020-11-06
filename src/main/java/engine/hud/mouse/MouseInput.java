@@ -29,6 +29,9 @@ public class MouseInput {
     /**stores the rotation of the mouse wheel */
     private float mouseWheelRotation = 0;
 
+    /**stores horizontal scroll value */
+    private float horizontalScroll = 0;
+
     /**
      * creates objects for all the vectors used
      */
@@ -76,6 +79,7 @@ public class MouseInput {
             @Override
             public void invoke(long window, double xoffset, double yoffset) {
                 mouseWheelRotation = (float) -yoffset;
+                horizontalScroll = (float) -xoffset;
             }
         });
 
@@ -155,7 +159,15 @@ public class MouseInput {
         return t;
     }
 
+    public float getXOffsetScroll() {
+        float t = horizontalScroll;
+        horizontalScroll = 0;
+        return t;
+    }
+
     public boolean isPressed(MouseListener.MouseButton button) {
         return buttonsPressed[button.ordinal()];
     }
+
+
 }
