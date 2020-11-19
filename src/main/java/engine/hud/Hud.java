@@ -24,8 +24,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static engine.general.GameEngine.pTime;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
-import static org.lwjgl.opengl.GL30.glBindFramebuffer;
+import static org.lwjgl.opengl.GL30.*;
 
 public class Hud {
 
@@ -383,10 +382,10 @@ public class Hud {
      */
     public void renderDragEvents(Matrix4f ortho, Transformation transformation,HudShaderManager shaderManager) {
         if(rightDragEvent != null && rightDragEvent.getDragVisual() != null) {
-            rightDragEvent.getDragVisual().renderComponent(ortho, transformation,shaderManager);
+            rightDragEvent.getDragVisual().renderComponent(ortho, transformation,shaderManager,0);
         }
         if(leftDragEvent != null && leftDragEvent.getDragVisual() != null) {
-            leftDragEvent.getDragVisual().renderComponent(ortho,transformation,shaderManager);
+            leftDragEvent.getDragVisual().renderComponent(ortho,transformation,shaderManager,0);
         }
     }
 

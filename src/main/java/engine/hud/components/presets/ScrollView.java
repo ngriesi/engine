@@ -7,6 +7,7 @@ import engine.hud.components.layout.ExpandList;
 import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.RelativeToScreenSize;
+import engine.hud.constraints.sizeConstraints.SubtractConstraint;
 import engine.hud.events.DragEvent;
 import engine.hud.mouse.MouseEvent;
 import engine.hud.mouse.MouseListener;
@@ -70,9 +71,10 @@ public class ScrollView extends QuadComponent {
         removeComponent(verticalBar.getBarBack());
         removeComponent(horizontalBar.getBarBack());
         this.contentBack = content;
+        addComponent(contentBack);
         addComponent(horizontalBar.getBarBack());
         addComponent(verticalBar.getBarBack());
-        addComponent(contentBack);
+
         contentBack.setxPositionConstraint(new RelativeInParent(0));
         contentBack.setyPositionConstraint(new RelativeInParent(0));
         verticalBar.setScrollPosition(0);
@@ -95,7 +97,7 @@ public class ScrollView extends QuadComponent {
         horizontalBar.getBarBack().setVisible(ratioX>1);
 
         if(ratioX>1 && ratioY>1) {
-            horizontalBar.getBarBack().changeWidthValue(0.9f);
+            horizontalBar.getBarBack().setWidthConstraint(new SubtractConstraint(new RelativeToParentSize(1),new RelativeToScreenSize(0.01f)));
         }
 
         verticalBar.getBar().changeHeightValue(height);

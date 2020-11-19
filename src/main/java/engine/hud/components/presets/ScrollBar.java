@@ -5,6 +5,8 @@ import engine.hud.components.SubComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.layout.ExpandList;
 import engine.hud.constraints.positionConstraints.RelativeInParent;
+import engine.hud.constraints.sizeConstraints.InvertedDirectionRelativeToScreen;
+import engine.hud.constraints.sizeConstraints.InvertedRelativeToWindow;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.RelativeToScreenSize;
 import engine.hud.events.DragEvent;
@@ -41,7 +43,7 @@ public class ScrollBar implements DragEvent {
             barBack.setxPositionConstraint(new RelativeInParent(1));
             barBack.setyPositionConstraint(new RelativeInParent(0.5f));
         } else {
-            barBack.setHeightConstraint(new RelativeToScreenSize(barThickness));
+            barBack.setHeightConstraint(new InvertedDirectionRelativeToScreen(barThickness));
             barBack.setWidthConstraint(new RelativeToParentSize(1));
             barBack.setyPositionConstraint(new RelativeInParent(1));
             barBack.setxPositionConstraint(new RelativeInParent(0));

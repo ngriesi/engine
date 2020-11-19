@@ -61,10 +61,10 @@ public class SceneComponent extends ContentComponent {
 
         shaderManager.setShaderProgram(shaderManager.getMaskShader());
 
-        super.renderNext(ortho,transformation,shaderManager);
+        super.renderNext(ortho,transformation,shaderManager,0);
         if(renderedOnTop != null) {
 
-            renderedOnTop.renderComponent(ortho,transformation,shaderManager);
+            renderedOnTop.renderComponent(ortho,transformation,shaderManager,0);
         }
         hud.renderDragEvents(ortho,transformation,shaderManager);
     }
@@ -162,6 +162,8 @@ public class SceneComponent extends ContentComponent {
 
 
             currentComponent = subComponents.get(currentId);
+
+            System.out.println(currentId);
 
         } else {
             currentComponent = null;

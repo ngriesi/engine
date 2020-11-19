@@ -11,9 +11,12 @@ import engine.graph.items.Mesh;
 import engine.graph.light.LightHandler;
 import engine.hud.Hud;
 import engine.hud.assets.Quad;
+import engine.hud.color.Color;
+import engine.hud.color.ColorScheme;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengles.GLES20;
 
 import java.util.List;
 import java.util.Map;
@@ -253,6 +256,25 @@ public class Renderer {
         Matrix4f ortho = transformation.getOrthoProjectionMatrix(0,1,1,0,0,-Hud.MAX_IDS);
 
         hud.render(ortho,transformation);
+
+        glDepthFunc(GL_ALWAYS);
+        glStencilFunc(GL_EQUAL,2,0xFF);
+        glColorMask(true,true,true,true);
+
+        GameItem item = new GameItem();
+        item.setPosition(0.5f,0.5f,0);
+        ShaderProgram shader = hud.getShaderManager().getMaskShader();
+        Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(item, ortho);
+        shader.setUniform("projModelMatrix", projModelMatrix);
+        shader.setUniform("transparancyMode", 0);
+
+        shader.setUniform("useTexture",0);
+
+        shader.setUniform("colors", new ColorScheme(Color.WHITE).getVectorArray());
+        shader.setUniform("useColorShade",0);
+        item.setMesh(new Quad().getMesh());
+       // item.getMesh().render();
+
 
         /*for(GameItem gameItem : hud.getGameItems()){
             Mesh mesh = gameItem.getMesh();

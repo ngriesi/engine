@@ -133,19 +133,20 @@ public class MainGame implements IGameLogic {
         quad2.setCornerSize(0f);
         quad3.setColor(Color.GREEN);
 
+
         QuadComponent quad4 = new QuadComponent();
         quad4.setHeightConstraint(0.5f);
         quad4.setWidthConstraint(0.5f);
         quad4.setxPositionConstraint(1);
         quad4.setyPositionConstraint(0);
         quad4.setColors(new Color(1,0,0,0.5f));
-        quad4.setMaskComponent(null);
 
 
         quad2.addComponent(quad3);
         quad2.addComponent(quad4);
 
-        background.addComponent(quad2);
+
+        //background.addComponent(quad2);
 
 
         TextComponent text = new TextComponent(FontTexture.STANDARD_FONT_TEXTURE);
@@ -170,7 +171,7 @@ public class MainGame implements IGameLogic {
 
 
         Button btn = new Button(0.5f,0.5f,0.5f,0.5f,"test",FontTexture.STANDARD_FONT_TEXTURE);
-        //background.addComponent(vs);
+        background.addComponent(vs);
 
         hud.getScene().addComponent(background);
 

@@ -2,15 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/HorizontalScrollView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/ScrollBar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/ScrollView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/InvertedDirectionRelativeToScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/SubtractConstraint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/ContentComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/ContentComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/SubComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/SubComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/ScrollBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/ScrollBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/ScrollView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/ScrollView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/test/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/MainGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/ContentComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/ContentComponent.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/VerticalScrollView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/VerticalScrollView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/test/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/test/MainGame.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -218,7 +225,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604575065214</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="worked on scroll views">
+      <created>1604658439111</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1604658439111</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -251,6 +265,7 @@
     <MESSAGE value="cleanup of main engine classes" />
     <MESSAGE value="fixed relative to screen size Element constraint" />
     <MESSAGE value="fixed vertical scroll view" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed vertical scroll view" />
+    <MESSAGE value="worked on scroll views" />
+    <option name="LAST_COMMIT_MESSAGE" value="worked on scroll views" />
   </component>
 </project>

@@ -92,10 +92,10 @@ public abstract class ContentComponent {
      * @param transformation transformation object
      * @param shaderManager shaderManager of the Hud
      */
-    public void renderNext(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
+    public void renderNext(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager,int level) {
         content.forEach(contentComponent -> {
             if(contentComponent.isVisible() && !contentComponent.isRemoved()) {
-                contentComponent.renderComponent(orthographic, transformation, shaderManager);
+                contentComponent.renderComponent(orthographic, transformation, shaderManager,level);
             }
         });
     }
