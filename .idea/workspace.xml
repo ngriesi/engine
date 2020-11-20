@@ -113,6 +113,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="739c862f-48f0-47c1-9afa-4e460e54e3de" />
