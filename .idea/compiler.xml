@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="engine_clean" />
         <module name="engine" />
+        <module name="engine_clean" />
       </profile>
     </annotationProcessing>
   </component>
