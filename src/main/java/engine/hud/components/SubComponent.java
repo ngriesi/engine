@@ -116,7 +116,7 @@ public abstract class SubComponent extends ContentComponent {
             glColorMask(true, true,true , true);
 
 
-            glDepthMask(true);
+            glDepthMask(writeToDepthBuffer);
             glStencilMask(0xFF);
             glStencilFunc(GL_EQUAL, level, 0xFF);
             setDepthValue(getId());

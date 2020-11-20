@@ -1,6 +1,5 @@
 package engine.hud.components.presets;
 
-import engine.hud.color.Color;
 import engine.hud.components.SubComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.layout.ExpandList;
@@ -8,10 +7,6 @@ import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.RelativeToScreenSize;
 import engine.hud.constraints.sizeConstraints.SubtractConstraint;
-import engine.hud.events.DragEvent;
-import engine.hud.mouse.MouseEvent;
-import engine.hud.mouse.MouseListener;
-import org.joml.Vector2f;
 
 @SuppressWarnings("unused")
 public class ScrollView extends QuadComponent {
