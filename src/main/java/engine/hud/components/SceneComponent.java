@@ -163,7 +163,6 @@ public class SceneComponent extends ContentComponent {
 
             currentComponent = subComponents.get(currentId);
 
-            System.out.println(currentId);
 
         } else {
             currentComponent = null;
