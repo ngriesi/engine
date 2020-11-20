@@ -1,0 +1,97 @@
+Index: target/classes/hud_fragment.fs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#version 330\r\n\r\nin vec2 outTexCord;\r\nin vec3 mvPos;\r\nin vec4 color;\r\n\r\nout vec4 fragColor;\r\nout float gl_FragDepth;\r\n\r\nuniform sampler2D texture_sampler;\r\nuniform int hasTexture;\r\nuniform int isText;\r\nuniform int maskMode;\r\nuniform int depth;\r\nuniform float keepCornerProportion;\r\nuniform float keepEdgeProportion;\r\nuniform float cornerSize;\r\nuniform float full;\r\n\r\nfloat smoothing;\r\n\r\nvoid useColor(float dist);\r\n\r\nvoid setDepth();\r\n\r\nfloat cornerDist(float pow1_1,float pow1_2,float pow1_mult,float pow2_1,float pow2_2,float pow2_div,float value);\r\n\r\nvoid main() {\r\n\r\n\r\n    if(isText == 0) {\r\n        float value = cornerSize;\r\n\r\n        float startX;\r\n        float endX;\r\n\r\n        float startY;\r\n        float endY;\r\n\r\n        if(cornerSize > 0) {\r\n        if(keepCornerProportion < 0) {\r\n\r\n            startX =  -0.5 + value;\r\n            endX = -startX;\r\n\r\n            startY = -0.5 + value * -keepCornerProportion;\r\n            endY = -startY;\r\n\r\n            if(mvPos.x < startX) {\r\n                if(mvPos.y < startY) {\r\n\r\n                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,startY,-keepCornerProportion,value);\r\n\r\n                    if(t > 0) {\r\n                        fragColor = color * 0;\r\n                    } else {\r\n                        useColor(1+t/pow(value,2));\r\n                    }\r\n                } else if(mvPos.y > endY) {\r\n\r\n                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,endY,-keepCornerProportion,value);\r\n\r\n                    if(t > 0) {\r\n                        fragColor = color * 0;\r\n                    } else {\r\n                        useColor(1+t/pow(value,2));\r\n                    }\r\n                } else {\r\n                    float val2 = value;\r\n                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;\r\n                    float temp2 = temp1>0?pow(temp1,2):0;\r\n                    useColor(temp2 * (25)/(pow(val2 * 10,2)));\r\n                }\r\n            } else if (mvPos.x > endX) {\r\n                if(mvPos.y < startY) {\r\n\r\n                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,startY,-keepCornerProportion,value);\r\n\r\n                    if(t > 0) {\r\n                        fragColor = color * 0;\r\n                    } else {\r\n                        useColor(1+t/pow(value,2));\r\n                    }\r\n                } else if(mvPos.y > endY) {\r\n\r\n                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,endY,-keepCornerProportion,value);\r\n\r\n                    if(t > 0) {\r\n                         fragColor = color * 0;\r\n                    } else {\r\n                         useColor(1+t/pow(value,2));\r\n                    }\r\n                } else {\r\n                    float val2 = value;\r\n                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;\r\n                    float temp2 = temp1>0?pow(temp1,2):0;\r\n                    useColor(temp2 * (25)/(pow(val2 * 10,2)));\r\n                }\r\n            } else {\r\n                float val2 = value *-keepCornerProportion;\r\n                float temp1 = (abs(mvPos.y) - (0.5f - val2)) * 2;\r\n                float temp2 = temp1>0?pow(temp1,2):0;\r\n                useColor(temp2 * (25)/(pow(val2 * 10,2)));\r\n            }\r\n        } else if(keepCornerProportion > 0){\r\n\r\n            startX =  -0.5 + value/keepCornerProportion;\r\n            endX = -startX;\r\n\r\n            startY = -0.5 + value;\r\n            endY = -startY;\r\n\r\n            if(mvPos.x < startX) {\r\n                if(mvPos.y < startY) {\r\n                    float t = cornerDist(mvPos.x,startX,keepCornerProportion,mvPos.y,startY,1,value);\r\n\r\n                    if(t > 0) {\r\n                         fragColor = color * 0;\r\n                    } else {\r\n                        useColor(1+t/pow(value,2));\r\n                    }\r\n                } else if(mvPos.y > endY) {\r\n\r\n                    float t = cornerDist(mvPos.x,startX,keepCornerProportion,mvPos.y,endY,1,value);\r\n\r\n                    if(t > 0) {\r\n                         fragColor = color * 0;\r\n                    } else {\r\n                        useColor(1+t/pow(value,2));\r\n                    }\r\n                } else {\r\n                    float val2 = value/keepCornerProportion;\r\n                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;\r\n                    float temp2 = temp1>0?pow(temp1,2):0;\r\n                    useColor(temp2 * (25)/(pow(val2 * 10,2)));\r\n                }\r\n            } else if (mvPos.x > endX) {\r\n                if(mvPos.y < startY) {\r\n\r\n                    float t = cornerDist(mvPos.x,endX,keepCornerProportion,mvPos.y,startY,1,value);\r\n\r\n                    if(t > 0) {\r\n                         fragColor = color * 0;\r\n                    } else {\r\n                        useColor(1+t/pow(value,2));\r\n                    }\r\n                } else if(mvPos.y > endY) {\r\n\r\n                    float t = cornerDist(mvPos.x,endX,keepCornerProportion,mvPos.y,endY,1,value);\r\n\r\n                    if(t > 0) {\r\n                         fragColor = color * 0;\r\n                    } else {\r\n                         useColor(1+t/pow(value,2));\r\n                    }\r\n                } else {\r\n                    float val2 = value/keepCornerProportion;\r\n                    float temp1 = (abs(mvPos.x) - (0.5f - val2)) * 2;\r\n                    float temp2 = temp1>0?pow(temp1,2):0;\r\n                    useColor(temp2 * (25)/(pow(val2 * 10,2)));\r\n                }\r\n            } else {\r\n                float val2 = value;\r\n                float temp1 = (abs(mvPos.y) - (0.5f - val2)) * 2;\r\n                float temp2 = temp1>0?pow(temp1,2):0;\r\n                useColor(temp2 * (25)/(pow(val2 * 10,2)));\r\n            }\r\n\r\n        } else {\r\n            startX =  -0.5 + value;\r\n            endX = -startX;\r\n\r\n            startY = -0.5 + value;\r\n            endY = -startY;\r\n\r\n            if(mvPos.x < startX) {\r\n                if(mvPos.y < startY) {\r\n\r\n                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,startY,1,value);\r\n\r\n                    if(t > 0) {\r\n                         fragColor = color * 0;\r\n                    } else {\r\n                        useColor(1+t/pow(value,2));\r\n                    }\r\n                } else if(mvPos.y > endY) {\r\n\r\n                    float t = cornerDist(mvPos.x,startX,1,mvPos.y,endY,1,value);\r\n\r\n                    if(t > 0) {\r\n                         fragColor = color * 0;\r\n                    } else {\r\n                        useColor(1+t/pow(value,2));\r\n                    }\r\n                } else {\r\n                    float temp1 = (abs(mvPos.x) - (0.5f - value)) * 2;\r\n                    float temp2 = temp1>0?pow(temp1,2):0;\r\n                    useColor(temp2 * (25)/(pow(value * 10,2)));\r\n                }\r\n            } else if (mvPos.x > endX) {\r\n                if(mvPos.y < startY) {\r\n\r\n                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,startY,1,value);\r\n\r\n                    if(t > 0) {\r\n                         fragColor = color * 0;\r\n                    } else {\r\n                        useColor(1+t/pow(value,2));\r\n                    }\r\n                } else if(mvPos.y > endY) {\r\n\r\n                    float t = cornerDist(mvPos.x,endX,1,mvPos.y,endY,1,value);\r\n\r\n                    if(t > 0) {\r\n                         fragColor = color * 0;\r\n                    } else {\r\n                         useColor(1+t/pow(value,2));\r\n                    }\r\n                } else {\r\n                    float temp1 = (abs(mvPos.x) - (0.5f - value)) * 2;\r\n                    float temp2 = temp1>0?pow(temp1,2):0;\r\n                    useColor(temp2 * (25)/(pow(value * 10,2)));\r\n                }\r\n            } else {\r\n                float temp1 = (abs(mvPos.y) - (0.5f - value)) * 2;\r\n                float temp2 = temp1>0?pow(temp1,2):0;\r\n                useColor(temp2 * (25)/(pow(value * 10,2)));\r\n            }\r\n        }\r\n        } else {\r\n\r\n            if(keepEdgeProportion == 0) {\r\n                 useColor(max(abs(mvPos.x),abs(mvPos.y))*2);\r\n            }\r\n            else if(keepEdgeProportion > 0){\r\n                 useColor(max(abs(mvPos.x * keepEdgeProportion) - 0.5f,abs(mvPos.y))*2);\r\n            } else {\r\n                 useColor(max(abs(mvPos.x),abs(mvPos.y * ((keepEdgeProportion+1)*0.5f - 1)))*2);\r\n            }\r\n\r\n        }\r\n    } else {\r\n\r\n\r\n        float smoothing = 0.9f / (0.5 * 100);\r\n\r\n        float distance = texture(texture_sampler, outTexCord).a;\r\n        float alpha = smoothstep(full - smoothing, full + smoothing, distance);\r\n        fragColor = vec4(color.rgb, color.a * alpha);\r\n\r\n\r\n        setDepth();\r\n    }\r\n}\r\n\r\nvoid useColor(float dist) {\r\n    if( hasTexture == 1) {\r\n        fragColor = color * texture(texture_sampler, outTexCord);\r\n    }else{\r\n\r\n\r\n        if(dist > 0.5f) {\r\n            fragColor = color * 1;\r\n        } else {\r\n            fragColor = color * dist;\r\n        }\r\n\r\n\r\n    }\r\n\r\n    setDepth();\r\n\r\n    //fragColor = gl_FragDepth * 7000000 * vec4(1,1,1,1);\r\n}\r\n\r\nvoid setDepth() {\r\n    if( maskMode == 0) {\r\n            gl_FragDepth = depth/16777215.0;\r\n            if(fragColor.a == 0) {\r\n                discard;\r\n            }\r\n        } else {\r\n                gl_FragDepth = depth/16777215.0;\r\n\r\n        }\r\n\r\n}\r\n\r\nfloat cornerDist(float pow1_1,float pow1_2,float pow1_mult,float pow2_1,float pow2_2,float pow2_div,float value) {\r\n\r\n    return pow((pow1_1 - pow1_2) * pow1_mult,2) + pow((pow2_1 - pow2_2)/pow2_div,2) - pow(value,2);\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- target/classes/hud_fragment.fs	(revision 1c40d48face07fc4d5d6780c9958d08c4b9f1d62)
++++ target/classes/hud_fragment.fs	(date 1605874627034)
+@@ -15,7 +15,9 @@
+ uniform float keepCornerProportion;
+ uniform float keepEdgeProportion;
+ uniform float cornerSize;
++uniform float edgeSize;
+ uniform float full;
++uniform vec4 edgeColor;
+ 
+ float smoothing;
+ 
+@@ -259,10 +261,10 @@
+     }else{
+ 
+ 
+-        if(dist > 0.5f) {
+-            fragColor = color * 1;
++        if(dist > 1 - edgeSize) {
++            fragColor = edgeColor;
+         } else {
+-            fragColor = color * dist;
++            fragColor = color;
+         }
+ 
+ 
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision 1c40d48face07fc4d5d6780c9958d08c4b9f1d62)
++++ .idea/misc.xml	(date 1605875001497)
+@@ -8,7 +8,7 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/libraries/LWJGL3.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"libraryTable\">\r\n  <library name=\"LWJGL3\">\r\n    <CLASSES>\r\n      <root url=\"file://C:/Program Files/Java/LWJGL3.23\" />\r\n    </CLASSES>\r\n    <JAVADOC />\r\n    <SOURCES>\r\n      <root url=\"file://C:/Program Files/Java/LWJGL3.23\" />\r\n    </SOURCES>\r\n    <jarDirectory url=\"file://C:/Program Files/Java/LWJGL3.23\" recursive=\"false\" />\r\n    <jarDirectory url=\"file://C:/Program Files/Java/LWJGL3.23\" recursive=\"false\" type=\"SOURCES\" />\r\n  </library>\r\n</component>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/LWJGL3.xml	(revision 1c40d48face07fc4d5d6780c9958d08c4b9f1d62)
++++ .idea/libraries/LWJGL3.xml	(date 1605875574891)
+@@ -1,13 +1,13 @@
+ <component name="libraryTable">
+   <library name="LWJGL3">
+     <CLASSES>
+-      <root url="file://C:/Program Files/Java/LWJGL3.23" />
++      <root url="file://$PROJECT_DIR$/../../../../Program Files/Java/LWJGL3.23" />
+     </CLASSES>
+     <JAVADOC />
+     <SOURCES>
+-      <root url="file://C:/Program Files/Java/LWJGL3.23" />
++      <root url="file://$PROJECT_DIR$/../../../../Program Files/Java/LWJGL3.23" />
+     </SOURCES>
+-    <jarDirectory url="file://C:/Program Files/Java/LWJGL3.23" recursive="false" />
+-    <jarDirectory url="file://C:/Program Files/Java/LWJGL3.23" recursive="false" type="SOURCES" />
++    <jarDirectory url="file://$PROJECT_DIR$/../../../../Program Files/Java/LWJGL3.23" recursive="false" />
++    <jarDirectory url="file://$PROJECT_DIR$/../../../../Program Files/Java/LWJGL3.23" recursive="false" type="SOURCES" />
+   </library>
+ </component>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CompilerConfiguration\">\r\n    <annotationProcessing>\r\n      <profile name=\"Maven default annotation processors profile\" enabled=\"true\">\r\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\r\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\r\n        <outputRelativeToContentRoot value=\"true\" />\r\n        <module name=\"engine_clean\" />\r\n      </profile>\r\n    </annotationProcessing>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision 1c40d48face07fc4d5d6780c9958d08c4b9f1d62)
++++ .idea/compiler.xml	(date 1605875001512)
+@@ -7,6 +7,7 @@
+         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+         <outputRelativeToContentRoot value="true" />
+         <module name="engine_clean" />
++        <module name="engine" />
+       </profile>
+     </annotationProcessing>
+   </component>

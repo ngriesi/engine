@@ -1,0 +1,292 @@
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/jarRepositories.xml	(date 1605875001543)
++++ .idea/jarRepositories.xml	(date 1605875001543)
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Central Repository" />
++      <option name="url" value="https://repo.maven.apache.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"013e9847-6f46-41dd-adec-e76c5e3625d9\" name=\"Default Changelist\" comment=\"\" />\r\n    <option name=\"EXCLUDED_CONVERTED_TO_IGNORED\" value=\"true\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GithubDefaultAccount\">\r\n    <option name=\"defaultAccountId\" value=\"989c3145-ef9c-422d-a928-8b48ea176b12\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1gP7OwYS7Qq2NHMfAp5PdBnD17c\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/src/main/resources\" />\r\n    <property name=\"project.structure.last.edited\" value=\"Modules\" />\r\n    <property name=\"project.structure.proportion\" value=\"0.15\" />\r\n    <property name=\"project.structure.side.proportion\" value=\"0.4586207\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"settings.github\" />\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Niels\\Eigenes\\Projekte\\engine_clean\\src\\main\\resources\" />\r\n      <recent name=\"C:\\Users\\Niels\\Eigenes\\Projekte\\engine_clean\\src\\main\\java\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunDashboard\">\r\n    <option name=\"ruleStates\">\r\n      <list>\r\n        <RuleState>\r\n          <option name=\"name\" value=\"ConfigurationTypeDashboardGroupingRule\" />\r\n        </RuleState>\r\n        <RuleState>\r\n          <option name=\"name\" value=\"StatusDashboardGroupingRule\" />\r\n        </RuleState>\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"test.Main\" />\r\n      <module name=\"engine_clean\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"test.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SvnConfiguration\">\r\n    <configuration />\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"013e9847-6f46-41dd-adec-e76c5e3625d9\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1598004344179</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1598004344179</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Second commit\">\r\n      <created>1598007660915</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1598007660915</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Added fragment shader edge distance calculation for the KEEP_X corner mode\">\r\n      <created>1598011312170</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1598011312170</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Added fragment shader edge distance calculation for the KEEP_Y corner mode and improved the edge distance calculation for the KEEP_X corner mode\">\r\n      <created>1598012176857</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1598012176857</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Added fragment shader edge distance calculation for the FREE corner mode and added simple support for edge customization from the java code\">\r\n      <created>1598024779267</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1598024779267</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"5\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"COLUMN_ORDER\" />\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Second commit\" />\r\n    <MESSAGE value=\"Added fragment shader edge distance calculation for the KEEP_X corner mode\" />\r\n    <MESSAGE value=\"Added fragment shader edge distance calculation for the KEEP_Y corner mode and improved the edge distance calculation for the KEEP_X corner mode\" />\r\n    <MESSAGE value=\"Added fragment shader edge distance calculation for the FREE corner mode and added simple support for edge customization from the java code\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Added fragment shader edge distance calculation for the FREE corner mode and added simple support for edge customization from the java code\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/workspace.xml	(revision 1c40d48face07fc4d5d6780c9958d08c4b9f1d62)
++++ .idea/workspace.xml	(date 1605876364150)
+@@ -1,8 +1,153 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="SELECTIVE" />
++  </component>
++  <component name="BranchesTreeState">
++    <expand>
++      <path>
++        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
++      </path>
++      <path>
++        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
++      </path>
++      <path>
++        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
++      </path>
++    </expand>
++    <select />
++  </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="" />
+-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
++    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="">
++      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/libraries/LWJGL3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/LWJGL3.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/GameEngine.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/IGameLogic.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/MouseInput$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/MouseInput.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$Face.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$IdxGroup.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$IndexData.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$VertexData.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/Timer.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/Transformation.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/Utils.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/Window$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/Window$WindowPreset.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/Window.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/save/EncoderBase64.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/save/FileSaves.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/save/Resources.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/general/Camera.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/general/Scene.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/general/Skybox.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/items/GameItem.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/items/Material.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/items/Mesh.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/items/Texture$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/items/Texture$FilterMode.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/items/Texture.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/light/DirectionalLight.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/light/LightHandler.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/light/PointLight$Attenuation.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/light/PointLight.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/light/SpotLight.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/actions/Action.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/actions/DragAction.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/actions/KeyAction.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/actions/MouseAction.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/actions/ReturnAction.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/Animation.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/AnimationAction.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/ColorAnimation.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/ColorSchemeAnimation$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/ColorSchemeAnimation$2.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/ColorSchemeAnimation$3.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/ColorSchemeAnimation$4.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/ColorSchemeAnimation$5.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/ColorSchemeAnimation.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/DefaultAnimations.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/FloatAnimation.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/Vector2fAnimation.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/Vector3fAnimation.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/animations/Vector4fAnimation.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/assets/Quad.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/color/Color.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/color/ColorScheme$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/color/ColorScheme$ColorSide.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/color/ColorScheme$GradientDirection.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/color/ColorScheme$StandardColorSchemes.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/color/ColorScheme.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/Component$RenderMode.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/Component.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/ContentComponent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/MainComponent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent$CornerProportion.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent$MaskMode.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/QuadComponent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/TextComponent$MaskMode.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/TextComponent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/TextInputComponent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/layout/ExpandList$Orientation.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/layout/ExpandList.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/layout/GridLayout$GridData.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/layout/GridLayout.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/Background.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/Button.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/DropDownMenu$DropDownElement$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/DropDownMenu$DropDownElement$2.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/DropDownMenu$DropDownElement$3.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/DropDownMenu$DropDownElement.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/DropDownMenu.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/PopupWindow.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/TextInputBox.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/VerticalScrollView.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/EndAtRelativeToParent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/EndAtRelativeToWindow.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/PositionConstraint$Direction.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/PositionConstraint.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeInParent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeInWindow.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeToParentPosition.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeToWindowPosition.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/StartAtRelativeToParent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/StartAtRelativeToWindow.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/AbsoluteAspectRatio.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/AspectRatio.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedRelativeToParent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedRelativeToWindow.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/PixelValue.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToParentSize.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToScreenSize.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToWindowSize.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SizeConstraint$Direction.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SizeConstraint.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/TextAspectRatio.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/events/DragEvent.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/FontTexture$CharData.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/FontTexture.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem$LineData.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem$TextAlignment.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/engine/render/ShaderProgram.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/hud_fragment.fs" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hud_fragment.fs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/test/Main.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/test/MainGame.class" beforeDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -20,12 +165,24 @@
+   </component>
+   <component name="GithubDefaultAccount">
+     <option name="defaultAccountId" value="989c3145-ef9c-422d-a928-8b48ea176b12" />
++  </component>
++  <component name="MavenImportPreferences">
++    <option name="generalSettings">
++      <MavenGeneralSettings>
++        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\plugins\maven\lib\maven3" />
++      </MavenGeneralSettings>
++    </option>
+   </component>
+   <component name="ProjectId" id="1gP7OwYS7Qq2NHMfAp5PdBnD17c" />
+   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
++  <component name="ProjectViewState">
++    <option name="hideEmptyMiddlePackages" value="true" />
++    <option name="showLibraryContents" value="true" />
++  </component>
+   <component name="PropertiesComponent">
++    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
++    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Program Files/Java/LWJGL3.23" />
+     <property name="project.structure.last.edited" value="Modules" />
+     <property name="project.structure.proportion" value="0.15" />
+     <property name="project.structure.side.proportion" value="0.4586207" />
+@@ -37,22 +194,10 @@
+       <recent name="C:\Users\Niels\Eigenes\Projekte\engine_clean\src\main\java" />
+     </key>
+   </component>
+-  <component name="RunDashboard">
+-    <option name="ruleStates">
+-      <list>
+-        <RuleState>
+-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+-        </RuleState>
+-        <RuleState>
+-          <option name="name" value="StatusDashboardGroupingRule" />
+-        </RuleState>
+-      </list>
+-    </option>
+-  </component>
+   <component name="RunManager">
+     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+       <option name="MAIN_CLASS_NAME" value="test.Main" />
+-      <module name="engine_clean" />
++      <module name="engine" />
+       <extension name="coverage">
+         <pattern>
+           <option name="PATTERN" value="test.*" />
+@@ -69,6 +214,7 @@
+       </list>
+     </recent_temporary>
+   </component>
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="SvnConfiguration">
+     <configuration />
+   </component>
+@@ -116,13 +262,12 @@
+       <map>
+         <entry key="MAIN">
+           <value>
+-            <State>
+-              <option name="COLUMN_ORDER" />
+-            </State>
++            <State />
+           </value>
+         </entry>
+       </map>
+     </option>
++    <option name="oldMeFiltersMigrated" value="true" />
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="Second commit" />
+@@ -131,4 +276,22 @@
+     <MESSAGE value="Added fragment shader edge distance calculation for the FREE corner mode and added simple support for edge customization from the java code" />
+     <option name="LAST_COMMIT_MESSAGE" value="Added fragment shader edge distance calculation for the FREE corner mode and added simple support for edge customization from the java code" />
+   </component>
++  <component name="WindowStateProjectService">
++    <state x="757" y="410" key="DetectedRootsChooserDialog" timestamp="1605875490600">
++      <screen x="0" y="0" width="1920" height="1050" />
++    </state>
++    <state x="757" y="410" key="DetectedRootsChooserDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1605875490600" />
++    <state x="740" y="279" key="FileChooserDialogImpl" timestamp="1605875599096">
++      <screen x="0" y="0" width="1920" height="1050" />
++    </state>
++    <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1605875599096" />
++    <state x="440" y="99" key="SettingsEditor" timestamp="1605875690080">
++      <screen x="0" y="0" width="1920" height="1050" />
++    </state>
++    <state x="440" y="99" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1605875690080" />
++    <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605876177759">
++      <screen x="0" y="0" width="1920" height="1050" />
++    </state>
++    <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1050@0.0.1920.1050" timestamp="1605876177759" />
++  </component>
+ </project>
+\ No newline at end of file
