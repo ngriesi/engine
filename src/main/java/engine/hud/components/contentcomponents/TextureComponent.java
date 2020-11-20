@@ -31,7 +31,7 @@ public class TextureComponent extends QuadComponent {
         shader.setUniform("projModelMatrix", projModelMatrix);
         shader.setUniform("useTransparent", maskMode == MaskMode.USE_TRANSPARENT?1:0);
         shader.setUniform("useTexture",1);
-        shader.setUniform("texture",0);
+        shader.setUniform("texture2d",0);
 
         switch (getCornerProportion()) {
             case FREE:

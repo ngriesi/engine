@@ -31,7 +31,7 @@ public class HudShaderManager {
         maskShader.createUniforms("cornerScale");
         maskShader.createUniforms("cornerSize");
         maskShader.createUniforms("useTexture");
-        maskShader.createUniforms("texture");
+        maskShader.createUniforms("texture2d");
         maskShader.createVector4fArrayUniform("colors",4);
         maskShader.createUniforms("useColorShade");
         maskShader.createUniforms("edgeStartColor");

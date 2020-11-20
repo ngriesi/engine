@@ -18,7 +18,7 @@ uniform float cornerSize;
 
 uniform int useTexture;
 
-uniform sampler2D texture;
+uniform sampler2D texture2d;
 
 uniform float edgeValue;
 
@@ -34,7 +34,7 @@ void main() {
 
         float full = 0.5f;
 
-        float dist = texture(texture, outTexCord).a;
+        float dist = texture(texture2d, outTexCord).a;
         float alphaText = smoothstep(full - smoothing, full + smoothing, dist);
         fragColor = vec4(color.rgb, color.a * alphaText);
     } else {
@@ -68,7 +68,7 @@ void main() {
 
 
         if(useTexture==1) {
-            fragColor = texture(texture, outTexCord);
+            fragColor = texture(texture2d, outTexCord);
         } else if(useTexture==0) {
             fragColor = color;
         }
