@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/SubComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/SubComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/ScrollView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/ScrollView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/Main.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -226,7 +223,35 @@
       <option name="project" value="LOCAL" />
       <updated>1605795294559</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="commit pom">
+      <created>1605875995007</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1605875995007</updated>
+    </task>
+    <task id="LOCAL-00021" summary="commit pom">
+      <created>1605876058839</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1605876058839</updated>
+    </task>
+    <task id="LOCAL-00022" summary="commit pom">
+      <created>1605876097029</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1605876097029</updated>
+    </task>
+    <task id="LOCAL-00023" summary="commit pom">
+      <created>1605876156267</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1605876156267</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -261,6 +286,7 @@
     <MESSAGE value="fixed vertical scroll view" />
     <MESSAGE value="worked on scroll views" />
     <MESSAGE value="reworked render and mask system, finished scroll view, added some size constraints" />
-    <option name="LAST_COMMIT_MESSAGE" value="reworked render and mask system, finished scroll view, added some size constraints" />
+    <MESSAGE value="commit pom" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit pom" />
   </component>
 </project>
