@@ -44,6 +44,8 @@ public class Main {
 
         MainGame mainGame = new MainGame();
 
+        System.out.println("test");
+
         GameEngine gameEngine = null;
 
         try {
