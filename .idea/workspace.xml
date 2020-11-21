@@ -22,54 +22,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="Removed debug message">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/shader/sceneShader/sceneFragmentShader.shader" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/shader/sceneShader/sceneVertexShader.shader" afterDir="false" />
+    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up animation classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/general/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/general/GameEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/general/OBJLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/general/OBJLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/graph/items/Mesh.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/graph/items/Mesh.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/HudShaderManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/HudShaderManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/actions/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/actions/Action.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/actions/DragAction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/actions/KeyAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/actions/KeyAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/actions/ReturnAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/actions/ReturnAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Animation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/AnimationAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/AnimationAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/ColorAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/ColorAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/ColorSchemeAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/ColorSchemeAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/DefaultAnimations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/DefaultAnimations.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/FloatAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/FloatAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector2fAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector2fAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector3fAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector3fAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector4fAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector4fAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/render/ShaderProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/render/ShaderProgram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/quadShader/colorShadeQuadVertexShader.vs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/quadShader/quadEdgeFragmentShader.fs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/quadShader/simpleQuadFragmentShader.fs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/textureShader/simpleTextureFragmentShader.fs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/textureShader/simpleTextureShader.vs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/GameEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/GameEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$Face.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$Face.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$IdxGroup.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$IdxGroup.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$IndexData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$IndexData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$VertexData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$VertexData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/items/Mesh.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/graph/items/Mesh.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/HudShaderManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/HudShaderManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/shader/hudshader/quadShader/colorShadeQuadVertexShader.vs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/shader/hudshader/quadShader/quadEdgeFragmentShader.fs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/shader/hudshader/quadShader/simpleQuadFragmentShader.fs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/shader/hudshader/textureShader/simpleTextureFragmentShader.fs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/shader/hudshader/textureShader/simpleTextureShader.vs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/test/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/test/MainGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/assets/Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/assets/Edge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/assets/Quad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/assets/Quad.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -338,7 +294,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605878575034</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="cleaned up animation classes">
+      <created>1605961567221</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1605961567221</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -375,7 +338,8 @@
     <MESSAGE value="commit pom" />
     <MESSAGE value="Fixed texture use" />
     <MESSAGE value="Removed debug message" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed debug message" />
+    <MESSAGE value="cleaned up animation classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up animation classes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1605885680825">
@@ -422,10 +386,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1605877050773" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1605878577776">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1605972547933">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1605878577776" />
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1605972547933" />
     <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605877400645">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

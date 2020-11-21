@@ -3,13 +3,18 @@ package engine.hud.assets;
 import engine.graph.items.GameItem;
 import engine.graph.items.Material;
 import engine.graph.items.Mesh;
-import engine.graph.items.Texture;
-import engine.hud.components.contentcomponents.TextureComponent;
 import org.joml.Vector4f;
 
+/**
+ * Game Item Object used by many hud components
+ * contains a quad mesh
+ */
 public class Quad extends GameItem {
 
 
+    /**
+     * default constructor creates the quad
+     */
     public Quad() {
         createQuad();
     }
