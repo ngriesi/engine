@@ -1,10 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/Main.java" afterDir="false" />
+    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="Removed debug message">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/shader/sceneShader/sceneFragmentShader.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/shader/sceneShader/sceneVertexShader.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/general/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/general/GameEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/general/OBJLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/general/OBJLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/graph/items/Mesh.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/graph/items/Mesh.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/HudShaderManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/HudShaderManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/actions/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/actions/Action.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/actions/DragAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/actions/KeyAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/actions/KeyAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/actions/ReturnAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/actions/ReturnAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Animation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/AnimationAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/AnimationAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/ColorAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/ColorAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/ColorSchemeAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/ColorSchemeAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/DefaultAnimations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/DefaultAnimations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/FloatAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/FloatAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector2fAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector2fAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector3fAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector3fAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector4fAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/animations/Vector4fAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/render/ShaderProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/render/ShaderProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/test/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/MainGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/quadShader/colorShadeQuadVertexShader.vs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/quadShader/quadEdgeFragmentShader.fs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/quadShader/simpleQuadFragmentShader.fs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/textureShader/simpleTextureFragmentShader.fs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/textureShader/simpleTextureShader.vs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/GameEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/GameEngine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$Face.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$Face.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$IdxGroup.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$IdxGroup.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$IndexData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$IndexData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$VertexData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader$VertexData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/general/OBJLoader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/graph/items/Mesh.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/graph/items/Mesh.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/HudShaderManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/HudShaderManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/shader/hudshader/quadShader/colorShadeQuadVertexShader.vs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/shader/hudshader/quadShader/quadEdgeFragmentShader.fs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/shader/hudshader/quadShader/simpleQuadFragmentShader.fs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/shader/hudshader/textureShader/simpleTextureFragmentShader.fs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/shader/hudshader/textureShader/simpleTextureShader.vs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/test/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/test/MainGame.class" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,10 +88,14 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="989c3145-ef9c-422d-a928-8b48ea176b12" />
+    <option name="defaultAccountId" value="739c862f-48f0-47c1-9afa-4e460e54e3de" />
   </component>
   <component name="ProjectId" id="1gP7OwYS7Qq2NHMfAp5PdBnD17c" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -34,7 +104,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.4586207" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -47,22 +117,10 @@
       <recent name="C:\Users\Niels\Eigenes\Projekte\engine_clean\src\main\java" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="test.Main" />
-      <module name="engine_clean" />
+      <module name="engine" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.*" />
@@ -79,6 +137,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration>C:\Users\Niels\AppData\Roaming\Subversion</configuration>
   </component>
@@ -251,7 +310,35 @@
       <option name="project" value="LOCAL" />
       <updated>1605876156267</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="commit pom">
+      <created>1605876578736</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1605876578736</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Fixed texture use">
+      <created>1605876836157</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1605876836157</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Fixed texture use">
+      <created>1605877013329</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1605877013329</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Removed debug message">
+      <created>1605878575034</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1605878575034</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -259,13 +346,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Second commit" />
@@ -287,6 +373,76 @@
     <MESSAGE value="worked on scroll views" />
     <MESSAGE value="reworked render and mask system, finished scroll view, added some size constraints" />
     <MESSAGE value="commit pom" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit pom" />
+    <MESSAGE value="Fixed texture use" />
+    <MESSAGE value="Removed debug message" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed debug message" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1605885680825">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1605885680825" />
+    <state x="707" y="380" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1605960926145">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="707" y="380" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1050@0.0.1920.1050" timestamp="1605960926145" />
+    <state width="1877" height="141" key="GridCell.Tab.0.bottom" timestamp="1605958196199">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="141" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1605958196199" />
+    <state width="1877" height="141" key="GridCell.Tab.0.center" timestamp="1605958196199">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="141" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1605958196199" />
+    <state width="1877" height="141" key="GridCell.Tab.0.left" timestamp="1605958196199">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="141" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1605958196199" />
+    <state width="1877" height="141" key="GridCell.Tab.0.right" timestamp="1605958196199">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="141" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1605958196199" />
+    <state width="1877" height="352" key="GridCell.Tab.1.bottom" timestamp="1605889414894">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="352" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1605889414894" />
+    <state width="1877" height="352" key="GridCell.Tab.1.center" timestamp="1605889414894">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="352" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1605889414894" />
+    <state width="1877" height="352" key="GridCell.Tab.1.left" timestamp="1605889414894">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="352" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1605889414894" />
+    <state width="1877" height="352" key="GridCell.Tab.1.right" timestamp="1605889414894">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="352" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1605889414894" />
+    <state x="461" y="170" key="SettingsEditor" timestamp="1605877050773">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1605877050773" />
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1605878577776">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1605878577776" />
+    <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605877400645">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1050@0.0.1920.1050" timestamp="1605877400645" />
+    <state x="505" y="261" width="909" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1605884814385">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="505" y="261" width="909" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1050@0.0.1920.1050" timestamp="1605884814385" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

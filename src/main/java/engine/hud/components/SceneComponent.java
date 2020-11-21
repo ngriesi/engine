@@ -53,20 +53,18 @@ public class SceneComponent extends ContentComponent {
     /**
      * starts the rendering for all components including the drag event visuals if existing
      *
-     * @param ortho transformation matrix
+     * @param orthographic transformation matrix
      * @param transformation class
      * @param shaderManager of the Hud
      */
-    public void render(Matrix4f ortho, Transformation transformation, HudShaderManager shaderManager) {
+    public void render(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
 
-        shaderManager.setShaderProgram(shaderManager.getMaskShader());
-
-        super.renderNext(ortho,transformation,shaderManager,0);
+        super.renderNext(orthographic,transformation,shaderManager,0);
         if(renderedOnTop != null) {
 
-            renderedOnTop.renderComponent(ortho,transformation,shaderManager,0);
+            renderedOnTop.renderComponent(orthographic,transformation,shaderManager,0);
         }
-        hud.renderDragEvents(ortho,transformation,shaderManager);
+        hud.renderDragEvents(orthographic,transformation,shaderManager);
     }
 
     /**

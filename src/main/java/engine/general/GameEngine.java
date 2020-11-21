@@ -180,6 +180,7 @@ public class GameEngine implements Runnable{
         gameLogic.update(interval,mouseInput);
         if(window.isResized()) {
             hud.getScene().updateBounds();
+
         }
         hud.update(interval);
 

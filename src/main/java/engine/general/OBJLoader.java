@@ -135,6 +135,7 @@ public class OBJLoader {
             System.out.println(v2f.x + "||"+v2f.y);
         }
 
+
         return new Mesh(posArr,texArr,normArr,indicesArr);
 
     }

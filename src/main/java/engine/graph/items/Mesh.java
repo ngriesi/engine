@@ -44,6 +44,7 @@ public class Mesh {
         FloatBuffer textCoordsBuffer = null;
         FloatBuffer normalsBuffer = null;
         IntBuffer indicesBuffer = null;
+        material = new Material();
         try{
             vertexCount = indices.length;
             vboidList = new ArrayList<>();
@@ -195,6 +196,7 @@ public class Mesh {
      */
     public void renderList(List<GameItem> gameItems, Consumer<GameItem> consumer){
         initRender();
+
 
         for(GameItem gameItem : gameItems){
             //Setup data required by GameItem

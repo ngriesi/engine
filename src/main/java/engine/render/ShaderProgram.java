@@ -4,7 +4,6 @@ import engine.graph.items.Material;
 import engine.graph.light.DirectionalLight;
 import engine.graph.light.PointLight;
 import engine.graph.light.SpotLight;
-import engine.hud.assets.Edge;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -17,6 +16,7 @@ import java.util.Map;
 
 import static org.lwjgl.opengl.GL20.*;
 
+@SuppressWarnings("unused")
 public class ShaderProgram {
 
     /** id of the program */
@@ -76,7 +76,7 @@ public class ShaderProgram {
     private int createShader(String shaderCode, int shaderType) throws Exception{
         int shaderId = glCreateShader(shaderType);
         if(shaderId==0){
-            throw new Exception("Error creating shader, shadertype: "+ shaderType);
+            throw new Exception("Error creating shader, shader type: "+ shaderType);
         }
 
         glShaderSource(shaderId,shaderCode);

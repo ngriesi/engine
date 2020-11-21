@@ -10,13 +10,8 @@ import engine.graph.items.GameItem;
 import engine.graph.items.Mesh;
 import engine.graph.light.LightHandler;
 import engine.hud.Hud;
-import engine.hud.assets.Quad;
-import engine.hud.color.Color;
-import engine.hud.color.ColorScheme;
 import org.joml.Matrix4f;
-import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengles.GLES20;
 
 import java.util.List;
 import java.util.Map;
@@ -26,7 +21,6 @@ import static org.lwjgl.opengles.GLES20.GL_COLOR_BUFFER_BIT;
 
 public class Renderer {
 
-    private Quad temp;
 
     /** the angele of the field of view */
     private static final float FOV = (float)Math.toRadians(60.0f);
@@ -67,12 +61,9 @@ public class Renderer {
      */
     @SuppressWarnings("unused")
     public void init(Window window, LightHandler lightHandler) throws Exception{
-        //setupSceneShader(lightHandler);
+        setupSceneShader(lightHandler);
         setupHudShader();
         //setupSkyBoxShader();
-        temp = new Quad();
-        temp.setPosition(0.5f,0.5f,1);
-        temp.getMesh().getMaterial().setAmbientColor(new Vector4f(0,0,1,1));
     }
 
     /**
@@ -85,17 +76,17 @@ public class Renderer {
     @SuppressWarnings("unused")
     private void setupSceneShader(LightHandler lightHandler) throws Exception {
         sceneShaderProgram = new ShaderProgram();
-        sceneShaderProgram.createVertexShader(Resources.loadResource("/vertex.vs"));
-        sceneShaderProgram.createFragmentShader(Resources.loadResource("/fragment.fs"));
+        sceneShaderProgram.createVertexShader(Resources.loadResource("/shader/sceneShader/sceneVertexShader.shader"));
+        sceneShaderProgram.createFragmentShader(Resources.loadResource("/shader/sceneShader/sceneFragmentShader.shader"));
         sceneShaderProgram.link();
 
         sceneShaderProgram.createUniforms("projectionMatrix");
         sceneShaderProgram.createUniforms("modelViewMatrix");
         sceneShaderProgram.createUniforms("texture_sampler");
 
-        sceneShaderProgram.createMaterialUniform("material");
+        //sceneShaderProgram.createMaterialUniform("material");
 
-        lightHandler.inti(sceneShaderProgram);
+        //lightHandler.inti(sceneShaderProgram);
     }
 
     /**
@@ -168,11 +159,19 @@ public class Renderer {
         transformation.updateProjectionMatrix(FOV, window.getWidth(),window.getHeight(),Z_NEAR,Z_FAR);
         transformation.updateViewMatrix(camera);
 
-        //renderScene(scene)
 
+
+
+
+
+
+        renderScene(scene);
+
+        glClear( GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         renderHud(window, hud);
 
+        glColorMask(true,true,true,true);
 
         //renderSkyBox(scene);
     }
@@ -197,17 +196,19 @@ public class Renderer {
         //Update viewMatrix
         Matrix4f viewMatrix = transformation.getViewMatrix();
 
-        scene.getLightHandler().renderLights(viewMatrix,sceneShaderProgram);
+        //scene.getLightHandler().renderLights(viewMatrix,sceneShaderProgram);
 
         sceneShaderProgram.setUniform("texture_sampler",0);
         //Render each mesh with the associated gameItem
         Map<Mesh, List<GameItem>> mapMeshes = scene.getGameMeshes();
         for(Mesh mesh : mapMeshes.keySet()){
-            sceneShaderProgram.setUniform("material",mesh.getMaterial());
+            //sceneShaderProgram.setUniform("material",mesh.getMaterial());
             mesh.renderList(mapMeshes.get(mesh), gameItem -> {
                 Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(gameItem, viewMatrix);
                 sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             });
+
+
         }
 
         sceneShaderProgram.unbind();
@@ -253,38 +254,10 @@ public class Renderer {
     @SuppressWarnings("unused")
     private void renderHud(Window window, Hud hud) {
 
-        Matrix4f ortho = transformation.getOrthoProjectionMatrix(0,1,1,0,0,-Hud.MAX_IDS);
+        Matrix4f orthographic = transformation.getOrthoProjectionMatrix(0,1,1,0,0,-Hud.MAX_IDS);
 
-        hud.render(ortho,transformation);
+        hud.render(orthographic,transformation);
 
-        glDepthFunc(GL_ALWAYS);
-        glStencilFunc(GL_EQUAL,2,0xFF);
-        glColorMask(true,true,true,true);
-
-        GameItem item = new GameItem();
-        item.setPosition(0.5f,0.5f,0);
-        ShaderProgram shader = hud.getShaderManager().getMaskShader();
-        Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(item, ortho);
-        shader.setUniform("projModelMatrix", projModelMatrix);
-        shader.setUniform("transparancyMode", 0);
-
-        shader.setUniform("useTexture",0);
-
-        shader.setUniform("colors", new ColorScheme(Color.WHITE).getVectorArray());
-        shader.setUniform("useColorShade",0);
-        item.setMesh(new Quad().getMesh());
-       // item.getMesh().render();
-
-
-        /*for(GameItem gameItem : hud.getGameItems()){
-            Mesh mesh = gameItem.getMesh();
-            Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(gameItem,ortho);
-            hudShaderProgram.setUniform("projModelMatrix",projModelMatrix);
-            hudShaderProgram.setUniform("color",gameItem.getMesh().getMaterial().getAmbientColor());
-            hudShaderProgram.setUniform("hasTexture",gameItem.getMesh().getMaterial().isTexture() ? 1 : 0);
-
-            mesh.render();
-        }*/
 
 
     }

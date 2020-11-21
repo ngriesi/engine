@@ -3,6 +3,9 @@ package engine.hud.animations;
 import engine.hud.Hud;
 import org.joml.Vector3f;
 
+/**
+ * class used to animate a linear transition of a <code>Vector3f</code> object
+ */
 @SuppressWarnings("unused")
 public class Vector3fAnimation extends Animation<Vector3f> {
 
@@ -21,6 +24,11 @@ public class Vector3fAnimation extends Animation<Vector3f> {
         super(hud, duration, new Vector3f(startValue), new Vector3f(endValue), action);
     }
 
+    /**
+     * calculates the size of the step performed every frame
+     *
+     * @return the new step size
+     */
     @Override
     protected Vector3f calculateStep() {
         Vector3f result = new Vector3f();
@@ -30,29 +38,46 @@ public class Vector3fAnimation extends Animation<Vector3f> {
         return result;
     }
 
+    /**
+     * action performed every frame the animation is running
+     * (is part of the animations list in <class>hud</class>)
+     *
+     * @see Hud
+     */
     @Override
     public void makeStep() {
 
-
+        //copy end vector to keep its value
         Vector3f mov  = new Vector3f(endValue);
+        //get vector form start to end7
         mov.sub(startValue);
-        Vector3f prog = new Vector3f(progress);
-        prog.sub(startValue);
+        //copy progress vector to keep its value
+        Vector3f progressTemp = new Vector3f(progress);
+        //get vector from start to progress
+        progressTemp.sub(startValue);
 
+        //check if the vector from start to progress is still shorter than the one from start to end
+        if(mov.length() > progressTemp.length()) {
 
-        if(mov.length() > prog.length()) {
-
+            //set new component color
             action.execute(action.getProgress(component).add(step),component);
             progress.set(action.getProgress(component));
 
         } else {
+
+            //set end value and end teh animation
             action.execute(endValue,component);
             endAnimation();
         }
     }
 
+    /**
+     * creates an independent copy of the animation
+     *
+     * @return copy of the animation
+     */
     @Override
-    public Animation copy() {
+    public Animation<Vector3f> copy() {
         return new Vector3fAnimation(hud,duration,new Vector3f(startValue),new Vector3f(endValue),action);
     }
 }

@@ -46,15 +46,13 @@ public class HudShaderManager {
         return maskShader;
     }
 
-    public void setShaderProgram(ShaderProgram shader) {
 
-        if(!shader.equals(currentlyUsed)) {
-            if(currentlyUsed != null) {
-                currentlyUsed.unbind();
-            }
-            currentlyUsed = shader;
-            currentlyUsed.bind();
-        }
+    public void unbindShader() {
+        currentlyUsed.unbind();
+    }
+
+    public void bindShader() {
+        maskShader.bind();
     }
 
     public void cleanUp() {

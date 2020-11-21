@@ -5,6 +5,22 @@ import engine.hud.actions.Action;
 
 import engine.hud.components.ContentComponent;
 
+/**
+ * Abstract parent class of all animations, allows the progressive linear change of
+ * an attribute over a certain time in update frames
+ *
+ *
+ * usage:
+ *
+ *      create Animation with a constructor of the children of this class
+ *
+ *      apply it to a component with the <code>createForComponent<code/> method
+ *
+ *      start the animation with the <code>startAnimation</code> method
+ *
+ * @param <T> type of the attribute that is getting changed
+ */
+@SuppressWarnings("rawtypes")
 public abstract class Animation <T> {
 
     /** hud that "contains" this animation */
@@ -100,7 +116,7 @@ public abstract class Animation <T> {
     }
 
     /**
-     * starts the animation by adding it to the huds list of animations that
+     * starts the animation by adding it to the list of animations of the hud that
      * should be started next update frame
      */
     public void startAnimation() {
@@ -109,7 +125,7 @@ public abstract class Animation <T> {
     }
 
     /**
-     * ends the animation by adding it to the huds list of animations that
+     * ends the animation by adding it to the list of animations of the hud that
      * should be removed form the list of executing animations in the next
      * update frame
      * it also calls the execute method of the onFinished action if it has been
@@ -132,13 +148,17 @@ public abstract class Animation <T> {
         progress = action.getProgress(component);
     }
 
-    public void setOnFinishedAction(Action onFinishedAction) {
-        this.onFinishedAction = onFinishedAction;
-    }
-
+    /**
+     * sets a new animation duration and calculates the new step size according to it
+     *
+     * @param duration new duration of the animation in update frames
+     */
     public void setDuration(int duration) {
         this.duration = duration;
         step = calculateStep();
+    }
 
+    public void setOnFinishedAction(Action onFinishedAction) {
+        this.onFinishedAction = onFinishedAction;
     }
 }

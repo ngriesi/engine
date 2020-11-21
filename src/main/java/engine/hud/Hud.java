@@ -109,6 +109,7 @@ public class Hud {
         newActions = new ArrayList<>();
         actions = new ArrayList<>();
 
+        //noinspection InstantiationOfUtilityClass
         new DefaultAnimations(this);
 
         try {
@@ -239,10 +240,10 @@ public class Hud {
     public void render(Matrix4f ortho, Transformation transformation) {
 
 
-        glBindFramebuffer(GL_FRAMEBUFFER,0);
+
 
         glStencilMask(1);
-        shaderManager.setShaderProgram(shaderManager.getMaskShader());
+        shaderManager.bindShader();
         scene.render(ortho,transformation,shaderManager);
 
     }
