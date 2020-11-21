@@ -22,10 +22,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up animation classes">
+    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up asset classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/assets/Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/assets/Edge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/assets/Quad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/assets/Quad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/color/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/color/Color.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/color/ColorScheme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/color/ColorScheme.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -301,7 +301,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605961567221</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="cleaned up asset classes">
+      <created>1605972566896</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1605972566896</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -339,7 +346,8 @@
     <MESSAGE value="Fixed texture use" />
     <MESSAGE value="Removed debug message" />
     <MESSAGE value="cleaned up animation classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up animation classes" />
+    <MESSAGE value="cleaned up asset classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up asset classes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1605885680825">
@@ -386,10 +394,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1605877050773" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1605972547933">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1605972572609">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1605972547933" />
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1605972572609" />
     <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605877400645">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

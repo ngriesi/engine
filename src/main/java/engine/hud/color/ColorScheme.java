@@ -2,13 +2,27 @@ package engine.hud.color;
 
 import org.joml.Vector4f;
 
+/**
+ * class for handling the color schemes of the components
+ * a color scheme is composed of four <code>Color</code> objects
+ * for each side of the component
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class ColorScheme {
 
+    /**
+     * enums to identify standard color schemes for the default hud layout
+     */
     public enum StandardColorSchemes {
         BUTTON_STANDARD,BUTTON_ENTERED,BUTTON_PRESSED,BUTTON_TEXT_STANDARD,BUTTON_TEXT_PRESSED,BUTTON_DISABLED,BUTTON_TEXT_DISABLED
     }
 
+    /**
+     * method to access the default color schemes for the standard layout
+     *
+     * @param colorScheme identifier of the color scheme
+     * @return default color scheme
+     */
     public static ColorScheme getStandardColorScheme(StandardColorSchemes colorScheme) {
         switch (colorScheme) {
             case BUTTON_STANDARD: return new ColorScheme(Color.DARK_GRAY,Color.DARK_GRAY,Color.LIGHT_GRAY,Color.VERY_DARK_GREY);
@@ -23,7 +37,10 @@ public class ColorScheme {
         }
     }
 
-
+    /**
+     * contains possible directions of a color gradient for the <code>createGradient</code>
+     * method
+     */
     public enum GradientDirection {
         TOP_TO_BOTTOM,
         RIGHT_TOP_TO_LEFT_BOTTOM,
@@ -35,12 +52,26 @@ public class ColorScheme {
         LEFT_TOP_TO_RIGHT_BOTTOM
     }
 
+    /**
+     * enum used to identify color sides in the getter method
+     */
     public enum ColorSide {
         LEFT,RIGHT,TOP,BOTTOM
     }
 
+    /**
+     * colors of the sides of the component
+     */
     private Color right,left,top,bottom;
 
+    /**
+     * constructor sets all colors of the scheme
+     *
+     * @param right right color
+     * @param left left color
+     * @param top top color
+     * @param bottom bottom color
+     */
     public ColorScheme(Color right, Color left, Color top, Color bottom) {
         this.right = right;
         this.left = left;
@@ -48,21 +79,39 @@ public class ColorScheme {
         this.bottom = bottom;
     }
 
+    /**
+     * constructor sets one color for all of the sides of the scheme
+     *
+     * @param color color set to all sides
+     */
     public ColorScheme(Color color) {
         this(color,color,color,color);
     }
 
+    /**
+     * default constructor creates a color scheme with four white sides
+     */
     public ColorScheme() {
         this(new Color());
     }
 
+    /**
+     * copy constructor
+     *
+     * @param colorScheme to be copied
+     */
     public ColorScheme(ColorScheme colorScheme) {
-        this.right = colorScheme.getRight();
-        this.left = colorScheme.getLeft();
-        this.top = colorScheme.getTop();
-        this.bottom = colorScheme.getBottom();
+        this.right = new Color(colorScheme.getRight());
+        this.left = new Color(colorScheme.getLeft());
+        this.top = new Color(colorScheme.getTop());
+        this.bottom = new Color(colorScheme.getBottom());
     }
 
+    /**
+     * sets all four sides of the scheme to one color
+     *
+     * @param color set to all four sides
+     */
     public void setAllColors(Color color) {
         this.right = new Color(color);
         this.left = new Color(color);
@@ -70,6 +119,14 @@ public class ColorScheme {
         this.top = new Color(color);
     }
 
+    /**
+     * sets all four colors
+     *
+     * @param left left color
+     * @param top top color
+     * @param right right color
+     * @param bottom bottom color
+     */
     public void setColors(Color left,Color top,Color right,Color bottom) {
         this.right = right;
         this.left = left;
@@ -77,6 +134,11 @@ public class ColorScheme {
         this.bottom = bottom;
     }
 
+    /**
+     * sets all the colors to the value of the passed Vector4f
+     *
+     * @param value new value for all four colors
+     */
     public void setValues(Vector4f value) {
         right.setColor(value);
         left.setColor(value);
@@ -84,7 +146,13 @@ public class ColorScheme {
         bottom.setColor(value);
     }
 
-
+    /**
+     * creates a gradient inside this color scheme
+     *
+     * @param startColor start color of the gradient
+     * @param endColor end color of the gradient
+     * @param direction direction of the gradient
+     */
     public void createGradient(Color startColor,Color endColor,GradientDirection direction) {
         switch (direction) {
             case BOTTOM_TO_TOP: setColors(startColor,endColor,startColor,startColor);break;
@@ -98,6 +166,12 @@ public class ColorScheme {
         }
     }
 
+    /**
+     * sets the color of a specific side
+     *
+     * @param color color to be set
+     * @param side side where the color is set to
+     */
     public void setColor(Color color,ColorSide side) {
         switch (side) {
             case TOP: this.top = color;break;
@@ -107,6 +181,12 @@ public class ColorScheme {
         }
     }
 
+    /**
+     * returns the color of a specific side
+     *
+     * @param side side the color is red form
+     * @return the color of the specified side
+     */
     public Color getColor(ColorSide side) {
         switch (side) {
             case TOP:return top;
@@ -116,8 +196,17 @@ public class ColorScheme {
         }
     }
 
+    /**
+     * creates and returns an array of Vector4f objects with the length four. This is the
+     * form the color data is passed on to the shaders
+     *
+     * order: left,right,top,bottom
+     *
+     * @see engine.hud.components.contentcomponents.QuadComponent in the rendering methods
+     *
+     * @return the color scheme as an array of vectors
+     */
     public Vector4f[] getVectorArray() {
-
         return new Vector4f[] {left.getVector4f(),right.getVector4f(),top.getVector4f(),bottom.getVector4f()};
     }
 
