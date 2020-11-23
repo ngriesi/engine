@@ -5,16 +5,34 @@ import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.constraints.positionConstraints.RelativeToParentPosition;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 
+/**
+ * a layout component that gets bigger when more items get added, usd for
+ * dynamic content of a scroll view
+ */
 public class ExpandList extends QuadComponent {
 
+    /**
+     * orientation enum of this layout
+     */
     public enum Orientation {
         VERTICAL,HORIZONTAL
     }
 
-    private Orientation orientation;
+    /**
+     * orientation of this layout
+     */
+    private final Orientation orientation;
 
+    /**
+     * defines how many elements need to be added  for the component to have the size 1.0f
+     */
     private int elementsPerPage;
 
+    /**
+     * constructor sets the orientation
+     *
+     * @param orientation of the layout
+     */
     public ExpandList(Orientation orientation) {
         this.orientation = orientation;
         if(orientation == Orientation.HORIZONTAL) {
@@ -25,6 +43,11 @@ public class ExpandList extends QuadComponent {
         elementsPerPage = 1;
     }
 
+    /**
+     * adds a component add the end of the row and increases the size of the layout component
+     *
+     * @param component to add
+     */
     @Override
     public void addComponent(SubComponent component) {
 
@@ -59,6 +82,12 @@ public class ExpandList extends QuadComponent {
 
     }
 
+    /**
+     * removes a component from the layout and updates the positions of the remaining components,
+     * decreases the size of the layout component
+     *
+     * @param component to be removed
+     */
     @Override
     public void removeComponent(SubComponent component) {
 
@@ -103,7 +132,26 @@ public class ExpandList extends QuadComponent {
 
     }
 
+    /**
+     * sets the number of elements per page and updates the positions
+     *
+     * @param elementsPerPage new number of elements per page
+     */
     public void setElementsPerPage(int elementsPerPage) {
-        this.elementsPerPage = elementsPerPage;
+        this.elementsPerPage = elementsPerPage>0?elementsPerPage:1;
+
+        changeHeightValue(getContent().size()/(float)elementsPerPage);
+
+        for(int i = 0;i < getContent().size();i++) {
+            if(orientation == Orientation.HORIZONTAL) {
+
+                getContent().get(i).setHeightConstraint(new RelativeToParentSize(1.0f / (getContent().size() + 1)));
+                getContent().get(i).setyPositionConstraint(new RelativeToParentPosition(1.0f / (getContent().size() + 1) * (i+0.5f)));
+            } else {
+                getContent().get(i).setWidthConstraint(new RelativeToParentSize(1.0f / (getContent().size() + 1)));
+                getContent().get(i).setxPositionConstraint(new RelativeToParentPosition(1.0f / (getContent().size() + 1) * (i+0.5f)));
+
+            }
+        }
     }
 }

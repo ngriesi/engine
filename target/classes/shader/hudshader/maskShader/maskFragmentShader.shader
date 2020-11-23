@@ -8,7 +8,7 @@ in vec4 color;
 out vec4 fragColor;
 out float gl_FragDepth;
 
-uniform int transparancyMode;
+uniform int transparencyMode;
 
 uniform float keepCornerProportion;
 
@@ -86,7 +86,7 @@ void main() {
 
 
 
-    if((transparancyMode==0 && fragColor.a == 0)) {
+    if((transparencyMode==0 && fragColor.a == 0)) {
         discard;
     }
 }

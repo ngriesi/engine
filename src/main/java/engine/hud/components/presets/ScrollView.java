@@ -13,7 +13,8 @@ public class ScrollView extends QuadComponent {
 
     private SubComponent contentBack;
 
-    private ScrollBar verticalBar,horizontalBar;
+    private final ScrollBar verticalBar;
+    private final ScrollBar horizontalBar;
 
     public ScrollView() {
 
