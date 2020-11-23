@@ -20,11 +20,13 @@ import engine.hud.color.ColorScheme;
 import engine.hud.components.SubComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.contentcomponents.TextComponent;
+import engine.hud.components.contentcomponents.TextInputComponent;
 import engine.hud.components.presets.*;
 import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
 import engine.hud.constraints.elementSizeConstraints.RelativeToComponentSizeE;
 import engine.hud.constraints.elementSizeConstraints.RelativeToScreenSizeE;
 import engine.hud.constraints.positionConstraints.RelativeToParentPosition;
+import engine.hud.constraints.sizeConstraints.TextAspectRatio;
 import engine.hud.mouse.MouseEvent;
 import engine.hud.mouse.MouseInput;
 import engine.hud.mouse.MouseListener;
@@ -66,7 +68,16 @@ public class MainGame implements IGameLogic {
         renderer.init(window,new LightHandler());
         camera = new Camera();
 
-        hud.getScene().addComponent(new QuadComponent());
+        QuadComponent quadComponent = new QuadComponent();
+
+        TextInputComponent textComponent = new TextInputComponent(FontTexture.STANDARD_FONT_TEXTURE);
+        textComponent.setText("test");
+        textComponent.setColors(Color.BLACK);
+        textComponent.setHeightConstraint(0.5f);
+        textComponent.setWidthConstraint(new TextAspectRatio());
+        quadComponent.addComponent(textComponent);
+
+        hud.getScene().addComponent(quadComponent);
 
 
         scene = new Scene();

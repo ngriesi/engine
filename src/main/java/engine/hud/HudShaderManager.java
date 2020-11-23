@@ -26,7 +26,7 @@ public class HudShaderManager {
         maskShader.link();
 
         maskShader.createUniforms("projModelMatrix");
-        maskShader.createUniforms("transparancyMode");
+        maskShader.createUniforms("transparencyMode");
         maskShader.createUniforms("keepCornerProportion");
         maskShader.createUniforms("cornerScale");
         maskShader.createUniforms("cornerSize");

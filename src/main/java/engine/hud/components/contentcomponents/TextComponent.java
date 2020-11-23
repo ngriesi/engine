@@ -12,12 +12,12 @@ import engine.hud.text.FontTexture;
 import engine.hud.text.TextItem;
 import engine.render.ShaderProgram;
 import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector4f;
 
+/**
+ * class used to display a text with a transparent background
+ */
+@SuppressWarnings("unused")
 public class TextComponent extends SubComponent {
-
-
 
     /** determines what effect transparent pixels have on the mask */
     @SuppressWarnings("unused")
@@ -26,30 +26,31 @@ public class TextComponent extends SubComponent {
     }
 
     /** contains meshes of the component */
-    private TextItem textItem;
+    private final TextItem textItem;
 
     /** text of the component */
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private String text;
 
     /** way the mask for the children is created */
-    private QuadComponent.MaskMode maskMode;
+    private QuadComponent.MaskMode maskMode = SubComponent.MaskMode.DISPOSE_TRANSPARENT;
 
     /**
      *  colors of the quad, when color shade is off only the first one is used,
      *  when its on the colors in the array are the colors at the edges of the
      *  quad and everything between is shaded
      */
-    private ColorScheme colors;
+    private ColorScheme colors = new ColorScheme(Color.BLACK);
 
     /**
      * if true all four colors are used otherwise only the first
      */
     private boolean useColorShade;
 
-    private float autoXOffset;
-
-    private float autoYOffset;
+    /**
+     * automatically sett offset values used by other components to move the text inside of them
+     */
+    private float autoXOffset,autoYOffset;
 
     /**
      * creates the text component without setting a text,
@@ -57,17 +58,10 @@ public class TextComponent extends SubComponent {
      */
     public TextComponent(FontTexture fontTexture) {
         super();
-
         textItem = new TextItem(fontTexture);
         textItem.setText("");
-        maskMode = QuadComponent.MaskMode.DISPOSE_TRANSPARENT;
-        colors = new ColorScheme();
-        useColorShade = false;
         setHeightConstraint(new TextAspectRatio());
         setWidthConstraint(new RelativeToWindowSize(1));
-        autoXOffset = 0;
-        autoYOffset = 0;
-
     }
 
     /**
@@ -96,51 +90,33 @@ public class TextComponent extends SubComponent {
 
     }
 
+    /**
+     * extra method for position update to be called by other components which need
+     * to move text inside of them
+     */
     @SuppressWarnings("WeakerAccess")
     protected void updatePosition() {
         textItem.setPosition(super.getOnScreenXPosition() + super.getOnScreenWidth() * super.getxOffset() + autoXOffset,(super.getOnScreenYPosition() + super.getOnScreenHeight() * super.getyOffset() + autoYOffset),textItem.getPosition().z);
     }
 
     /**
-     * renders the quad mesh to the screen and than calls the render method of all its content components
+     * sets the depth value of the component by setting its z position to
+     * the passed value
      *
-     * @param ortho orthographic transformation
-     * @param transformation transformation object
-     * @param hudShaderProgram shader
+     * @param depthValue new depth value (z cord)
      */
-   // @Override
-    public void drawMesh(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram, RenderMode renderMode) {
-
-        Mesh mesh = textItem.getMesh();
-        Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(textItem, ortho);
-        hudShaderProgram.setUniform("projModelMatrix", projModelMatrix);
-        hudShaderProgram.setUniform("depth",getId());
-        hudShaderProgram.setUniform("isText",1);
-        hudShaderProgram.setUniform("full",0.5f);
-        if(renderMode == RenderMode.NORMAL) {
-            hudShaderProgram.setUniform("colors", colors.getVectorArray());
-
-            hudShaderProgram.setUniform("useColorShade", useColorShade ? 1 : 0);
-            hudShaderProgram.setUniform("hasTexture", mesh.getMaterial().isTexture() ? 1 : 0);
-
-            hudShaderProgram.setUniform("maskMode", maskMode.ordinal());
-
-
-        } else {
-            hudShaderProgram.setUniform("colors", new Vector4f[] {new Vector4f(1,1,1,1)});
-            hudShaderProgram.setUniform("useColorShade",0);
-            hudShaderProgram.setUniform("hasTexture", 0);
-        }
-
-
-        mesh.render();
-    }
-
     @Override
     public void setDepthValue(float depthValue) {
         textItem.setPosition(textItem.getPosition().x,textItem.getPosition().y,depthValue);
     }
 
+    /**
+     * sets up the shader for drawing the text component and draws it to the screen
+     *
+     * @param orthographic projection matrix for the hud
+     * @param transformation transformation class for matrix calculations
+     * @param shaderManager shader manager of the hud provides the shader reference
+     */
     @Override
     public void setupShader(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
         Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(textItem, orthographic);
@@ -148,7 +124,7 @@ public class TextComponent extends SubComponent {
 
 
         shader.setUniform("projModelMatrix", projModelMatrix);
-        shader.setUniform("transparancyMode", maskMode.ordinal());
+        shader.setUniform("transparencyMode", maskMode.ordinal());
 
         shader.setUniform("useTexture",2);
 
@@ -165,6 +141,9 @@ public class TextComponent extends SubComponent {
     }
 
 
+    /**
+     * draws the mesh
+     */
     @Override
     public void drawMesh() {
         Mesh mesh = textItem.getMesh();
@@ -246,8 +225,11 @@ public class TextComponent extends SubComponent {
         return getTextItem().getText();
     }
 
-
     public void setColorScheme(ColorScheme textColor) {
         this.colors = new ColorScheme(textColor);
+    }
+
+    public void setUseColorShade(boolean useColorShade) {
+        this.useColorShade = useColorShade;
     }
 }

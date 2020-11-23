@@ -2,10 +2,11 @@ package engine.hud.components.contentcomponents;
 
 import engine.general.Transformation;
 import engine.graph.items.Mesh;
+import engine.hud.HudShaderManager;
 import engine.hud.actions.Action;
-import engine.hud.actions.KeyAction;
 import engine.hud.assets.Quad;
 import engine.hud.color.Color;
+import engine.hud.mouse.MouseEvent;
 import engine.hud.text.FontTexture;
 import engine.render.ShaderProgram;
 import org.joml.Matrix4f;
@@ -16,13 +17,17 @@ import org.joml.Vector4f;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.glStencilMask;
 
+/**
+ * class used to create a component that can get text input
+ */
+@SuppressWarnings("unused")
 public class TextInputComponent extends TextComponent {
 
     /** cursor position (letters) */
     private final Vector2i cursorPosition;
 
     /** the mesh of the cursor bar */
-    private Quad cursor;
+    private final Quad cursor;
 
     /** if true the text input components only accepts numbers as input */
     @SuppressWarnings("unused")
@@ -51,125 +56,127 @@ public class TextInputComponent extends TextComponent {
         setCursorPosition();
         setText("");
 
-        getKeyListener().setKeyAction(new KeyAction() {
+        getMouseListener().addLeftButtonAction(e -> {
+            if(e.getEvent()== MouseEvent.Event.CLICK_RELEASED) {
+                hud.setCurrentKeyInputTarget(TextInputComponent.this);
+                hud.needsNextRendering();
+            }
+            return false;
+        });
 
-            @Override
-            public void execute(int key) {
+        getKeyListener().setKeyAction(key -> {
 
-                    switch(key) {
+                switch(key) {
 
-                        case GLFW_KEY_SPACE:
-                        {
-                            if(!onlyNumbers) {
-                                getTextItem().addLetter(cursorPosition.y,cursorPosition.x,' ');
-                                cursorPosition.x ++;
-                                changed();
-                            }
+                    case GLFW_KEY_SPACE:
+                    {
+                        if(!onlyNumbers) {
+                            getTextItem().addLetter(cursorPosition.y,cursorPosition.x,' ');
+                            cursorPosition.x ++;
+                            changed();
                         }
-                        break;
+                    }
+                    break;
 
-                        case GLFW_KEY_LEFT:
-                        {
-                            if(cursorPosition.x > 0) {
-                                cursorPosition.x --;
-                            } else {
-                                if(cursorPosition.y > 0) {
-                                    cursorPosition.y --;
-                                    cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
-                                }
-                            }
-                        }
-                        break;
-
-                        case GLFW_KEY_RIGHT:
-                        {
-                            if(cursorPosition.x < getTextItem().getLineLength(cursorPosition.y)) {
-                                cursorPosition.x ++;
-                            } else {
-                                if(cursorPosition.y < getTextItem().getLines() - 1) {
-                                    cursorPosition.y ++;
-                                    cursorPosition.x = 0;
-                                }
-                            }
-                        }
-                        break;
-
-                        case GLFW_KEY_DOWN:
-                        {
-                            if(cursorPosition.y < getTextItem().getLines() - 1) {
-                                cursorPosition.y ++;
-                                if(getTextItem().getLineLength(cursorPosition.y) < cursorPosition.x) {
-                                    cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
-                                }
-                            }
-                        }
-                        break;
-
-                        case GLFW_KEY_UP:
-                        {
+                    case GLFW_KEY_LEFT:
+                    {
+                        if(cursorPosition.x > 0) {
+                            cursorPosition.x --;
+                        } else {
                             if(cursorPosition.y > 0) {
                                 cursorPosition.y --;
-                                if(getTextItem().getLineLength(cursorPosition.y) < cursorPosition.x) {
-                                    cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
-                                }
+                                cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
                             }
                         }
-                        break;
+                    }
+                    break;
 
-                        case GLFW_KEY_BACKSPACE:
-                        {
-                            if(cursorPosition.x>0) {
-                                getTextItem().removeLetter(cursorPosition.y,cursorPosition.x-1);
-                                cursorPosition.x--;
+                    case GLFW_KEY_RIGHT:
+                    {
+                        if(cursorPosition.x < getTextItem().getLineLength(cursorPosition.y)) {
+                            cursorPosition.x ++;
+                        } else {
+                            if(cursorPosition.y < getTextItem().getLines() - 1) {
+                                cursorPosition.y ++;
+                                cursorPosition.x = 0;
+                            }
+                        }
+                    }
+                    break;
+
+                    case GLFW_KEY_DOWN:
+                    {
+                        if(cursorPosition.y < getTextItem().getLines() - 1) {
+                            cursorPosition.y ++;
+                            if(getTextItem().getLineLength(cursorPosition.y) < cursorPosition.x) {
+                                cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
+                            }
+                        }
+                    }
+                    break;
+
+                    case GLFW_KEY_UP:
+                    {
+                        if(cursorPosition.y > 0) {
+                            cursorPosition.y --;
+                            if(getTextItem().getLineLength(cursorPosition.y) < cursorPosition.x) {
+                                cursorPosition.x = getTextItem().getLineLength(cursorPosition.y);
+                            }
+                        }
+                    }
+                    break;
+
+                    case GLFW_KEY_BACKSPACE:
+                    {
+                        if(cursorPosition.x>0) {
+                            getTextItem().removeLetter(cursorPosition.y,cursorPosition.x-1);
+                            cursorPosition.x--;
+                            changed();
+                        } else {
+                            if(cursorPosition.y > 0) {
+                                cursorPosition.x = getTextItem().getLineLength(cursorPosition.y-1);
+                                getTextItem().removeLine(cursorPosition.y);
+                                cursorPosition.y --;
                                 changed();
-                            } else {
-                                if(cursorPosition.y > 0) {
-                                    cursorPosition.x = getTextItem().getLineLength(cursorPosition.y-1);
-                                    getTextItem().removeLine(cursorPosition.y);
-                                    cursorPosition.y --;
+                            }
+                        }
+                    }
+                    break;
+
+                    case GLFW_KEY_ENTER:
+                    {
+                        if(allowNewLine) {
+                            getTextItem().addLine(cursorPosition.y,cursorPosition.x);
+                            cursorPosition.y ++;
+                            cursorPosition.x = 0;
+                            changed();
+                        }
+                    }
+                    break;
+
+                    default:
+                    {
+                        if (window.isKeyPressed(key)) {
+
+                            String temp = glfwGetKeyName(key, glfwGetKeyScancode(key));
+                            if (temp != null) {
+                                if (!onlyNumbers || Character.isDigit(temp.charAt(0))) {
+                                    if (window.isKeyPressed(GLFW_KEY_LEFT_SHIFT) || window.isKeyPressed(GLFW_KEY_RIGHT_SHIFT)) {
+                                        getTextItem().addLetter(cursorPosition.y, cursorPosition.x, Character.toUpperCase(temp.charAt(0)));
+                                    } else {
+                                        getTextItem().addLetter(cursorPosition.y, cursorPosition.x, temp.charAt(0));
+                                    }
+                                    cursorPosition.x++;
                                     changed();
                                 }
                             }
                         }
-                        break;
-
-                        case GLFW_KEY_ENTER:
-                        {
-                            if(allowNewLine) {
-                                getTextItem().addLine(cursorPosition.y,cursorPosition.x);
-                                cursorPosition.y ++;
-                                cursorPosition.x = 0;
-                                changed();
-                            }
-                        }
-                        break;
-
-                        default:
-                        {
-                            if (window.isKeyPressed(key)) {
-
-                                String temp = glfwGetKeyName(key, glfwGetKeyScancode(key));
-                                if (temp != null) {
-                                    if (!onlyNumbers || Character.isDigit(temp.charAt(0))) {
-                                        if (window.isKeyPressed(GLFW_KEY_LEFT_SHIFT) || window.isKeyPressed(GLFW_KEY_RIGHT_SHIFT)) {
-                                            getTextItem().addLetter(cursorPosition.y, cursorPosition.x, Character.toUpperCase(temp.charAt(0)));
-                                            cursorPosition.x++;
-                                            changed();
-                                        } else {
-                                            getTextItem().addLetter(cursorPosition.y, cursorPosition.x, temp.charAt(0));
-                                            cursorPosition.x++;
-                                            changed();
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     }
-
-                    updateBounds();
-
                 }
-        });
+
+                updateBounds();
+
+            });
 
     }
 
@@ -217,32 +224,40 @@ public class TextInputComponent extends TextComponent {
      * renders the cursor mesh without stencil information and calls the renderMesh
      * Method  of the textComponent (super) to render the text itself
      *
-     * @param ortho orthographic transformation
+     * @param orthographic orthographic transformation
      * @param transformation transformation object
      * @param hudShaderProgram shader
-     * @param renderMode render mode
      */
-    @Override
-    public void drawMesh(Matrix4f ortho, Transformation transformation, ShaderProgram hudShaderProgram, RenderMode renderMode) {
+    public void drawCursor(Matrix4f orthographic, Transformation transformation, ShaderProgram hudShaderProgram) {
 
-        if(hud.getCurrentKeyInputTarget().equals(this)) {
+
+        if(hud.getCurrentKeyInputTarget() != null && hud.getCurrentKeyInputTarget().equals(this)) {
             Mesh mesh = cursor.getMesh();
-            Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(cursor, ortho);
+            Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(cursor, orthographic);
             hudShaderProgram.setUniform("projModelMatrix", projModelMatrix);
-            hudShaderProgram.setUniform("depth", getId());
-            hudShaderProgram.setUniform("isText", 1);
+            hudShaderProgram.setUniform("useTexture", 2);
             hudShaderProgram.setUniform("useColorShade", 0);
             hudShaderProgram.setUniform("colors", new Vector4f[]{cursor.getMesh().getMaterial().getAmbientColor()});
-            hudShaderProgram.setUniform("maskMode", super.getMaskMode().ordinal());
+            hudShaderProgram.setUniform("transparencyMode", super.getMaskMode().ordinal());
 
 
             glStencilMask(0x0);
             mesh.render();
             glStencilMask(0xFF);
         }
+    }
 
-
-        super.drawMesh(ortho, transformation, hudShaderProgram, renderMode);
+    /**
+     * inserts the drawing of the cursor into the parent class setup shader method
+     *
+     * @param orthographic projection matrix for the hud
+     * @param transformation transformation class for matrix calculations
+     * @param shaderManager shader manager of the hud provides the shader reference
+     */
+    @Override
+    public void setupShader(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
+        super.setupShader(orthographic, transformation, shaderManager);
+        drawCursor(orthographic,transformation,shaderManager.getMaskShader());
     }
 
     /**

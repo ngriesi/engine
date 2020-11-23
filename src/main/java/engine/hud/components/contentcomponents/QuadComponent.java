@@ -16,88 +16,101 @@ import org.joml.Vector2f;
 
 import static engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint.Proportion.*;
 
+/**
+ * The Quad component class provides the implementation to add a rectangle to the hud scene.
+ * The rect can be scaled, colored, have rounded corners and an edge
+ */
+@SuppressWarnings("unused")
 public class QuadComponent extends SubComponent {
 
 
     /**
      * mesh of the component
      */
-    Quad quad;
+    Quad quad = new Quad();
+
     /**
      * if not FREE corners are the same in both x and y direction
      */
-    private ElementSizeConstraint.Proportion cornerProportion;
+    private ElementSizeConstraint.Proportion cornerProportion = FREE;
+
     /**
      * if not FREE edges are the same in both x and y direction
      */
-    private ElementSizeConstraint.Proportion edgeProportion;
+    private ElementSizeConstraint.Proportion edgeProportion = FREE;
+
     /**
-     * way the mask for the children is created
+     * defines if transparent areas should be handled as colored areas or different
      */
-    MaskMode maskMode;
+    MaskMode maskMode = MaskMode.USE_TRANSPARENT;
+
     /**
      * size of the rounded corners relative to component size (0 disables rounded corners)
      */
-    ElementSizeConstraint cornerSize;
+    ElementSizeConstraint cornerSize = new RelativeToComponentSizeE(0);
+
     /**
      * edges of the component
      */
-    private Edge edge;
+    private Edge edge = new Edge();
+
     /**
      * colors of the quad, when color shade is off only the first one is used,
      * when its on the colors in the array are the colors at the edges of the
      * quad and everything between is shaded
      */
-    private ColorScheme colors;
+    private ColorScheme colors = new ColorScheme();
+
     /**
      * if true all four colors are used otherwise only the first
      */
     private boolean useColorShade;
+
     /**
      * rotation of the component, one circle equals 360.0f
      */
     private float rotation;
+
     /**
      * if true the window size influences the way the rotation is displayed
      */
     private boolean useAbsoluteRotation = true;
 
     /**
-     * creates a quad for the component
-     * sets default values
+     * sets the depth value of the component by setting its z position to
+     * the passed value
+     *
+     * @param depthValue new depth value (z cord)
      */
-    public QuadComponent() {
-        super();
-        quad = new Quad();
-        cornerProportion = FREE;
-        edgeProportion = FREE;
-        maskMode = MaskMode.USE_TRANSPARENT;
-        cornerSize = new RelativeToComponentSizeE(0);
-        colors = new ColorScheme();
-        useColorShade = false;
-        edge = new Edge();
-
-
-    }
-
     @Override
     public void setDepthValue(float depthValue) {
         quad.setPosition(quad.getPosition().x,quad.getPosition().y,depthValue);
     }
 
+    /**
+     * sets up the shader for drawing the quad and draws it to the screen
+     *
+     * @param orthographic projection matrix for the hud
+     * @param transformation transformation class for matrix calculations
+     * @param shaderManager shader manager of the hud provides the shader reference
+     */
     @Override
     public void setupShader(Matrix4f orthographic, Transformation transformation, HudShaderManager shaderManager) {
+        //calculates the projection model matrix for this component
         Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(quad, orthographic);
+
         ShaderProgram shader = hud.getShaderManager().getMaskShader();
 
-
+        /*
+            SET UNIFORM VALUES
+         */
         shader.setUniform("projModelMatrix", projModelMatrix);
-        shader.setUniform("transparancyMode", maskMode.ordinal());
+        shader.setUniform("transparencyMode", maskMode.ordinal());
 
         shader.setUniform("useTexture",0);
 
-        shader.setUniform("colors", getColorSheme().getVectorArray());
-        shader.setUniform("useColorShade",isUseColorShade()?1:0);
+        shader.setUniform("colors", getColorScheme().getVectorArray());
+        shader.setUniform("useColorShade",isUseColorShade()?1:0);   //boolean is made to an int uniform
 
         shader.setUniform("edgeStartColor",edge.getStartColor().getVector4f());
         shader.setUniform("edgeEndColor",edge.getEndColor().getVector4f());
@@ -109,6 +122,10 @@ public class QuadComponent extends SubComponent {
 
         shader.setUniform("edgeSize",cornerSizeTemp!=0?cornerSizeTemp - (edge.getSize().getValue(this,edgeProportion) * cornerSizeTemp):1 - edge.getSize().getValue(this,edgeProportion));
 
+
+        /*
+           CALCULATING AND SETTING VALUES FOR CORNER CREATION
+         */
         if(cornerSize.getAbsoluteValue() > 0) {
             switch (getCornerProportion()) {
                 case FREE:
@@ -144,6 +161,7 @@ public class QuadComponent extends SubComponent {
 
 
 
+        //draws the mesh
         drawMesh();
     }
 
@@ -153,8 +171,13 @@ public class QuadComponent extends SubComponent {
     @Override
     public void updateBounds() {
 
+        // updates the values of this component
         super.updateBounds();
+
+        // sets the updated values for the quads new position
         quad.setPosition((super.getOnScreenXPosition() + super.getOnScreenWidth() * super.getxOffset()), (super.getOnScreenYPosition() + super.getOnScreenHeight() * super.getyOffset()), quad.getPosition().z);
+
+        // calculates value updates for the rotation
         float rotationComplete = calculateRotation();
         float rotation = Math.abs(rotationComplete);
 
@@ -164,6 +187,8 @@ public class QuadComponent extends SubComponent {
         double sinus = Math.cos(Math.toRadians(rotation));
 
 
+        // sets new values for rotation and scale, scale is used to create a rotation
+        // that is independent from the window size
         quad.setScale3(
                 (float) (super.getOnScreenWidth() * (sinus) + super.getOnScreenWidth() * (aspectRatio) * (float) (1 - sinus)),
                 (float) (super.getOnScreenHeight() * (sinus) + super.getOnScreenHeight() * (1 / aspectRatio) * (float) (1 - sinus)),
@@ -178,7 +203,6 @@ public class QuadComponent extends SubComponent {
      *
      * @return rotation (absolute)
      */
-
     private float calculateRotation() {
         if (useAbsoluteRotation) {
             if (window != null) {
@@ -203,7 +227,6 @@ public class QuadComponent extends SubComponent {
      */
     @Override
     public void drawMesh() {
-
         Mesh mesh = quad.getMesh();
         mesh.render();
     }
@@ -284,7 +307,7 @@ public class QuadComponent extends SubComponent {
         this.colors = new ColorScheme(colors);
     }
 
-    public ColorScheme getColorSheme() {
+    public ColorScheme getColorScheme() {
         return colors;
     }
 

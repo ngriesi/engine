@@ -22,10 +22,15 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up asset classes">
+    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up Color classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/color/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/color/Color.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/color/ColorScheme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/color/ColorScheme.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/HudShaderManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/HudShaderManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/QuadComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/QuadComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextInputComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextInputComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextureComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextureComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/test/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/MainGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/shader/hudshader/maskShader/maskFragmentShader.shader" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/shader/hudshader/maskShader/maskFragmentShader.shader" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -308,7 +313,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605972566896</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="cleaned up Color classes">
+      <created>1605974191686</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1605974191686</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -347,33 +359,34 @@
     <MESSAGE value="Removed debug message" />
     <MESSAGE value="cleaned up animation classes" />
     <MESSAGE value="cleaned up asset classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up asset classes" />
+    <MESSAGE value="cleaned up Color classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up Color classes" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1605885680825">
+    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1606129949670">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1605885680825" />
+    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1606129949670" />
     <state x="707" y="380" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1605960926145">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="707" y="380" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1050@0.0.1920.1050" timestamp="1605960926145" />
-    <state width="1877" height="141" key="GridCell.Tab.0.bottom" timestamp="1605958196199">
+    <state width="1877" height="327" key="GridCell.Tab.0.bottom" timestamp="1606129685475">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="141" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1605958196199" />
-    <state width="1877" height="141" key="GridCell.Tab.0.center" timestamp="1605958196199">
+    <state width="1877" height="327" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1606129685475" />
+    <state width="1877" height="327" key="GridCell.Tab.0.center" timestamp="1606129685475">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="141" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1605958196199" />
-    <state width="1877" height="141" key="GridCell.Tab.0.left" timestamp="1605958196199">
+    <state width="1877" height="327" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1606129685475" />
+    <state width="1877" height="327" key="GridCell.Tab.0.left" timestamp="1606129685475">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="141" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1605958196199" />
-    <state width="1877" height="141" key="GridCell.Tab.0.right" timestamp="1605958196199">
+    <state width="1877" height="327" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1606129685475" />
+    <state width="1877" height="327" key="GridCell.Tab.0.right" timestamp="1606129685475">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="141" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1605958196199" />
+    <state width="1877" height="327" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1606129685475" />
     <state width="1877" height="352" key="GridCell.Tab.1.bottom" timestamp="1605889414894">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -394,10 +407,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1605877050773" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1605972572609">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1606130062310">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1605972572609" />
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1606130062310" />
     <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605877400645">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -406,6 +419,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="505" y="261" width="909" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1050@0.0.1920.1050" timestamp="1605884814385" />
+    <state x="394" y="0" width="1508" height="682" key="dock-window-1" timestamp="1606129739283">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="394" y="0" width="1508" height="682" key="dock-window-1/0.0.1920.1050@0.0.1920.1050" timestamp="1606129739283" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
