@@ -38,7 +38,7 @@ public class VerticalScrollView extends QuadComponent implements DragEvent {
         barBack.setyPositionConstraint(new RelativeInParent(0.5f));
         barBack.setColors(Color.TRANSPARENT);
 
-        barBack.setSelectable(false);
+        barBack.setFocusable(false);
 
         this.addComponent(barBack);
 
@@ -49,7 +49,7 @@ public class VerticalScrollView extends QuadComponent implements DragEvent {
         bar.setxPositionConstraint(new RelativeInParent(0.5f));
         bar.setColors(new Color(0.7f,0.7f,0.7f,0.5f));
 
-        bar.setSelectable(false);
+        bar.setFocusable(false);
 
         bar.getMouseListener().addMouseAction(e -> {
             if(e.getEvent()== MouseEvent.Event.DRAG_STARTED && e.getMouseButton() == MouseListener.MouseButton.LEFT) {

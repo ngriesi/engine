@@ -24,7 +24,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static engine.general.GameEngine.pTime;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL30.*;
 
 public class Hud {
 
@@ -62,7 +61,10 @@ public class Hud {
     private CopyOnWriteArrayList<Action> endOfFrameActions;
 
     /** saves the component that currently gets all the key inputs */
-    private ContentComponent currentKeyInputTarget;
+    private ContentComponent currentInputFocus;
+
+    /** saves the component that currently is in focus */
+    private ContentComponent currentFocus;
 
     /** List of components that should get removed */
     private List<SubComponent> removedComponents;
@@ -152,8 +154,8 @@ public class Hud {
         scene.input(window,mouseInput);
 
         scene.getKeyListener().handleKeyInput(window);
-        if(currentKeyInputTarget != null) {
-            currentKeyInputTarget.getKeyListener().handleKeyInput(window);
+        if(currentInputFocus != null) {
+            currentInputFocus.getKeyListener().handleKeyInput(window);
         }
 
         if(rightDragEvent != null && !mouseInput.isPressed(MouseListener.MouseButton.RIGHT)) {
@@ -344,17 +346,34 @@ public class Hud {
      * sets the component that will get future key inputs next to the current
      * used scene component
      *
-     * @param currentKeyInputTarget new component for key inputs
+     * @param currentInputFocus new component for key inputs
      */
-    public void setCurrentKeyInputTarget(ContentComponent currentKeyInputTarget) {
+    public void setCurrentInputFocus(ContentComponent currentInputFocus) {
 
-        if(this.currentKeyInputTarget != null && !currentKeyInputTarget.equals(this.currentKeyInputTarget)) {
-            this.currentKeyInputTarget.deselected();
-            currentKeyInputTarget.selected();
+        if(this.currentInputFocus != null) {
+            this.currentInputFocus.lostInputFocus();
+
         }
-        this.currentKeyInputTarget = currentKeyInputTarget;
+        if(!currentInputFocus.equals(this.currentInputFocus)) {
+            currentInputFocus.receivedInputFocus();
+        }
 
-        System.out.println(currentKeyInputTarget);
+        this.currentInputFocus = currentInputFocus;
+
+
+
+    }
+
+    public void setCurrentFocus(ContentComponent currentFocus) {
+        if(this.currentFocus != null) {
+            this.currentFocus.lostFocus();
+
+        }
+        if(!currentFocus.equals(this.currentFocus)) {
+            currentFocus.receivedFocus();
+        }
+
+        this.currentFocus = currentFocus;
     }
 
     /**
@@ -507,8 +526,8 @@ public class Hud {
         removedComponents.add(component);
     }
 
-    public ContentComponent getCurrentKeyInputTarget() {
-        return currentKeyInputTarget;
+    public ContentComponent getCurrentInputFocus() {
+        return currentInputFocus;
     }
 
     public HudShaderManager getShaderManager() {

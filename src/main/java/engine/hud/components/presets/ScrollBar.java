@@ -51,7 +51,7 @@ public class ScrollBar implements DragEvent {
         barBack.setColors(Color.TRANSPARENT);
 
 
-        barBack.setSelectable(false);
+        barBack.setFocusable(false);
 
         scrollView.addComponent(barBack);
 
@@ -69,7 +69,7 @@ public class ScrollBar implements DragEvent {
         }
         bar.setColors(new Color(0.7f,0.7f,0.7f,0.5f));
 
-        bar.setSelectable(false);
+        bar.setFocusable(false);
 
         bar.getMouseListener().addMouseAction(e -> {
             if(e.getEvent()== MouseEvent.Event.DRAG_STARTED && e.getMouseButton() == MouseListener.MouseButton.LEFT) {

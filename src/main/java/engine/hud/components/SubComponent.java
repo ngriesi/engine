@@ -135,30 +135,6 @@ public abstract class SubComponent extends ContentComponent {
 
             setupShader(orthographic, transformation, shaderManager);
 
-            /*
-            if (maskComponent != null) {
-
-                glDepthMask(writeToDepthBuffer);
-                glStencilFunc(GL_EQUAL, 1, 0xff);
-                setDepthValue(getId());
-                glDepthFunc(GL_ALWAYS);
-                glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
-
-                setupShader(orthographic, transformation, shaderManager);
-            } else {
-                glDepthFunc(GL_ALWAYS);
-                glStencilFunc(GL_ALWAYS, 0, 0);
-                glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-                glDepthMask(writeToDepthBuffer);
-                setDepthValue(getId());
-
-
-                setupShader(orthographic, transformation, shaderManager);
-
-            }
-
-             */
-
         }
 
     }

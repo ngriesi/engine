@@ -6,6 +6,8 @@ import engine.hud.Hud;
 import engine.hud.HudShaderManager;
 import engine.hud.actions.Action;
 import engine.hud.keys.KeyListener;
+import engine.hud.mouse.MouseAction;
+import engine.hud.mouse.MouseEvent;
 import engine.hud.mouse.MouseListener;
 import org.joml.Matrix4f;
 
@@ -47,14 +49,23 @@ public abstract class ContentComponent {
     /** content of the hud component */
     protected CopyOnWriteArrayList<SubComponent> content;
 
-    /** executed when component gets deselected */
-    private Action deselectedAction;
+    /** executed when component gets focus */
+    private Action onFocusedAction;
 
-    /** executed when component gets selected */
-    private Action selectedAction;
+    /** executed when component loses focus */
+    private Action onFocusLostAction;
 
-    /** if true the component can be selected */
-    private boolean selectable;
+    /** executed when component gets input focus */
+    private Action onInputFocusedAction;
+
+    /** executed when component loses input focus */
+    private Action onInputFocusLostAction;
+
+    /** if true the component can be in focus */
+    private boolean focusable = true;
+
+    /** if true the component can get input focus */
+    private boolean inputFocusable = true;
 
     /** id of the component */
     protected int id;
@@ -70,10 +81,18 @@ public abstract class ContentComponent {
      */
     ContentComponent() {
         content = new CopyOnWriteArrayList<>();
-        selectable = true;
         visible = true;
         keyListener = new KeyListener();
         mouseListener = new MouseListener(this);
+        mouseListener.addLeftButtonAction(new MouseAction() {
+            @Override
+            public boolean action(MouseEvent e) {
+                if(e.getEvent()== MouseEvent.Event.CLICK_RELEASED || e.getEvent() == MouseEvent.Event.PRESS_RELEASED) {
+                    ContentComponent.this.focus();
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -207,36 +226,85 @@ public abstract class ContentComponent {
         updateBounds();
     }
 
-    public void select() {
-        if(selectable) {
-            hud.setCurrentKeyInputTarget(this);
+    public void focus() {
+        if(focusable) {
+            hud.setCurrentFocus(this);
+            if(inputFocusable) {
+                hud.setCurrentInputFocus(this);
+            }
         }
     }
 
-    public void deselected() {
-
-        if(deselectedAction != null) {
-            deselectedAction.execute();
+    public void receivedFocus() {
+        if(onFocusedAction != null) {
+            onFocusedAction.execute();
         }
     }
 
-    public void selected() {
-
-        if(selectedAction != null) {
-            selectedAction.execute();
+    public void lostFocus() {
+        if(onFocusLostAction != null) {
+            onFocusLostAction.execute();
         }
     }
 
-    public void setDeselectedAction(Action deselectedAction) {
-        this.deselectedAction = deselectedAction;
+    public void receivedInputFocus() {
+        if(onInputFocusedAction != null) {
+            onInputFocusedAction.execute();
+        }
     }
 
-    public boolean isSelectable() {
-        return selectable;
+    public void lostInputFocus() {
+        if(onInputFocusLostAction != null) {
+            onInputFocusLostAction.execute();
+        }
     }
 
-    public void setSelectable(boolean selectable) {
-        this.selectable = selectable;
+    public Action getOnFocusedAction() {
+        return onFocusedAction;
+    }
+
+    public void setOnFocusedAction(Action onFocusedAction) {
+        this.onFocusedAction = onFocusedAction;
+    }
+
+    public Action getOnFocusLostAction() {
+        return onFocusLostAction;
+    }
+
+    public void setOnFocusLostAction(Action onFocusLostAction) {
+        this.onFocusLostAction = onFocusLostAction;
+    }
+
+    public Action getOnInputFocusedAction() {
+        return onInputFocusedAction;
+    }
+
+    public void setOnInputFocusedAction(Action onInputFocusedAction) {
+        this.onInputFocusedAction = onInputFocusedAction;
+    }
+
+    public Action getOnInputFocusLostAction() {
+        return onInputFocusLostAction;
+    }
+
+    public void setOnInputFocusLostAction(Action onInputFocusLostAction) {
+        this.onInputFocusLostAction = onInputFocusLostAction;
+    }
+
+    public boolean isFocusable() {
+        return focusable;
+    }
+
+    public void setFocusable(boolean focusable) {
+        this.focusable = focusable;
+    }
+
+    public boolean isInputFocusable() {
+        return inputFocusable;
+    }
+
+    public void setInputFocusable(boolean inputFocusable) {
+        this.inputFocusable = inputFocusable;
     }
 
     public MouseListener getMouseListener() {
@@ -289,14 +357,6 @@ public abstract class ContentComponent {
 
     public float getyOffset() {
         return yOffset;
-    }
-
-    public Action getSelectedAction() {
-        return selectedAction;
-    }
-
-    public void setSelectedAction(Action selectedAction) {
-        this.selectedAction = selectedAction;
     }
 
     public Window getWindow() {

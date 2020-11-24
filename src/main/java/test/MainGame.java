@@ -70,12 +70,11 @@ public class MainGame implements IGameLogic {
 
         QuadComponent quadComponent = new QuadComponent();
 
-        TextInputComponent textComponent = new TextInputComponent(FontTexture.STANDARD_FONT_TEXTURE);
-        textComponent.setText("test");
-        textComponent.setColors(Color.BLACK);
-        textComponent.setHeightConstraint(0.5f);
-        textComponent.setWidthConstraint(new TextAspectRatio());
-        quadComponent.addComponent(textComponent);
+        DropDownMenu<Quad> drop = new DropDownMenu<>();
+        for(int i = 0;i < 20 ; i ++) {
+            drop.addElement(i + "test",new Quad());
+        }
+        quadComponent.addComponent(drop);
 
         hud.getScene().addComponent(quadComponent);
 

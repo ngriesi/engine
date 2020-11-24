@@ -26,7 +26,7 @@ public class TextInputBox extends QuadComponent {
         textInputComponent.setyPositionConstraint(new RelativeToParentPosition(0.5f));
         textInputComponent.setxPositionConstraint(new RelativeInParent(0));
         textInputComponent.setOnCursorChanged(this::cursorChangedAction);
-        textInputComponent.setSelectable(false);
+        textInputComponent.setFocusable(false);
         this.addComponent(textInputComponent);
         this.setCornerSize(0.2f);
         this.setCornerProportion(ElementSizeConstraint.Proportion.KEEP_HEIGHT);
@@ -37,7 +37,7 @@ public class TextInputBox extends QuadComponent {
             @Override
             public boolean action(MouseEvent e) {
                 if(e.getEvent() == MouseEvent.Event.CLICK_RELEASED && e.getMouseButton()== MouseListener.MouseButton.LEFT) {
-                    hud.setCurrentKeyInputTarget(textInputComponent);
+                    hud.setCurrentInputFocus(textInputComponent);
                     hud.needsNextRendering();
                     float x = e.getMouseInput().getRelativePos().x - (textInputComponent.getOnScreenXPosition() + textInputComponent.getxOffset() + textInputComponent.getAutoXOffset() - textInputComponent.getOnScreenWidth()/2);
                     float y = e.getMouseInput().getRelativePos().y - (textInputComponent.getOnScreenYPosition() + textInputComponent.getyOffset() + textInputComponent.getAutoYOffset() - textInputComponent.getOnScreenHeight()/2);

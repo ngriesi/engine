@@ -1,6 +1,7 @@
 package engine.hud.components.presets;
 
 import engine.hud.actions.ReturnAction;
+import engine.hud.animations.ColorSchemeAnimation;
 import engine.hud.animations.DefaultAnimations;
 import engine.hud.assets.Edge;
 import engine.hud.color.Color;
@@ -9,7 +10,6 @@ import engine.hud.components.SubComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.contentcomponents.TextComponent;
 import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
-import engine.hud.constraints.elementSizeConstraints.RelativeToComponentSizeE;
 import engine.hud.constraints.elementSizeConstraints.RelativeToScreenSizeE;
 import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
@@ -19,35 +19,83 @@ import engine.hud.mouse.MouseListener;
 import engine.hud.text.FontTexture;
 import org.joml.Vector2f;
 
+/**
+ * Button class extends QuadComponent and is used to create buttons with
+ * a default behaviour
+ */
+@SuppressWarnings("unused")
 public class Button extends QuadComponent implements DragEvent {
 
-    private TextComponent textComponent;
+    /**
+     * text component containing the text of the button
+     */
+    private final TextComponent textComponent;
 
+    /**
+     * action performed when button gets clicked
+     */
     private ReturnAction clickedAction;
 
+    /**
+     * button only performs the clickedAction if activated is true
+     */
     private boolean activated;
 
+    /**
+     * it true the button will deactivate after the first click
+     */
     private boolean autoDeactivate;
 
+    /**
+     * if true the button is enabled, if false the buttons functions is disabled and
+     * its visuals are changed
+     */
     private boolean enabled;
 
+    /**
+     * if true the button is currently pressed
+     */
     private boolean pressed;
 
-    private engine.hud.animations.Animation entered;
+    /**
+     * animation, played when the mouse enters this button
+     */
+    private final ColorSchemeAnimation entered;
 
-    private engine.hud.animations.Animation exited;
+    /**
+     * animation, played when the mouse exits this button
+     */
+    private final ColorSchemeAnimation exited;
 
+    /**
+     * color schemes used in for the different states of the button
+     */
     public ColorScheme normalColor,enteredColor,clickedColor,pressedColor,textColor,textClickedColor,disabledColor,textDisabledColor;
 
-    private QuadComponent mainBack;
+    /**
+     * quad component used to display the main background of the button
+     */
+    private final QuadComponent mainBack;
 
+    /**
+     * constructor creating a button with text
+     *
+     * @param width width of the button relative to its parent size
+     * @param height height of the button relative to its parent size
+     * @param x x position of the button relative to its parent position
+     * @param y y position of the button relative to its parent position
+     * @param text text of the button
+     * @param fontTexture font texture used by the button text
+     */
     public Button(float width, float height, float x, float y, String text, FontTexture fontTexture) {
 
+        //sets button bounds
         super.setWidthConstraint(new RelativeToParentSize(width));
         super.setHeightConstraint(new RelativeToParentSize(height));
         super.setxPositionConstraint(new RelativeInParent(x));
         super.setyPositionConstraint(new RelativeInParent(y));
 
+        //gets default color schemes
         normalColor = ColorScheme.getStandardColorScheme(ColorScheme.StandardColorSchemes.BUTTON_STANDARD);
         enteredColor = ColorScheme.getStandardColorScheme(ColorScheme.StandardColorSchemes.BUTTON_ENTERED);
         clickedColor = ColorScheme.getStandardColorScheme(ColorScheme.StandardColorSchemes.BUTTON_PRESSED);
@@ -57,12 +105,13 @@ public class Button extends QuadComponent implements DragEvent {
         disabledColor = ColorScheme.getStandardColorScheme(ColorScheme.StandardColorSchemes.BUTTON_DISABLED);
         textDisabledColor = ColorScheme.getStandardColorScheme(ColorScheme.StandardColorSchemes.BUTTON_TEXT_DISABLED);
 
+        //sets standard boolean values
         autoDeactivate = false;
         enabled = true;
         pressed = false;
 
 
-
+        //creates the text component of the button
         textComponent = new TextComponent(fontTexture);
         textComponent.setText(text);
 
@@ -74,6 +123,7 @@ public class Button extends QuadComponent implements DragEvent {
         textComponent.setColorScheme(textColor);
 
 
+        //mainBack,this and effect are used to create multiple edges
         setCornerSize(new RelativeToScreenSizeE(0.015f));
 
         setCornerProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
@@ -120,10 +170,11 @@ public class Button extends QuadComponent implements DragEvent {
 
         activated = true;
 
+        //sets default animations
+        entered = (ColorSchemeAnimation) DefaultAnimations.buttonEnteredAnimation.createForComponent(mainBack);
+        exited = (ColorSchemeAnimation) DefaultAnimations.buttonExitedAnimation.createForComponent(mainBack);
 
-        entered = DefaultAnimations.buttonEnteredAnimation.createForComponent(mainBack);
-        exited = DefaultAnimations.buttonExitedAnimation.createForComponent(mainBack);
-
+        //sets the mouse actions
         getMouseListener().addMouseAction(e -> {
             switch (e.getEvent()) {
                 case ENTERED:
@@ -189,6 +240,11 @@ public class Button extends QuadComponent implements DragEvent {
         });
     }
 
+    /**
+     * method is called when button gets clicked
+     *
+     * @return returns true
+     */
     private boolean clickedAction() {
 
         if(activated && enabled) {
@@ -206,6 +262,12 @@ public class Button extends QuadComponent implements DragEvent {
         return true;
     }
 
+    /**
+     * method is called when the mouse enters the button
+     *
+     * @param leftPressed it true the mouse was dragged into the button
+     * @return whether the entered event was consumed or not
+     */
     private boolean enteredAction(boolean leftPressed) {
         if(hud.getLeftDragEvent() == null) {
             if (!leftPressed) {
@@ -229,6 +291,25 @@ public class Button extends QuadComponent implements DragEvent {
 
     }
 
+    /**
+     * enables the button and sets its respective color
+     */
+    public void enable() {
+        textComponent.setColorScheme(textColor);
+        mainBack.setColorScheme(normalColor);
+        enabled = true;
+    }
+
+    /**
+     * disables the component and sets its respective color
+     */
+    public void disable() {
+        textComponent.setColorScheme(textDisabledColor);
+        mainBack.setColorScheme(disabledColor);
+        enabled = false;
+    }
+
+
     public void setOnLeftClickAction(ReturnAction onLeftClickAction) {
         clickedAction = onLeftClickAction;
     }
@@ -240,19 +321,6 @@ public class Button extends QuadComponent implements DragEvent {
     public void deactivate() {activated = false;}
 
     public void activate() {activated = true;}
-
-    public void enable() {
-        textComponent.setColorScheme(textColor);
-        mainBack.setColorScheme(normalColor);
-        enabled = true;
-
-    }
-
-    public void disable() {
-        textComponent.setColorScheme(textDisabledColor);
-        mainBack.setColorScheme(disabledColor);
-        enabled = false;
-    }
 
     public void setAutoDeactivate(boolean autoDeactivate) {
         this.autoDeactivate = autoDeactivate;

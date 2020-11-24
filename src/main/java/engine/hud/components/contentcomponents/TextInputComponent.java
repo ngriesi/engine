@@ -58,7 +58,7 @@ public class TextInputComponent extends TextComponent {
 
         getMouseListener().addLeftButtonAction(e -> {
             if(e.getEvent()== MouseEvent.Event.CLICK_RELEASED) {
-                hud.setCurrentKeyInputTarget(TextInputComponent.this);
+                hud.setCurrentInputFocus(TextInputComponent.this);
                 hud.needsNextRendering();
             }
             return false;
@@ -231,7 +231,7 @@ public class TextInputComponent extends TextComponent {
     public void drawCursor(Matrix4f orthographic, Transformation transformation, ShaderProgram hudShaderProgram) {
 
 
-        if(hud.getCurrentKeyInputTarget() != null && hud.getCurrentKeyInputTarget().equals(this)) {
+        if(hud.getCurrentInputFocus() != null && hud.getCurrentInputFocus().equals(this)) {
             Mesh mesh = cursor.getMesh();
             Matrix4f projModelMatrix = transformation.buildOrtoProjModelMatrix(cursor, orthographic);
             hudShaderProgram.setUniform("projModelMatrix", projModelMatrix);
@@ -354,8 +354,8 @@ public class TextInputComponent extends TextComponent {
      * needs rendering to remove cursor
      */
     @Override
-    public void deselected() {
-        super.deselected();
+    public void lostInputFocus() {
+        super.lostInputFocus();
         hud.needsNextRendering();
     }
 

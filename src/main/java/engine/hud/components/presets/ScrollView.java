@@ -78,7 +78,7 @@ public class ScrollView extends QuadComponent {
         calculateValues();
     }
 
-    private void calculateValues() {
+    void calculateValues() {
 
 
         float ratioY = (contentBack.getOnScreenHeight())/this.getOnScreenHeight();
