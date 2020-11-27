@@ -155,7 +155,7 @@ public class DropDownMenu<T> extends QuadComponent {
         scrollView.setyPositionConstraint(new RelativeInParent(0));
         scrollView.setxPositionConstraint(new RelativeInParent(0.5f));
 
-        scrollView.setVisible(true);
+        scrollView.setVisible(false);
 
         scrollView.setContent(contentBack);
 
@@ -168,13 +168,8 @@ public class DropDownMenu<T> extends QuadComponent {
             }
             if(e.getEvent() == MouseEvent.Event.CLICK_RELEASED && e.getMouseButton() == LEFT) {
 
-                if(getSceneComponent().getRenderedOnTop() != null && getSceneComponent().getRenderedOnTop().equals(scrollView)) {
-                    getSceneComponent().setRenderedOnTop(null);
-                    scrollView.setVisible(false);
-                } else {
-                    getSceneComponent().setRenderedOnTop(scrollView);
-                    scrollView.setVisible(true);
-                }
+                getSceneComponent().setRenderedOnTop(scrollView);
+                scrollView.setVisible(true);
                 hud.needsNextRendering();
                 return true;
             }

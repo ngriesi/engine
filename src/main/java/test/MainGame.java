@@ -69,6 +69,7 @@ public class MainGame implements IGameLogic {
         camera = new Camera();
 
         QuadComponent quadComponent = new QuadComponent();
+        quadComponent.setColor(Color.RED);
 
         DropDownMenu<Quad> drop = new DropDownMenu<>();
         for(int i = 0;i < 20 ; i ++) {
@@ -77,6 +78,9 @@ public class MainGame implements IGameLogic {
         quadComponent.addComponent(drop);
 
         hud.getScene().addComponent(quadComponent);
+
+        PopupWindow popup = new PopupWindow();
+        popup.show(quadComponent);
 
 
         scene = new Scene();
