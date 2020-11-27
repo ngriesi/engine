@@ -1,4 +1,4 @@
-package engine.hud.components.presets;
+package engine.hud.components.presets.scroll;
 
 import engine.hud.components.SubComponent;
 import engine.hud.components.contentcomponents.QuadComponent;
@@ -8,14 +8,31 @@ import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.RelativeToScreenSize;
 import engine.hud.constraints.sizeConstraints.SubtractConstraint;
 
+/**
+ * scroll view for horizontal and vertical scrolling, unused bars
+ * are hidden automatically
+ */
 @SuppressWarnings("unused")
-public class ScrollView extends QuadComponent {
+public class ScrollView extends ScrollComponent {
 
+    /**
+     * component that gets scrolled, can be set with the <code>setContent</code> method
+     */
     private SubComponent contentBack;
 
+    /**
+     * vertical scroll bar
+     */
     private final ScrollBar verticalBar;
+
+    /**
+     * horizontal scroll bar
+     */
     private final ScrollBar horizontalBar;
 
+    /**
+     * constructor creating an empty scroll view
+     */
     public ScrollView() {
 
         contentBack = new QuadComponent();
@@ -24,7 +41,10 @@ public class ScrollView extends QuadComponent {
         verticalBar = new ScrollBar(this, ExpandList.Orientation.VERTICAL);
         horizontalBar = new ScrollBar(this, ExpandList.Orientation.HORIZONTAL);
 
+        // sets up the scrolling of the view
         this.getMouseListener().addMouseAction(e -> {
+
+            // vertical scrolling setup
             float yOffset = e.getMouseInput().getYOffsetScroll();
             if(yOffset != 0) {
                 if(contentBack.getOnScreenHeight() > getOnScreenHeight()) {
@@ -38,8 +58,8 @@ public class ScrollView extends QuadComponent {
                 }
             }
 
+            // horizontal scroll setup
             float xOffset = e.getMouseInput().getXOffsetScroll();
-
             if(xOffset != 0) {
                 if(contentBack.getOnScreenWidth() > getOnScreenWidth()) {
                     float value = horizontalBar.getScrollPosition() + ((xOffset * 0.5f) / (contentBack.getOnScreenWidth() / getOnScreenWidth()));
@@ -56,21 +76,24 @@ public class ScrollView extends QuadComponent {
         });
     }
 
-    @Override
-    public void updateBounds() {
-        super.updateBounds();
-        calculateValues();
-    }
-
+    /**
+     * sets a new content for the scroll view
+     *
+     * @param content new content of the scroll view
+     */
     public void setContent(SubComponent content) {
+        // removes old content
         removeComponent(contentBack);
         removeComponent(verticalBar.getBarBack());
         removeComponent(horizontalBar.getBarBack());
         this.contentBack = content;
+
+        // adds new content
         addComponent(contentBack);
         addComponent(horizontalBar.getBarBack());
         addComponent(verticalBar.getBarBack());
 
+        // resets the scroll positions
         contentBack.setxPositionConstraint(new RelativeInParent(0));
         contentBack.setyPositionConstraint(new RelativeInParent(0));
         verticalBar.setScrollPosition(0);
@@ -78,9 +101,14 @@ public class ScrollView extends QuadComponent {
         calculateValues();
     }
 
-    void calculateValues() {
+    /**
+     * updates the values of the scroll bars
+     */
+    @Override
+    public void calculateValues() {
 
 
+        // calculates  new width nad height values for the bars
         float ratioY = (contentBack.getOnScreenHeight())/this.getOnScreenHeight();
 
         float ratioX = (contentBack.getOnScreenWidth())/this.getOnScreenWidth();
@@ -92,20 +120,28 @@ public class ScrollView extends QuadComponent {
         verticalBar.getBarBack().setVisible(ratioY>1);
         horizontalBar.getBarBack().setVisible(ratioX>1);
 
+        // sets the size of the horizontal bar
         if(ratioX>1 && ratioY>1) {
             horizontalBar.getBarBack().setWidthConstraint(new SubtractConstraint(new RelativeToParentSize(1),new RelativeToScreenSize(0.01f)));
         }
 
+        // sets the new heights
         verticalBar.getBar().changeHeightValue(height);
         horizontalBar.getBar().changeWidthValue(width);
 
+        // sets the new positions
         verticalBar.getBar().changeYValue(verticalBar.getScrollPosition());
         horizontalBar.getBar().changeXValue(horizontalBar.getScrollPosition());
 
+        // updates the position of the content
         updateContentPosition();
     }
 
-    void updateContentPosition() {
+    /**
+     * updates the position of the content of the scroll view
+     */
+    @Override
+    protected void updateContentPosition() {
         contentBack.changeYValue(verticalBar.getScrollPosition());
         contentBack.changeXValue(horizontalBar.getScrollPosition());
     }

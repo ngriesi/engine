@@ -1,4 +1,4 @@
-package engine.hud.components.presets;
+package engine.hud.components.presets.scroll;
 
 import engine.hud.color.Color;
 import engine.hud.components.SubComponent;
@@ -6,7 +6,6 @@ import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.layout.ExpandList;
 import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.sizeConstraints.InvertedDirectionRelativeToScreen;
-import engine.hud.constraints.sizeConstraints.InvertedRelativeToWindow;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.RelativeToScreenSize;
 import engine.hud.events.DragEvent;
@@ -14,28 +13,61 @@ import engine.hud.mouse.MouseEvent;
 import engine.hud.mouse.MouseListener;
 import org.joml.Vector2f;
 
+/**
+ * used to create a scroll bar, used in the ScrollViews
+ *
+ * @see ScrollView for useage
+ */
 @SuppressWarnings("WeakerAccess")
 public class ScrollBar implements DragEvent {
 
+    /**
+     * determines the orientation of the scroll bar
+     */
     private final ExpandList.Orientation orientation;
 
-    private QuadComponent barBack,bar;
+    /**
+     * components the scroll bar consists of
+     */
+    private final QuadComponent barBack,bar;
 
+    /**
+     * sets the thickness of the bar relative to the screen width
+     */
     @SuppressWarnings("FieldCanBeLocal")
-    private float barThickness = 0.01f;
+    private final float barThickness = 0.01f;
 
+    /**
+     * if true the scroll bar currently get dragged
+     */
     private boolean dragging = false;
 
+    /**
+     * saves the offset between the mouse coordinates and the scroll bar position while dragging
+     */
     private float diff;
 
+    /**
+     * current position of the scroll bar
+     */
     private float scrollPosition;
 
-    private ScrollView scrollView;
+    /**
+     * scroll view the bar belongs to
+     */
+    private final ScrollComponent scrollView;
 
-    public ScrollBar(ScrollView scrollView, ExpandList.Orientation orientation) {
+    /**
+     * constructor creating a scroll bar for a scroll view with a defined rotation
+     *
+     * @param scrollView the bar belongs to
+     * @param orientation of the scroll bar
+     */
+    public ScrollBar(ScrollComponent scrollView, ExpandList.Orientation orientation) {
         this.scrollView = scrollView;
         this.orientation = orientation;
 
+        // formats the bars background
         barBack = new QuadComponent();
         if(orientation== ExpandList.Orientation.VERTICAL) {
             barBack.setWidthConstraint(new RelativeToScreenSize(barThickness));
@@ -50,11 +82,11 @@ public class ScrollBar implements DragEvent {
         }
         barBack.setColors(Color.TRANSPARENT);
 
-
         barBack.setFocusable(false);
 
         scrollView.addComponent(barBack);
 
+        // formats the scroll bar bar
         bar = new QuadComponent();
         if(orientation == ExpandList.Orientation.VERTICAL) {
             bar.setWidthConstraint(new RelativeToParentSize(0.8f));
@@ -71,6 +103,7 @@ public class ScrollBar implements DragEvent {
 
         bar.setFocusable(false);
 
+        // defines the behaviour of the bar with the mouse
         bar.getMouseListener().addMouseAction(e -> {
             if(e.getEvent()== MouseEvent.Event.DRAG_STARTED && e.getMouseButton() == MouseListener.MouseButton.LEFT) {
                 scrollView.getHud().setLeftDragEvent(ScrollBar.this);
@@ -135,6 +168,11 @@ public class ScrollBar implements DragEvent {
         return null;
     }
 
+    /**
+     * action performed when the bar gets dragged
+     *
+     * @param lastMousePosition last position of the mouse (last frame)
+     */
     @Override
     public void dragAction(Vector2f lastMousePosition) {
         float value;
