@@ -20,7 +20,7 @@ import static org.lwjgl.opengl.GL11.GL_EQUAL;
  * main rendering method
  *
  */
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class SubComponent extends ContentComponent {
 
     /**
@@ -64,6 +64,17 @@ public abstract class SubComponent extends ContentComponent {
      * decides of transparent pixels should be a mask
      */
     private MaskMode maskMode;
+
+    /**
+     * defines if the component can be the mask for its content
+     */
+    private boolean beMask = true;
+
+    /**
+     * if true the component uses the last component above him in the (which it belongs to) that has
+     * the beMask attribute set to true as mask
+     */
+    private boolean useMask = true;
 
     public SubComponent() {
         this(new RelativeToWindowPosition(0.5f), new RelativeToWindowPosition(0.5f), new RelativeToWindowSize(0.5f), new RelativeToWindowSize(0.5f));
@@ -146,21 +157,35 @@ public abstract class SubComponent extends ContentComponent {
             // renders the component to the screen
             glDepthMask(writeToDepthBuffer);
             glStencilMask(0xFF);
-            glStencilFunc(GL_EQUAL, level, 0xFF);
+            if(useMask) {
+                glStencilFunc(GL_EQUAL, level, 0xFF);
+            } else {
+                glStencilFunc(GL_ALWAYS, level, 0xFF);
+            }
             setDepthValue(getId());
             glDepthFunc(GL_ALWAYS);
-            glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+            if(beMask) {
+                glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+            } else {
+                glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP);
+            }
             setupShader(orthographic, transformation, shaderManager);
 
             // renders all components inside this component
-            super.renderNext(orthographic, transformation, shaderManager,level + 1);
+            if(beMask) {
+                super.renderNext(orthographic, transformation, shaderManager, level + 1);
+            } else {
+                super.renderNext(orthographic, transformation, shaderManager, level);
+            }
 
             // erases this component dorm the stencil buffer
-            glColorMask(false, false, false, false);
-            glDepthMask(false);
-            glStencilFunc(GL_ALWAYS, 0, 0xff);
-            glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
-            setupShader(orthographic, transformation, shaderManager);
+            if(beMask) {
+                glColorMask(false, false, false, false);
+                glDepthMask(false);
+                glStencilFunc(GL_ALWAYS, 0, 0xff);
+                glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
+                setupShader(orthographic, transformation, shaderManager);
+            }
 
         }
 
@@ -368,5 +393,21 @@ public abstract class SubComponent extends ContentComponent {
 
     public void setMaskMode(MaskMode maskMode) {
         this.maskMode = maskMode;
+    }
+
+    public boolean isBeMask() {
+        return beMask;
+    }
+
+    public void setBeMask(boolean beMask) {
+        this.beMask = beMask;
+    }
+
+    public boolean isUseMask() {
+        return useMask;
+    }
+
+    public void setUseMask(boolean useMask) {
+        this.useMask = useMask;
     }
 }

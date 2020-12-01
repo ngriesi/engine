@@ -76,10 +76,10 @@ public class Hud {
     private DragEvent rightDragEvent;
 
     /** stores mask behaviour of the right drag event */
-    private ContentComponent rightDragEventMaskSave;
+    private boolean rightDragEventMaskSave;
 
     /** stores mask behaviour of the left drag event */
-    private ContentComponent leftDragEventMaskSave;
+    private boolean leftDragEventMaskSave;
 
     /** stores the last mouse position*/
     private Vector2f lastMousePositionRelative;
@@ -425,6 +425,9 @@ public class Hud {
     public void dropRightDragEvent() {
         if(rightDragEvent != null) {
             rightDragEvent.dropAction();
+            if(rightDragEvent.getDragVisual() != null) {
+                rightDragEvent.getDragVisual().setUseMask(rightDragEventMaskSave);
+            }
             rightDragEvent = null;
             needsNextRendering();
         }
@@ -433,6 +436,9 @@ public class Hud {
     public void dropLeftDragEvent() {
         if(leftDragEvent != null) {
             leftDragEvent.dropAction();
+            if(leftDragEvent.getDragVisual() != null) {
+                leftDragEvent.getDragVisual().setUseMask(leftDragEventMaskSave);
+            }
             leftDragEvent = null;
             needsNextRendering();
         }
@@ -446,6 +452,8 @@ public class Hud {
     public void setLeftDragEvent(DragEvent leftDragEvent) {
         this.leftDragEvent = leftDragEvent;
         if(leftDragEvent != null && leftDragEvent.getDragVisual() != null) {
+            leftDragEventMaskSave = leftDragEvent.getDragVisual().isUseMask();
+            leftDragEvent.getDragVisual().setUseMask(false);
             leftDragEvent.getDragVisual().setXPositionConstraint(new RelativeToWindowPosition(lastMousePositionRelative.x));
             leftDragEvent.getDragVisual().setYPositionConstraint(new RelativeToWindowPosition(lastMousePositionRelative.y));
         }
@@ -462,6 +470,8 @@ public class Hud {
         this.rightDragEvent = rightDragEvent;
 
         if(rightDragEvent != null && rightDragEvent.getDragVisual() != null) {
+            rightDragEventMaskSave = rightDragEvent.getDragVisual().isUseMask();
+            rightDragEvent.getDragVisual().setUseMask(false);
             rightDragEvent.getDragVisual().setXPositionConstraint(new RelativeToWindowPosition(lastMousePositionRelative.x));
             rightDragEvent.getDragVisual().setYPositionConstraint(new RelativeToWindowPosition(lastMousePositionRelative.y));
         }
