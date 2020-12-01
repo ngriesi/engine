@@ -19,8 +19,8 @@ public class Background extends QuadComponent {
      */
     public Background(ColorScheme color) {
         super();
-        this.setxPositionConstraint(new RelativeToWindowPosition(0.5f));
-        this.setyPositionConstraint(new RelativeToWindowPosition(0.5f));
+        this.setXPositionConstraint(new RelativeToWindowPosition(0.5f));
+        this.setYPositionConstraint(new RelativeToWindowPosition(0.5f));
         this.setHeightConstraint(new RelativeToWindowSize(1));
         this.setWidthConstraint(new RelativeToWindowSize(1));
 

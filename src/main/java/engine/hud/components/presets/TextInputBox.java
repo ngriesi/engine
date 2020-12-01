@@ -47,8 +47,8 @@ public class TextInputBox extends ScrollView {
         textInputComponent = new TextInputComponent(fontTexture);
         textInputComponent.setWidthConstraint(new TextAspectRatio());
         textInputComponent.setHeightConstraint(new RelativeToParentSize(1f/visibleLines));
-        textInputComponent.setyPositionConstraint(new RelativeToParentPosition(1f));
-        textInputComponent.setxPositionConstraint(new RelativeInParent(0));
+        textInputComponent.setYPositionConstraint(new RelativeToParentPosition(1f));
+        textInputComponent.setXPositionConstraint(new RelativeInParent(0));
         textInputComponent.setOnCursorChanged(this::cursorChangedAction);
         textInputComponent.setFocusable(false);
         textInputComponent.setColors(Color.BLACK);
@@ -79,8 +79,8 @@ public class TextInputBox extends ScrollView {
 
                 hud.setCurrentInputFocus(textInputComponent);
                 hud.needsNextRendering();
-                float x = e.getMouseInput().getRelativePos().x - (textInputComponent.getOnScreenXPosition() + textInputComponent.getxOffset()  - textInputComponent.getOnScreenWidth()/2);
-                float y = e.getMouseInput().getRelativePos().y - (textInputComponent.getOnScreenYPosition() + textInputComponent.getyOffset()  - textInputComponent.getOnScreenHeight()/2);
+                float x = e.getMouseInput().getRelativePos().x - (textInputComponent.getOnScreenXPosition() + textInputComponent.getXOffset()  - textInputComponent.getOnScreenWidth()/2);
+                float y = e.getMouseInput().getRelativePos().y - (textInputComponent.getOnScreenYPosition() + textInputComponent.getYOffset()  - textInputComponent.getOnScreenHeight()/2);
 
                 if(y < textInputComponent.getOnScreenHeight()) {
                     Vector2i newCursorPos = textInputComponent.getTextItem().getCursorPosition(x / textInputComponent.getOnScreenWidth(), y / textInputComponent.getOnScreenHeight());
@@ -125,7 +125,7 @@ public class TextInputBox extends ScrollView {
                 calculateValues();
             }
 
-            if (onScreenCursorPosition.x < (this.getOnScreenXPosition() + this.getOnScreenWidth() * (-0.5f + getxOffset()))) {
+            if (onScreenCursorPosition.x < (this.getOnScreenXPosition() + this.getOnScreenWidth() * (-0.5f + getXOffset()))) {
 
                 float relativeWidth = this.getOnScreenWidth()/textInputComponent.getOnScreenWidth();
 
@@ -134,7 +134,7 @@ public class TextInputBox extends ScrollView {
                 calculateValues();
 
 
-            } else if (onScreenCursorPosition.x > (this.getOnScreenXPosition() + this.getOnScreenWidth() * (0.5f + getxOffset()))) {
+            } else if (onScreenCursorPosition.x > (this.getOnScreenXPosition() + this.getOnScreenWidth() * (0.5f + getXOffset()))) {
 
                 float relativeWidth = this.getOnScreenWidth()/textInputComponent.getOnScreenWidth();
 
@@ -152,7 +152,7 @@ public class TextInputBox extends ScrollView {
                 calculateValues();
             }
 
-            if (onScreenCursorPosition.y < (this.getOnScreenYPosition() + this.getOnScreenHeight() * (-0.5f + getyOffset()))) {
+            if (onScreenCursorPosition.y < (this.getOnScreenYPosition() + this.getOnScreenHeight() * (-0.5f + getYOffset()))) {
 
                 float relativeHeight = this.getOnScreenHeight()/textInputComponent.getOnScreenHeight();
 
@@ -161,7 +161,7 @@ public class TextInputBox extends ScrollView {
                 calculateValues();
 
 
-            } else if (onScreenCursorPosition.y > (this.getOnScreenYPosition() + this.getOnScreenHeight() * (0.5f + getyOffset()))) {
+            } else if (onScreenCursorPosition.y > (this.getOnScreenYPosition() + this.getOnScreenHeight() * (0.5f + getYOffset()))) {
 
                 float relativeHeight = this.getOnScreenHeight()/textInputComponent.getOnScreenHeight();
 

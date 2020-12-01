@@ -1,15 +1,20 @@
 package engine.hud.components;
 
-import engine.hud.mouse.MouseInput;
 import engine.general.Transformation;
 import engine.general.Window;
 import engine.hud.HudShaderManager;
+import engine.hud.mouse.MouseInput;
 import org.joml.Matrix4f;
 
 import java.util.HashMap;
 
-import static engine.general.GameEngine.pTime;
-
+/**
+ * topmost component containing all the other (Sub)Components of a hud
+ *
+ * starts the recursive mouse input handling. For this it stores a map
+ * of all the SubComponents in the Scene with its ids.
+ */
+@SuppressWarnings("unused")
 public class SceneComponent extends ContentComponent {
 
     /** id for given to last added content component */
@@ -18,7 +23,7 @@ public class SceneComponent extends ContentComponent {
     /** id of currently selected component */
     private int currentId = 0;
 
-    /**content of the scene and its ids */
+    /** content of the scene and its ids */
     private HashMap<Integer,SubComponent> subComponents;
 
     /** last component that contained the mouse */
@@ -149,45 +154,30 @@ public class SceneComponent extends ContentComponent {
     public void input(Window window, MouseInput mouseInput) {
         SubComponent currentComponent;
 
+        // finds the new component the mouse points at
         if(mouseInput.isInWindow()) {
 
-
-
            SceneComponent.this.currentId = hud.getPixelColor((int) mouseInput.getCurrentPos().x, (int) (window.getHeight() - mouseInput.getCurrentPos().y));
-
-            pTime("input read");
-
-
-
-            currentComponent = subComponents.get(currentId);
-
+           currentComponent = subComponents.get(currentId);
 
         } else {
             currentComponent = null;
             window.forceEvents();
-
         }
 
-
-
-
+        // calls the methods to perform the mouseEntered, mouseExited and the normal mouseAction
         if(currentComponent != null && lastComponent != null) {
 
             if (!lastComponent.equals(currentComponent)) {
 
 
                 lastComponent.getMouseListener().mouseExitedRecursiveSave();
-                pTime("input 2");
                 currentComponent.getMouseListener().mouseEnteredRecursiveSave();
-                pTime("input 3");
                 lastComponent.getMouseListener().mouseExited(mouseInput);
-                pTime("input 4");
                 currentComponent.getMouseListener().mouseEntered(mouseInput);
-                pTime("input 5");
                 lastComponent = currentComponent;
             }
             currentComponent.getMouseListener().mouseActionStart(mouseInput);
-            pTime("input 6");
         } else if(currentComponent == null && lastComponent != null) {
             lastComponent.getMouseListener().mouseExitedRecursiveSave();
             lastComponent.getMouseListener().mouseExited(mouseInput);
@@ -202,11 +192,9 @@ public class SceneComponent extends ContentComponent {
         }
     }
 
-    @Override
-    public void cleanup() {
-        super.cleanup();
-    }
-
+    /**
+     * sets the focus and input focus to this SceneComponent
+     */
     @Override
     public void focus() {
         hud.setCurrentFocus(this);

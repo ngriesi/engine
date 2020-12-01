@@ -23,9 +23,9 @@ public class RelativeToParentPosition extends PositionConstraint {
     @Override
     public float getValue(SubComponent component, Direction direction) {
         if(direction==X) {
-            return component.getParent().getOnScreenXPosition() + component.getParent().getOnScreenWidth() * (-0.5f + component.getxOffset() + value);
+            return component.getParent().getOnScreenXPosition() + component.getParent().getOnScreenWidth() * (-0.5f + component.getXOffset() + value);
         } else {
-            return component.getParent().getOnScreenYPosition() + component.getParent().getOnScreenHeight() * (-0.5f + component.getyOffset() + value);
+            return component.getParent().getOnScreenYPosition() + component.getParent().getOnScreenHeight() * (-0.5f + component.getYOffset() + value);
         }
     }
 }

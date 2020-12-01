@@ -128,7 +128,7 @@ public class TextComponent extends SubComponent {
     protected void updatePosition() {
 
 
-        textItem.setPosition(super.getOnScreenXPosition() + super.getOnScreenWidth() * (super.getxOffset() + alignmentOffset),(super.getOnScreenYPosition() + super.getOnScreenHeight() * super.getyOffset()),textItem.getPosition().z);
+        textItem.setPosition(super.getOnScreenXPosition() + super.getOnScreenWidth() * (super.getXOffset() + alignmentOffset),(super.getOnScreenYPosition() + super.getOnScreenHeight() * super.getYOffset()),textItem.getPosition().z);
     }
 
     /**

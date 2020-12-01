@@ -14,6 +14,12 @@ import org.joml.Matrix4f;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_EQUAL;
 
+/**
+ * parent class of all the components visible in the screen
+ * saves the position and size constraints and contains the
+ * main rendering method
+ *
+ */
 @SuppressWarnings("WeakerAccess")
 public abstract class SubComponent extends ContentComponent {
 
@@ -22,14 +28,6 @@ public abstract class SubComponent extends ContentComponent {
      */
     public enum MaskMode {
         DISPOSE_TRANSPARENT, USE_TRANSPARENT, ONLY_EDGES
-    }
-
-
-    /**
-     * defines the rendering mode used
-     */
-    protected enum RenderMode {
-        NORMAL, ONE_COLOR
     }
 
     /**
@@ -58,11 +56,6 @@ public abstract class SubComponent extends ContentComponent {
     private ContentComponent parent;
 
     /**
-     * Mask of this component
-     */
-    private ContentComponent maskComponent;
-
-    /**
      * if true the component writes to the depth buffer
      */
     private boolean writeToDepthBuffer;
@@ -76,6 +69,14 @@ public abstract class SubComponent extends ContentComponent {
         this(new RelativeToWindowPosition(0.5f), new RelativeToWindowPosition(0.5f), new RelativeToWindowSize(0.5f), new RelativeToWindowSize(0.5f));
     }
 
+    /**
+     * constructor defining a individual position and size for the component
+     *
+     * @param xPosition xPosition Constraint
+     * @param yPosition yPosition Constraint
+     * @param width width Constraint
+     * @param height height Constraint
+     */
     public SubComponent(PositionConstraint xPosition, PositionConstraint yPosition, SizeConstraint width, SizeConstraint height) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
@@ -84,6 +85,7 @@ public abstract class SubComponent extends ContentComponent {
         writeToDepthBuffer = true;
         maskMode = MaskMode.USE_TRANSPARENT;
 
+        // sets default focus behavior on mouse click
         getMouseListener().addLeftButtonAction(e -> {
             if(e.getEvent()== MouseEvent.Event.CLICK_RELEASED || e.getEvent() == MouseEvent.Event.PRESS_RELEASED) {
                 if(getSceneComponent().getCurrentMouseTarget().equals(this)) {
@@ -95,6 +97,10 @@ public abstract class SubComponent extends ContentComponent {
 
     }
 
+    /**
+     * sets the focus to this component if focusable is true
+     * and sets the input focus to this component if input focusable is true
+     */
     @Override
     public void focus() {
         if(focusable) {
@@ -137,7 +143,7 @@ public abstract class SubComponent extends ContentComponent {
 
             glColorMask(true, true,true , true);
 
-
+            // renders the component to the screen
             glDepthMask(writeToDepthBuffer);
             glStencilMask(0xFF);
             glStencilFunc(GL_EQUAL, level, 0xFF);
@@ -146,15 +152,14 @@ public abstract class SubComponent extends ContentComponent {
             glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
             setupShader(orthographic, transformation, shaderManager);
 
+            // renders all components inside this component
             super.renderNext(orthographic, transformation, shaderManager,level + 1);
 
-
+            // erases this component dorm the stencil buffer
             glColorMask(false, false, false, false);
-
             glDepthMask(false);
             glStencilFunc(GL_ALWAYS, 0, 0xff);
             glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
-
             setupShader(orthographic, transformation, shaderManager);
 
         }
@@ -191,7 +196,6 @@ public abstract class SubComponent extends ContentComponent {
     public void addComponent(SubComponent component) {
         super.addComponent(component);
         addToScene(getSceneComponent());
-        component.setMaskComponent(this);
     }
 
     /**
@@ -293,11 +297,11 @@ public abstract class SubComponent extends ContentComponent {
      * setter for default constraints
      */
 
-    public void setxPositionConstraint(float xPosition) {
+    public void setXPositionConstraint(float xPosition) {
         this.xPosition = new RelativeInParent(xPosition);
     }
 
-    public void setyPositionConstraint(float yPosition) {
+    public void setYPositionConstraint(float yPosition) {
         this.yPosition = new RelativeInParent(yPosition);
     }
 
@@ -313,11 +317,11 @@ public abstract class SubComponent extends ContentComponent {
      * setter for constraints
      */
 
-    public void setxPositionConstraint(PositionConstraint xPosition) {
+    public void setXPositionConstraint(PositionConstraint xPosition) {
         this.xPosition = xPosition;
     }
 
-    public void setyPositionConstraint(PositionConstraint yPosition) {
+    public void setYPositionConstraint(PositionConstraint yPosition) {
         this.yPosition = yPosition;
     }
 
@@ -337,12 +341,12 @@ public abstract class SubComponent extends ContentComponent {
      */
 
     @SuppressWarnings("unused")
-    public PositionConstraint getxPosition() {
+    public PositionConstraint getXPosition() {
         return xPosition;
     }
 
     @SuppressWarnings("unused")
-    public PositionConstraint getyPosition() {
+    public PositionConstraint getYPosition() {
         return yPosition;
     }
 
@@ -354,19 +358,15 @@ public abstract class SubComponent extends ContentComponent {
         return height;
     }
 
-    public void setMaskComponent(ContentComponent maskComponent) {
-        this.maskComponent = maskComponent;
-    }
-
     public MaskMode getMaskMode() {
         return maskMode;
     }
 
-    public ContentComponent getMaskComponent() {
-        return maskComponent;
-    }
-
     public void setWriteToDepthBuffer(boolean writeToDepthBuffer) {
         this.writeToDepthBuffer = writeToDepthBuffer;
+    }
+
+    public void setMaskMode(MaskMode maskMode) {
+        this.maskMode = maskMode;
     }
 }

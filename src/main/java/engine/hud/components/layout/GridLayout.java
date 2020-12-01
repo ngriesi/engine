@@ -113,8 +113,8 @@ public class GridLayout extends QuadComponent {
             GridData data = positionData.get(subComponent);
             subComponent.setHeightConstraint(new RelativeToParentSize(1.0f/rows * (data.getHeight() - verticalPadding)));
             subComponent.setWidthConstraint(new RelativeToParentSize(1.0f/columns * (data.getWidth() - horizontalPadding)));
-            subComponent.setxPositionConstraint(new RelativeToParentPosition((data.getColumn()+(0.5f * (data.getWidth() - 2))) * 1.0f/columns));
-            subComponent.setyPositionConstraint(new RelativeToParentPosition((data.getRow()+(0.5f * (data.getHeight() - 2))) * 1.0f/rows));
+            subComponent.setXPositionConstraint(new RelativeToParentPosition((data.getColumn()+(0.5f * (data.getWidth() - 2))) * 1.0f/columns));
+            subComponent.setYPositionConstraint(new RelativeToParentPosition((data.getRow()+(0.5f * (data.getHeight() - 2))) * 1.0f/rows));
         }
         updateBounds();
     }
@@ -130,8 +130,8 @@ public class GridLayout extends QuadComponent {
         if(getComponent(row, column)==null) {
             component.setHeightConstraint(new RelativeToParentSize(1.0f / rows * (1 - verticalPadding)));
             component.setWidthConstraint(new RelativeToParentSize(1.0f / columns * (1 - horizontalPadding)));
-            component.setxPositionConstraint(new RelativeToParentPosition((column - 0.5f) * 1.0f / columns));
-            component.setyPositionConstraint(new RelativeToParentPosition((row - 0.5f) * 1.0f / rows));
+            component.setXPositionConstraint(new RelativeToParentPosition((column - 0.5f) * 1.0f / columns));
+            component.setYPositionConstraint(new RelativeToParentPosition((row - 0.5f) * 1.0f / rows));
             positionData.put(component, new GridData(row, column, 1, 1));
             super.addComponent(component);
         }
@@ -152,8 +152,8 @@ public class GridLayout extends QuadComponent {
         if(getComponent(row, column)== null) {
             component.setHeightConstraint(new RelativeToParentSize(1.0f / rows * (height - verticalPadding)));
             component.setWidthConstraint(new RelativeToParentSize(1.0f / columns * (width - horizontalPadding)));
-            component.setxPositionConstraint(new RelativeToParentPosition((column + (0.5f * (width - 2))) * 1.0f / columns));
-            component.setyPositionConstraint(new RelativeToParentPosition((row + (0.5f * (height - 2))) * 1.0f / rows));
+            component.setXPositionConstraint(new RelativeToParentPosition((column + (0.5f * (width - 2))) * 1.0f / columns));
+            component.setYPositionConstraint(new RelativeToParentPosition((row + (0.5f * (height - 2))) * 1.0f / rows));
             positionData.put(component, new GridData(row, column, width, height));
             super.addComponent(component);
         }

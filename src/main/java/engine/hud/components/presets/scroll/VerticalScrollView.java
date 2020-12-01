@@ -69,7 +69,7 @@ public class VerticalScrollView extends ScrollComponent {
         addComponent(verticalBar.getBarBack());
 
         // resets the scroll positions
-        contentBack.setyPositionConstraint(new RelativeInParent(0));
+        contentBack.setYPositionConstraint(new RelativeInParent(0));
         verticalBar.setScrollPosition(0);
 
         calculateValues();

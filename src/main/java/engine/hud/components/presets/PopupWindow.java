@@ -35,8 +35,8 @@ public class PopupWindow extends QuadComponent {
         // sets the bounds of the background
         this.setWidthConstraint(new RelativeToParentSize(1));
         this.setHeightConstraint(new RelativeToParentSize(1));
-        this.setxPositionConstraint(new RelativeInParent(0.5f));
-        this.setyPositionConstraint(new RelativeInParent(0.5f));
+        this.setXPositionConstraint(new RelativeInParent(0.5f));
+        this.setYPositionConstraint(new RelativeInParent(0.5f));
 
         // sets the color of the background
         this.setColors(new Color(0,0,0,0.5f));
@@ -54,8 +54,8 @@ public class PopupWindow extends QuadComponent {
         window = new QuadComponent();
         window.setWidthConstraint(new RelativeToParentSize(0.5f));
         window.setHeightConstraint(new RelativeToParentSize(0.5f));
-        window.setxPositionConstraint(new RelativeInParent(0.5f));
-        window.setyPositionConstraint(new RelativeInParent(0.5f));
+        window.setXPositionConstraint(new RelativeInParent(0.5f));
+        window.setYPositionConstraint(new RelativeInParent(0.5f));
 
         // makes the window consume left click events so it does not get closed when it is clicked
         window.getMouseListener().addMouseAction(e -> e.getEvent() == MouseEvent.Event.CLICK_RELEASED && e.getMouseButton() == MouseListener.MouseButton.LEFT);

@@ -175,7 +175,7 @@ public class QuadComponent extends SubComponent {
         super.updateBounds();
 
         // sets the updated values for the quads new position
-        quad.setPosition((super.getOnScreenXPosition() + super.getOnScreenWidth() * super.getxOffset()), (super.getOnScreenYPosition() + super.getOnScreenHeight() * super.getyOffset()), quad.getPosition().z);
+        quad.setPosition((super.getOnScreenXPosition() + super.getOnScreenWidth() * super.getXOffset()), (super.getOnScreenYPosition() + super.getOnScreenHeight() * super.getYOffset()), quad.getPosition().z);
 
         // calculates value updates for the rotation
         float rotationComplete = calculateRotation();

@@ -17,6 +17,9 @@ import org.joml.Vector4f;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.glStencilMask;
 
+
+//TODO undo function, marking, copy, cut and paste
+
 /**
  * class used to create a component that can get text input
  */
@@ -201,7 +204,7 @@ public class TextInputComponent extends TextComponent {
     private void setCursorPosition() {
         Vector2f pos = getTextItem().getCursorPosition(cursorPosition.x,cursorPosition.y);
 
-        cursor.setPosition(getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getxOffset() + getAlignmentOffset()) - cursor.getScale3().x/4,getOnScreenYPosition() + getOnScreenHeight() * (pos.y + getyOffset()),cursor.getPosition().z);
+        cursor.setPosition(getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getXOffset() + getAlignmentOffset()) - cursor.getScale3().x/4,getOnScreenYPosition() + getOnScreenHeight() * (pos.y + getYOffset()),cursor.getPosition().z);
 
         if(onCursorChanged != null && cursorChanged) {
             cursorChanged = false;
@@ -209,7 +212,7 @@ public class TextInputComponent extends TextComponent {
         }
 
         super.updatePosition();
-        cursor.setPosition(getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getxOffset() + getAlignmentOffset()) - cursor.getScale3().x/4,getOnScreenYPosition() + getOnScreenHeight() * (pos.y + getyOffset()),cursor.getPosition().z);
+        cursor.setPosition(getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getXOffset() + getAlignmentOffset()) - cursor.getScale3().x/4,getOnScreenYPosition() + getOnScreenHeight() * (pos.y + getYOffset()),cursor.getPosition().z);
 
     }
 
@@ -349,8 +352,8 @@ public class TextInputComponent extends TextComponent {
         Vector2f pos = getTextItem().getCursorPosition(cursorPosition.x,cursorPosition.y);
 
         Vector2f result = new Vector2f();
-        result.x = getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getxOffset() + getAlignmentOffset());
-        result.y = getOnScreenYPosition() - getOnScreenHeight()/2 + getOnScreenHeight() * (pos.y +0.5f + getyOffset());
+        result.x = getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getXOffset() + getAlignmentOffset());
+        result.y = getOnScreenYPosition() - getOnScreenHeight()/2 + getOnScreenHeight() * (pos.y +0.5f + getYOffset());
 
         return result;
     }

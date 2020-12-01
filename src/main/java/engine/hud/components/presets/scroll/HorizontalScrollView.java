@@ -80,7 +80,7 @@ public class HorizontalScrollView extends ScrollComponent {
 
 
         // resets the scroll positions
-        contentBack.setxPositionConstraint(new RelativeInParent(0));
+        contentBack.setXPositionConstraint(new RelativeInParent(0));
         horizontalBar.setScrollPosition(0);
         calculateValues();
     }

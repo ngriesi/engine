@@ -92,8 +92,8 @@ public class Button extends QuadComponent implements DragEvent {
         //sets button bounds
         super.setWidthConstraint(new RelativeToParentSize(width));
         super.setHeightConstraint(new RelativeToParentSize(height));
-        super.setxPositionConstraint(new RelativeInParent(x));
-        super.setyPositionConstraint(new RelativeInParent(y));
+        super.setXPositionConstraint(new RelativeInParent(x));
+        super.setYPositionConstraint(new RelativeInParent(y));
 
         //gets default color schemes
         normalColor = ColorScheme.getStandardColorScheme(ColorScheme.StandardColorSchemes.BUTTON_STANDARD);
@@ -117,8 +117,8 @@ public class Button extends QuadComponent implements DragEvent {
 
         textComponent.setHeightConstraint(new RelativeToParentSize(textComponent.getTextItem().getLines()>1?0.8f:0.5f));
         textComponent.setWidthConstraint(new TextAspectRatio());
-        textComponent.setxPositionConstraint(new RelativeInParent(0.5f));
-        textComponent.setyPositionConstraint(new RelativeInParent(0.5f));
+        textComponent.setXPositionConstraint(new RelativeInParent(0.5f));
+        textComponent.setYPositionConstraint(new RelativeInParent(0.5f));
 
         textComponent.setColorScheme(textColor);
 
@@ -137,11 +137,10 @@ public class Button extends QuadComponent implements DragEvent {
         mainBack = new QuadComponent();
         mainBack.setWidthConstraint(1f);
         mainBack.setHeightConstraint(1f);
-        mainBack.setxPositionConstraint(0.5f);
-        mainBack.setyPositionConstraint(0.5f);
+        mainBack.setXPositionConstraint(0.5f);
+        mainBack.setYPositionConstraint(0.5f);
         mainBack.setWriteToDepthBuffer(true);
         mainBack.setMaskMode(MaskMode.DISPOSE_TRANSPARENT);
-        mainBack.setMaskComponent(null);
         mainBack.setEdgeProportion(ElementSizeConstraint.Proportion.KEEP_WIDTH);
         mainBack.setEdge(new Edge((0.5f),Color.TRANSPARENT,Color.TRANSPARENT, Edge.BlendMode.REPLACE));
         mainBack.setCornerSize(new RelativeToScreenSizeE(0.015f));
@@ -151,8 +150,8 @@ public class Button extends QuadComponent implements DragEvent {
         QuadComponent effect = new QuadComponent();
         effect.setWidthConstraint(1);
         effect.setHeightConstraint(1);
-        effect.setxPositionConstraint(0.5f);
-        effect.setyPositionConstraint(0.5f);
+        effect.setXPositionConstraint(0.5f);
+        effect.setYPositionConstraint(0.5f);
         effect.setColors(Color.TRANSPARENT);
         effect.setMaskMode(MaskMode.DISPOSE_TRANSPARENT);
         effect.setWriteToDepthBuffer(false);

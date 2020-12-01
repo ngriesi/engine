@@ -125,8 +125,8 @@ public class DropDownMenu<T> extends QuadComponent {
         currentlySelected = new TextComponent(FontTexture.STANDARD_FONT_TEXTURE);
         currentlySelected.setHeightConstraint(new RelativeToParentSize(0.8f));
         currentlySelected.setWidthConstraint(new TextAspectRatio());
-        currentlySelected.setxPositionConstraint(new RelativeInParent(0.1f));
-        currentlySelected.setyPositionConstraint(new RelativeInParent(0.5f));
+        currentlySelected.setXPositionConstraint(new RelativeInParent(0.1f));
+        currentlySelected.setYPositionConstraint(new RelativeInParent(0.5f));
         currentlySelected.setColors(textColor);
 
         this.addComponent(currentlySelected);
@@ -135,8 +135,8 @@ public class DropDownMenu<T> extends QuadComponent {
         QuadComponent icon = new QuadComponent();
         icon.setHeightConstraint(new RelativeToParentSize(1));
         icon.setWidthConstraint(new AbsoluteAspectRatio(1));
-        icon.setxPositionConstraint(new RelativeInParent(1));
-        icon.setyPositionConstraint(new RelativeInParent(0.5f));
+        icon.setXPositionConstraint(new RelativeInParent(1));
+        icon.setYPositionConstraint(new RelativeInParent(0.5f));
         icon.setColors(iconColor);
         icon.setFocusable(false);
 
@@ -152,8 +152,8 @@ public class DropDownMenu<T> extends QuadComponent {
         scrollView = new ScrollView();
         scrollView.setWidthConstraint(new RelativeToParentSize(1));
         scrollView.setHeightConstraint(new RelativeToParentSize(0));
-        scrollView.setyPositionConstraint(new RelativeInParent(0));
-        scrollView.setxPositionConstraint(new RelativeInParent(0.5f));
+        scrollView.setYPositionConstraint(new RelativeInParent(0));
+        scrollView.setXPositionConstraint(new RelativeInParent(0.5f));
 
         scrollView.setVisible(false);
 
@@ -249,7 +249,7 @@ public class DropDownMenu<T> extends QuadComponent {
         // sets new height of the drop down menu if necessary
         if(height <= maxHeight) {
             contentBack.changeHeightValue(1);
-            scrollView.setyOffset(1.0f/height);
+            scrollView.setYOffset(1.0f/height);
             scrollView.changeHeightValue(height);
         } else {
             contentBack.changeHeightValue(height * (1.0f/maxHeight));
@@ -289,7 +289,7 @@ public class DropDownMenu<T> extends QuadComponent {
 
             // changes the height of the drop down menu if necessary
             if(height <= maxHeight) {
-                scrollView.setyOffset(1.0f/height);
+                scrollView.setYOffset(1.0f/height);
                 scrollView.changeHeightValue(height);
             } else {
                 scrollView.changeHeightValue(maxHeight);
@@ -445,7 +445,7 @@ public class DropDownMenu<T> extends QuadComponent {
 
             // formats the lines background
             this.setWidthConstraint(new RelativeToParentSize(1));
-            this.setxPositionConstraint(new RelativeInParent(0));
+            this.setXPositionConstraint(new RelativeInParent(0));
             this.setColors(dropDownMenu.getBackGroundColor());
 
 
@@ -454,8 +454,8 @@ public class DropDownMenu<T> extends QuadComponent {
             textComponent.setText(text);
             textComponent.setHeightConstraint(new RelativeToParentSize(0.8f));
             textComponent.setWidthConstraint(new TextAspectRatio());
-            textComponent.setyPositionConstraint(new RelativeInParent(0.5f));
-            textComponent.setxPositionConstraint(new RelativeInParent(0.1f));
+            textComponent.setYPositionConstraint(new RelativeInParent(0.5f));
+            textComponent.setXPositionConstraint(new RelativeInParent(0.1f));
 
             textComponent.setColors(dropDownMenu.getTextColor());
 

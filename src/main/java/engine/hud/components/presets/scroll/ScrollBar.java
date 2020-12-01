@@ -72,13 +72,13 @@ public class ScrollBar implements DragEvent {
         if(orientation== ExpandList.Orientation.VERTICAL) {
             barBack.setWidthConstraint(new RelativeToScreenSize(barThickness));
             barBack.setHeightConstraint(new RelativeToParentSize(1));
-            barBack.setxPositionConstraint(new RelativeInParent(1));
-            barBack.setyPositionConstraint(new RelativeInParent(0.5f));
+            barBack.setXPositionConstraint(new RelativeInParent(1));
+            barBack.setYPositionConstraint(new RelativeInParent(0.5f));
         } else {
             barBack.setHeightConstraint(new InvertedDirectionRelativeToScreen(barThickness));
             barBack.setWidthConstraint(new RelativeToParentSize(1));
-            barBack.setyPositionConstraint(new RelativeInParent(1));
-            barBack.setxPositionConstraint(new RelativeInParent(0));
+            barBack.setYPositionConstraint(new RelativeInParent(1));
+            barBack.setXPositionConstraint(new RelativeInParent(0));
         }
         barBack.setColors(Color.TRANSPARENT);
 
@@ -91,13 +91,13 @@ public class ScrollBar implements DragEvent {
         if(orientation == ExpandList.Orientation.VERTICAL) {
             bar.setWidthConstraint(new RelativeToParentSize(0.8f));
             bar.setHeightConstraint(new RelativeToParentSize(1));
-            bar.setyPositionConstraint(new RelativeInParent(0));
-            bar.setxPositionConstraint(new RelativeInParent(0.5f));
+            bar.setYPositionConstraint(new RelativeInParent(0));
+            bar.setXPositionConstraint(new RelativeInParent(0.5f));
         } else {
             bar.setHeightConstraint(new RelativeToParentSize(0.8f));
             bar.setWidthConstraint(new RelativeToParentSize(1));
-            bar.setxPositionConstraint(new RelativeInParent(0));
-            bar.setyPositionConstraint(new RelativeInParent(0.5f));
+            bar.setXPositionConstraint(new RelativeInParent(0));
+            bar.setYPositionConstraint(new RelativeInParent(0.5f));
         }
         bar.setColors(new Color(0.7f,0.7f,0.7f,0.5f));
 

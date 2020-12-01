@@ -6,13 +6,17 @@ import engine.hud.Hud;
 import engine.hud.HudShaderManager;
 import engine.hud.actions.Action;
 import engine.hud.keys.KeyListener;
-import engine.hud.mouse.MouseAction;
-import engine.hud.mouse.MouseEvent;
 import engine.hud.mouse.MouseListener;
 import org.joml.Matrix4f;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * highest class in the component hierarchy. Defines a component that can have
+ * SubComponents as its content
+ * Handles: content, position, size visibility, focus, MouseListener, KeyListener
+ * Also saves Window, Hud and ID of the component
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class ContentComponent {
 
@@ -71,7 +75,7 @@ public abstract class ContentComponent {
     protected int id;
 
     /**Mouse listener for the component */
-    private MouseListener mouseListener;
+    private final MouseListener mouseListener;
 
     /** Key listener for the component */
     private KeyListener keyListener;
@@ -208,36 +212,63 @@ public abstract class ContentComponent {
         content.forEach(SubComponent::cleanup);
     }
 
-    public void setxOffset(float xOffset) {
+    /**
+     * sets the xOffset of the component and updates its position
+     *
+     * @param xOffset new xOffset
+     */
+    public void setXOffset(float xOffset) {
         this.xOffset = xOffset;
         updateBounds();
     }
 
-    public void setyOffset(float yOffset) {
+    /**
+     * sets the yOffset of the component and updates its position
+     *
+     * @param yOffset new yOffset
+     */
+    public void setYOffset(float yOffset) {
         this.yOffset = yOffset;
         updateBounds();
     }
 
+    /**
+     * method used to give this component focus
+     *
+     * @see SceneComponent,SubComponent
+     */
     public abstract void focus();
 
+    /**
+     * method gets called when this component gets focus
+     */
     public void receivedFocus() {
         if(onFocusedAction != null) {
             onFocusedAction.execute();
         }
     }
 
+    /**
+     * method gets called when this component loses focus
+     */
     public void lostFocus() {
         if(onFocusLostAction != null) {
             onFocusLostAction.execute();
         }
     }
 
+    /**
+     * method gets called when this component gets input focus
+     */
     public void receivedInputFocus() {
         if(onInputFocusedAction != null) {
             onInputFocusedAction.execute();
         }
     }
 
+    /**
+     * method gets called when this component loses input focus
+     */
     public void lostInputFocus() {
         if(onInputFocusLostAction != null) {
             onInputFocusLostAction.execute();
@@ -336,11 +367,11 @@ public abstract class ContentComponent {
         return onScreenWidth;
     }
 
-    public float getxOffset() {
+    public float getXOffset() {
         return xOffset;
     }
 
-    public float getyOffset() {
+    public float getYOffset() {
         return yOffset;
     }
 
