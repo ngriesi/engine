@@ -25,20 +25,34 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up scroll view classes">
+    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up PopupWindow and fixed DropDownMenu">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_11_2020_13_47_[Default_Changelist]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_11_2020_13_47__Default_Changelist_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/DropDownMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/DropDownMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/PopupWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/PopupWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/ContentComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/ContentComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/SceneComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/SubComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/SubComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextInputComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextInputComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/TextInputBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/TextInputBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/text/TextItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/text/TextItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/test/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/DropDownMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/DropDownMenu$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/DropDownMenu$DropDownElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/DropDownMenu$DropDownElement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/DropDownMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/DropDownMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/PopupWindow$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/Hud$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/Hud$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/ContentComponent$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/ContentComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/ContentComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SceneComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent$MaskMode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent$MaskMode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent$RenderMode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent$RenderMode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/TextComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/TextComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/TextInputComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/contentcomponents/TextInputComponent.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/PopupWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/PopupWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/scroll/HorizontalScrollView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/scroll/HorizontalScrollView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/scroll/ScrollBar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/scroll/ScrollBar.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/scroll/ScrollView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/scroll/ScrollView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/scroll/VerticalScrollView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/scroll/VerticalScrollView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/TextInputBox$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/TextInputBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/TextInputBox.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem$LineData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem$LineData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/test/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/test/MainGame.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -371,7 +385,21 @@
       <option name="project" value="LOCAL" />
       <updated>1606477847688</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="cleaned up PopupWindow and fixed DropDownMenu">
+      <created>1606478796815</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1606478796815</updated>
+    </task>
+    <task id="LOCAL-00038" summary="cleaned up PopupWindow and fixed DropDownMenu">
+      <created>1606478812342</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1606478812342</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -387,7 +415,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added fragment shader edge distance calculation for the FREE corner mode and added simple support for edge customization from the java code" />
     <MESSAGE value="Major improvements to fragment Shader code" />
     <MESSAGE value="Changes to the fragment Shader Code" />
     <MESSAGE value="add edge support and improved the default button" />
@@ -412,13 +439,14 @@
     <MESSAGE value="cleaned up layout classes" />
     <MESSAGE value="cleaned up drop down menu class" />
     <MESSAGE value="cleaned up scroll view classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up scroll view classes" />
+    <MESSAGE value="cleaned up PopupWindow and fixed DropDownMenu" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up PopupWindow and fixed DropDownMenu" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1606477354480">
+    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1606823614490">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1606477354480" />
+    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1606823614490" />
     <state x="417" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1606230363545">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -427,46 +455,46 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="707" y="380" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1050@0.0.1920.1050" timestamp="1605960926145" />
-    <state width="1877" height="327" key="GridCell.Tab.0.bottom" timestamp="1606478282684">
+    <state width="1877" height="253" key="GridCell.Tab.0.bottom" timestamp="1606831506962">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="327" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1606478282684" />
-    <state width="1877" height="327" key="GridCell.Tab.0.center" timestamp="1606478282684">
+    <state width="1877" height="253" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1606831506962" />
+    <state width="1877" height="253" key="GridCell.Tab.0.center" timestamp="1606831506961">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="327" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1606478282684" />
-    <state width="1877" height="327" key="GridCell.Tab.0.left" timestamp="1606478282684">
+    <state width="1877" height="253" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1606831506961" />
+    <state width="1877" height="253" key="GridCell.Tab.0.left" timestamp="1606831506961">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="327" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1606478282684" />
-    <state width="1877" height="327" key="GridCell.Tab.0.right" timestamp="1606478282684">
+    <state width="1877" height="253" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1606831506961" />
+    <state width="1877" height="253" key="GridCell.Tab.0.right" timestamp="1606831506961">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="327" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1606478282684" />
-    <state width="1877" height="352" key="GridCell.Tab.1.bottom" timestamp="1605889414894">
+    <state width="1877" height="253" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1606831506961" />
+    <state width="1877" height="98" key="GridCell.Tab.1.bottom" timestamp="1606491932729">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1605889414894" />
-    <state width="1877" height="352" key="GridCell.Tab.1.center" timestamp="1605889414894">
+    <state width="1877" height="98" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1606491932729" />
+    <state width="1877" height="98" key="GridCell.Tab.1.center" timestamp="1606491932729">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1605889414894" />
-    <state width="1877" height="352" key="GridCell.Tab.1.left" timestamp="1605889414894">
+    <state width="1877" height="98" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1606491932729" />
+    <state width="1877" height="98" key="GridCell.Tab.1.left" timestamp="1606491932729">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1605889414894" />
-    <state width="1877" height="352" key="GridCell.Tab.1.right" timestamp="1605889414894">
+    <state width="1877" height="98" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1606491932729" />
+    <state width="1877" height="98" key="GridCell.Tab.1.right" timestamp="1606491932729">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1605889414894" />
+    <state width="1877" height="98" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1606491932729" />
     <state x="461" y="170" key="SettingsEditor" timestamp="1605877050773">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1605877050773" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1606477849507">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1606478813921">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1606477849507" />
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1606478813921" />
     <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605877400645">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

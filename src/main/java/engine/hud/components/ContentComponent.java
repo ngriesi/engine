@@ -62,10 +62,10 @@ public abstract class ContentComponent {
     private Action onInputFocusLostAction;
 
     /** if true the component can be in focus */
-    private boolean focusable = true;
+    protected boolean focusable = true;
 
     /** if true the component can get input focus */
-    private boolean inputFocusable = true;
+    protected boolean inputFocusable = true;
 
     /** id of the component */
     protected int id;
@@ -84,15 +84,7 @@ public abstract class ContentComponent {
         visible = true;
         keyListener = new KeyListener();
         mouseListener = new MouseListener(this);
-        mouseListener.addLeftButtonAction(new MouseAction() {
-            @Override
-            public boolean action(MouseEvent e) {
-                if(e.getEvent()== MouseEvent.Event.CLICK_RELEASED || e.getEvent() == MouseEvent.Event.PRESS_RELEASED) {
-                    ContentComponent.this.focus();
-                }
-                return false;
-            }
-        });
+
     }
 
 
@@ -226,14 +218,7 @@ public abstract class ContentComponent {
         updateBounds();
     }
 
-    public void focus() {
-        if(focusable) {
-            hud.setCurrentFocus(this);
-            if(inputFocusable) {
-                hud.setCurrentInputFocus(this);
-            }
-        }
-    }
+    public abstract void focus();
 
     public void receivedFocus() {
         if(onFocusedAction != null) {

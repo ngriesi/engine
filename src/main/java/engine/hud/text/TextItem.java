@@ -228,6 +228,10 @@ public class TextItem extends GameItem {
         return lineData.get(line).line.length();
     }
 
+    public TextAlignment getAlignment() {
+        return alignment;
+    }
+
     /**
      * calculates the maximum width of the text item
      *
@@ -271,6 +275,10 @@ public class TextItem extends GameItem {
      */
     public int getWidth() {
         return maxLineWidth;
+    }
+
+    public void setAlignment(TextAlignment alignment) {
+        this.alignment = alignment;
     }
 
     /**
@@ -329,6 +337,17 @@ public class TextItem extends GameItem {
 
         LineData line = lineData.get(yIndex);
 
+        float temp = getLineWidth(line.line)/(float)maxLineWidth;
+
+        float temp2 = (maxLineWidth - getLineWidth(line.line))/(float)maxLineWidth;
+
+        switch(alignment) {
+            case LEFT:x = x/temp;break;
+            case RIGHT:x = x;break;
+            case CENTER:x = (x - temp2/2)/temp;
+        }
+
+
         xIndex = line.getCursorPosition(x);
 
         return new Vector2i(xIndex,yIndex);
@@ -338,7 +357,7 @@ public class TextItem extends GameItem {
      * adds a letter to a specific line at a specific position
      *
      * @param line where the letter gets added
-     * @param position the leter gets added
+     * @param position the letter gets added
      * @param letter to add
      */
     public void addLetter(int line,int position,char letter) {
@@ -585,7 +604,6 @@ public class TextItem extends GameItem {
 
             for(int i = 0;i < indicesArr.length;i++) {
 
-                //noinspection IfStatementMissingBreakInLoop
                 if(indicesArr[i] >= index * VERTICES_PER_QUAD && indicesArr[i] <= index * VERTICES_PER_QUAD + 3) {
                     count=6;
                 }
@@ -684,21 +702,23 @@ public class TextItem extends GameItem {
 
             int yOffset = charData.getyOffset()- (VERTICAL_PADDING_ZERO - verticalPadding) /2;
 
+            float zPosition = 0;
+
             posArr[nextIndex * VERTICES_PER_QUAD * 3] = charData.getxOffset() + startX;
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 1] = this.yPos + yOffset;
-            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 2] = TextItem.this.getPosition().z;
+            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 2] = zPosition;
 
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 3] = charData.getxOffset() + startX;
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 4] = this.yPos + yOffset + charData.getHeight();
-            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 5] = TextItem.this.getPosition().z;
+            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 5] = zPosition;
 
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 6] = charData.getxOffset() + startX + charData.getWidth();
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 7] = this.yPos + yOffset;
-            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 8] = TextItem.this.getPosition().z;
+            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 8] = zPosition;
 
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 9] = charData.getxOffset() + startX + charData.getWidth();
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 10] = this.yPos + yOffset + charData.getHeight();
-            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 11] = TextItem.this.getPosition().z;
+            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 11] = zPosition;
 
             // texture coordinates
             float[] texArrTemp = texArr;

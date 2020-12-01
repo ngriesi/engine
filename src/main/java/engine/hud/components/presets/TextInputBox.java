@@ -1,57 +1,103 @@
 package engine.hud.components.presets;
 
+import engine.hud.assets.Edge;
 import engine.hud.color.Color;
-import engine.hud.components.contentcomponents.QuadComponent;
 import engine.hud.components.contentcomponents.TextInputComponent;
+import engine.hud.components.presets.scroll.ScrollView;
 import engine.hud.constraints.elementSizeConstraints.ElementSizeConstraint;
+import engine.hud.constraints.elementSizeConstraints.RelativeToParentSizeE;
+import engine.hud.constraints.elementSizeConstraints.RelativeToScreenSizeE;
 import engine.hud.constraints.positionConstraints.RelativeInParent;
 import engine.hud.constraints.positionConstraints.RelativeToParentPosition;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.TextAspectRatio;
-import engine.hud.mouse.MouseAction;
 import engine.hud.mouse.MouseEvent;
 import engine.hud.mouse.MouseListener;
 import engine.hud.text.FontTexture;
+import engine.hud.text.TextItem;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
-public class TextInputBox extends QuadComponent {
+/**
+ * Component used to create a text input field to enter text
+ * uses a Scroll view and a TextInputComponent
+ */
+@SuppressWarnings("unused")
+public class TextInputBox extends ScrollView {
 
-    private TextInputComponent textInputComponent;
+    /**
+     * textInputComponent used for the text input
+     */
+    private final TextInputComponent textInputComponent;
 
+    /**
+     * number of  lines that are visible at once
+     * (changes the size of the text input component)
+     */
+    private int visibleLines = 2;
+
+    /**
+     * constructor creating an empty text input box
+     *
+     * @param fontTexture used by the TextInputComponent
+     */
     public TextInputBox(FontTexture fontTexture) {
+
+        // formats the TextInputComponent
         textInputComponent = new TextInputComponent(fontTexture);
         textInputComponent.setWidthConstraint(new TextAspectRatio());
-        textInputComponent.setHeightConstraint(new RelativeToParentSize(0.7f));
-        textInputComponent.setyPositionConstraint(new RelativeToParentPosition(0.5f));
+        textInputComponent.setHeightConstraint(new RelativeToParentSize(1f/visibleLines));
+        textInputComponent.setyPositionConstraint(new RelativeToParentPosition(1f));
         textInputComponent.setxPositionConstraint(new RelativeInParent(0));
         textInputComponent.setOnCursorChanged(this::cursorChangedAction);
         textInputComponent.setFocusable(false);
-        this.addComponent(textInputComponent);
-        this.setCornerSize(0.2f);
+        textInputComponent.setColors(Color.BLACK);
+        textInputComponent.setTextAlignment(TextItem.TextAlignment.LEFT);
+
+        // formats the ScrollView
+        this.setContent(textInputComponent);
+        this.setCornerSize(new RelativeToScreenSizeE(0.15f));
         this.setCornerProportion(ElementSizeConstraint.Proportion.KEEP_HEIGHT);
 
-        setColors(Color.RED);
+        this.setEdge(new Edge(new RelativeToParentSizeE(1),Color.TEAL,Color.getTransparent(Color.TEAL), Edge.BlendMode.MULTIPLY));
 
-        getMouseListener().addMouseAction(new MouseAction() {
-            @Override
-            public boolean action(MouseEvent e) {
-                if(e.getEvent() == MouseEvent.Event.CLICK_RELEASED && e.getMouseButton()== MouseListener.MouseButton.LEFT) {
-                    hud.setCurrentInputFocus(textInputComponent);
-                    hud.needsNextRendering();
-                    float x = e.getMouseInput().getRelativePos().x - (textInputComponent.getOnScreenXPosition() + textInputComponent.getxOffset() + textInputComponent.getAutoXOffset() - textInputComponent.getOnScreenWidth()/2);
-                    float y = e.getMouseInput().getRelativePos().y - (textInputComponent.getOnScreenYPosition() + textInputComponent.getyOffset() + textInputComponent.getAutoYOffset() - textInputComponent.getOnScreenHeight()/2);
 
-                    Vector2i newCursorPos = textInputComponent.getTextItem().getCursorPosition(x/textInputComponent.getOnScreenWidth(),y/textInputComponent.getOnScreenHeight());
+        setColors(Color.WHITE);
 
-                    textInputComponent.setCursor(newCursorPos);
-
-                    updateBounds();
-                    return false;
-                }
-                return false;
-            }
+        // updates some values when the text of the TextInputComponent gets changed
+        textInputComponent.setOnChangedAction(() -> {
+            textInputComponent.setHeightConstraint(1f/visibleLines * textInputComponent.getTextItem().getLines());
+            updateBounds();
+            calculateValues();
+            hud.needsNextRendering();
         });
+
+        // defines the behavior of the ScrollView and the TextInputComponent when they get Left-Clicked (moves the cursor)
+        getMouseListener().addMouseAction(e -> {
+
+            if(e.getEvent() == MouseEvent.Event.CLICK_RELEASED && e.getMouseButton()== MouseListener.MouseButton.LEFT) {
+
+                hud.setCurrentInputFocus(textInputComponent);
+                hud.needsNextRendering();
+                float x = e.getMouseInput().getRelativePos().x - (textInputComponent.getOnScreenXPosition() + textInputComponent.getxOffset()  - textInputComponent.getOnScreenWidth()/2);
+                float y = e.getMouseInput().getRelativePos().y - (textInputComponent.getOnScreenYPosition() + textInputComponent.getyOffset()  - textInputComponent.getOnScreenHeight()/2);
+
+                if(y < textInputComponent.getOnScreenHeight()) {
+                    Vector2i newCursorPos = textInputComponent.getTextItem().getCursorPosition(x / textInputComponent.getOnScreenWidth(), y / textInputComponent.getOnScreenHeight());
+                    textInputComponent.setCursor(newCursorPos);
+                    updateBounds();
+                }
+
+
+                return false;
+
+            }
+            return false;
+        });
+    }
+
+    public void setVisibleLines(int visibleLines) {
+        this.visibleLines = visibleLines;
     }
 
     /**
@@ -59,38 +105,71 @@ public class TextInputBox extends QuadComponent {
      * text input box
      */
     private void cursorChangedAction() {
+
+
+
         Vector2f onScreenCursorPosition = textInputComponent.getOnScreenCursorPosition();
 
+        Vector2f relativeCursorPosition = new Vector2f(onScreenCursorPosition);
 
 
+        // cursor position relative to the TextInputComponent
+        relativeCursorPosition.x = (relativeCursorPosition.x - (textInputComponent.getOnScreenXPosition() - textInputComponent.getOnScreenWidth() * (0.5f)))/textInputComponent.getOnScreenWidth();
+        relativeCursorPosition.y = (relativeCursorPosition.y - (textInputComponent.getOnScreenYPosition() - textInputComponent.getOnScreenHeight()/2))/textInputComponent.getOnScreenHeight();
 
+
+        // calculates and performs horizontal movements
         if(textInputComponent.getOnScreenWidth() > 0) {
-            textInputComponent.setAutoXOffset(0);
+            if(textInputComponent.getOnScreenWidth() < this.getOnScreenWidth()) {
+                this.getHorizontalBar().setScrollPosition(0);
+                calculateValues();
+            }
 
             if (onScreenCursorPosition.x < (this.getOnScreenXPosition() + this.getOnScreenWidth() * (-0.5f + getxOffset()))) {
 
-                textInputComponent.setAutoXOffset(((this.getOnScreenXPosition() + this.getOnScreenWidth() * (-0.5f + getxOffset())) - onScreenCursorPosition.x));
+                float relativeWidth = this.getOnScreenWidth()/textInputComponent.getOnScreenWidth();
+
+                this.getHorizontalBar().setScrollPosition((relativeCursorPosition.x)/(1 - relativeWidth));
+
+                calculateValues();
+
 
             } else if (onScreenCursorPosition.x > (this.getOnScreenXPosition() + this.getOnScreenWidth() * (0.5f + getxOffset()))) {
 
-                textInputComponent.setAutoXOffset(-(onScreenCursorPosition.x - (this.getOnScreenXPosition() + this.getOnScreenWidth() * (0.5f + getxOffset()))));
+                float relativeWidth = this.getOnScreenWidth()/textInputComponent.getOnScreenWidth();
 
+                this.getHorizontalBar().setScrollPosition((relativeCursorPosition.x - relativeWidth)/(1 - relativeWidth));
+
+                calculateValues();
             }
         }
 
-
+        // calculates and performs vertical movements
         if(textInputComponent.getOnScreenHeight() > 0) {
-            textInputComponent.setAutoYOffset(0);
-            float baseValue = getOnScreenHeight()/textInputComponent.getTextItem().getLines() * (textInputComponent.getTextItem().getFontTexture().getHeight()/textInputComponent.getTextItem().getLineHeight());
-            float cursorHeight = baseValue * 0.7f;
-            if (onScreenCursorPosition.y <= (this.getOnScreenYPosition() + this.getOnScreenHeight() * (-0.5f + getyOffset()) + (cursorHeight * textInputComponent.getOnScreenHeight()))) {
 
-                textInputComponent.setAutoYOffset(((this.getOnScreenYPosition() + this.getOnScreenHeight() * (-0.5f + getyOffset())) - onScreenCursorPosition.y)+ (cursorHeight * textInputComponent.getOnScreenHeight()));
+            if(textInputComponent.getOnScreenHeight() < this.getOnScreenHeight()) {
+                this.getVerticalBar().setScrollPosition(0);
+                calculateValues();
+            }
 
-            } else if (onScreenCursorPosition.y > (this.getOnScreenYPosition() + this.getOnScreenHeight() * (0.5f + getyOffset()) - (cursorHeight * textInputComponent.getOnScreenHeight()))) {
+            if (onScreenCursorPosition.y < (this.getOnScreenYPosition() + this.getOnScreenHeight() * (-0.5f + getyOffset()))) {
 
-                textInputComponent.setAutoYOffset(-(onScreenCursorPosition.y - (this.getOnScreenYPosition() + this.getOnScreenHeight() * (0.5f + getyOffset()) - (cursorHeight * textInputComponent.getOnScreenHeight()))));
+                float relativeHeight = this.getOnScreenHeight()/textInputComponent.getOnScreenHeight();
 
+                this.getVerticalBar().setScrollPosition((relativeCursorPosition.y - 1f/textInputComponent.getTextItem().getLines() * 0.5f)/(1 - relativeHeight));
+
+                calculateValues();
+
+
+            } else if (onScreenCursorPosition.y > (this.getOnScreenYPosition() + this.getOnScreenHeight() * (0.5f + getyOffset()))) {
+
+                float relativeHeight = this.getOnScreenHeight()/textInputComponent.getOnScreenHeight();
+
+                this.getVerticalBar().setScrollPosition((relativeCursorPosition.y + 1f/textInputComponent.getTextItem().getLines() * 0.5f - relativeHeight)/(1 - relativeHeight));
+
+                System.out.println(relativeCursorPosition.y + " : " + this.getVerticalBar().getScrollPosition());
+
+                calculateValues();
             }
 
         }

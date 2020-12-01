@@ -69,18 +69,33 @@ public class MainGame implements IGameLogic {
         camera = new Camera();
 
         QuadComponent quadComponent = new QuadComponent();
-        quadComponent.setColor(Color.RED);
+        quadComponent.setColor(Color.WHITE);
 
         DropDownMenu<Quad> drop = new DropDownMenu<>();
         for(int i = 0;i < 20 ; i ++) {
             drop.addElement(i + "test",new Quad());
         }
-        quadComponent.addComponent(drop);
+        //quadComponent.addComponent(drop);
 
         hud.getScene().addComponent(quadComponent);
 
-        PopupWindow popup = new PopupWindow();
-        popup.show(quadComponent);
+        TextComponent textComponent = new TextComponent(FontTexture.STANDARD_FONT_TEXTURE);
+        textComponent.setText("test");
+        //quadComponent.addComponent(textComponent);
+
+        TextInputBox textBox = new TextInputBox(FontTexture.STANDARD_FONT_TEXTURE);
+        textBox.setHeightConstraint(0.5f);
+        textBox.setWidthConstraint(0.9f);
+        quadComponent.addComponent(textBox);
+
+        TextInputComponent textin = new TextInputComponent(FontTexture.STANDARD_FONT_TEXTURE);
+        textin.setColors(Color.RED);
+        textin.setHeightConstraint(0.5f);
+        textin.setWidthConstraint(1);
+        textin.setxPositionConstraint(0.5f);
+        textin.setyPositionConstraint(0.5f);
+        textin.setText("test");
+        //quadComponent.addComponent(textin);
 
 
         scene = new Scene();

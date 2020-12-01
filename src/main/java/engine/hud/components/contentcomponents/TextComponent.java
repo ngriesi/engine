@@ -48,9 +48,10 @@ public class TextComponent extends SubComponent {
     private boolean useColorShade;
 
     /**
-     * automatically sett offset values used by other components to move the text inside of them
+     * position offset dependent on the alignment of the text. Due to the way the TextItem gets created,
+     * is has to have different offsets for different alignments
      */
-    private float autoXOffset,autoYOffset;
+    private float alignmentOffset = 0;
 
     /**
      * creates the text component without setting a text,
@@ -62,6 +63,35 @@ public class TextComponent extends SubComponent {
         textItem.setText("");
         setHeightConstraint(new TextAspectRatio());
         setWidthConstraint(new RelativeToWindowSize(1));
+
+        calculateAlignmentOffset();
+
+    }
+
+    /**
+     * sets the offsetAlignment dependent of the textAlignment of the TextItem
+     */
+    private void calculateAlignmentOffset() {
+        switch (textItem.getAlignment()) {
+            case CENTER:
+            case RIGHT:
+                alignmentOffset = 0;break;
+            case LEFT: alignmentOffset = -0.5f;break;
+        }
+    }
+
+    public float getAlignmentOffset() {
+        return alignmentOffset;
+    }
+
+    /**
+     * sets the alignment of the text and calculates the right offset for it
+     *
+     * @param alignment new alignment of the TextItem
+     */
+    public void setTextAlignment(TextItem.TextAlignment alignment) {
+        textItem.setAlignment(alignment);
+        calculateAlignmentOffset();
     }
 
     /**
@@ -96,7 +126,9 @@ public class TextComponent extends SubComponent {
      */
     @SuppressWarnings("WeakerAccess")
     protected void updatePosition() {
-        textItem.setPosition(super.getOnScreenXPosition() + super.getOnScreenWidth() * super.getxOffset() + autoXOffset,(super.getOnScreenYPosition() + super.getOnScreenHeight() * super.getyOffset() + autoYOffset),textItem.getPosition().z);
+
+
+        textItem.setPosition(super.getOnScreenXPosition() + super.getOnScreenWidth() * (super.getxOffset() + alignmentOffset),(super.getOnScreenYPosition() + super.getOnScreenHeight() * super.getyOffset()),textItem.getPosition().z);
     }
 
     /**
@@ -203,22 +235,6 @@ public class TextComponent extends SubComponent {
     @SuppressWarnings("WeakerAccess")
     public QuadComponent.MaskMode getMaskMode() {
         return maskMode;
-    }
-
-    public float getAutoXOffset() {
-        return autoXOffset;
-    }
-
-    public void setAutoXOffset(float autoXOffset) {
-        this.autoXOffset = autoXOffset;
-    }
-
-    public float getAutoYOffset() {
-        return autoYOffset;
-    }
-
-    public void setAutoYOffset(float autoYOffset) {
-        this.autoYOffset = autoYOffset;
     }
 
     public String getText() {

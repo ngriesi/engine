@@ -207,6 +207,11 @@ public class SceneComponent extends ContentComponent {
         super.cleanup();
     }
 
+    @Override
+    public void focus() {
+        hud.setCurrentFocus(this);
+        hud.setCurrentInputFocus(this);
+    }
 
     public void setRenderedOnTop(SubComponent renderedOnTop) {
         this.renderedOnTop = renderedOnTop;
@@ -216,4 +221,7 @@ public class SceneComponent extends ContentComponent {
         return renderedOnTop;
     }
 
+    public SubComponent getCurrentMouseTarget() {
+        return lastComponent;
+    }
 }

@@ -8,6 +8,7 @@ import engine.hud.constraints.positionConstraints.RelativeToWindowPosition;
 import engine.hud.constraints.sizeConstraints.RelativeToParentSize;
 import engine.hud.constraints.sizeConstraints.RelativeToWindowSize;
 import engine.hud.constraints.sizeConstraints.SizeConstraint;
+import engine.hud.mouse.MouseEvent;
 import org.joml.Matrix4f;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -83,6 +84,27 @@ public abstract class SubComponent extends ContentComponent {
         writeToDepthBuffer = true;
         maskMode = MaskMode.USE_TRANSPARENT;
 
+        getMouseListener().addLeftButtonAction(e -> {
+            if(e.getEvent()== MouseEvent.Event.CLICK_RELEASED || e.getEvent() == MouseEvent.Event.PRESS_RELEASED) {
+                if(getSceneComponent().getCurrentMouseTarget().equals(this)) {
+                    SubComponent.this.focus();
+                }
+            }
+            return false;
+        });
+
+    }
+
+    @Override
+    public void focus() {
+        if(focusable) {
+            hud.setCurrentFocus(this);
+            if(inputFocusable) {
+                hud.setCurrentInputFocus(this);
+            }
+        } else {
+            parent.focus();
+        }
     }
 
     /**

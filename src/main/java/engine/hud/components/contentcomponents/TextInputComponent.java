@@ -44,6 +44,11 @@ public class TextInputComponent extends TextComponent {
     private Action onChangedAction;
 
     /**
+     * tracks if the cursor position in the text has changed
+     */
+    private boolean cursorChanged;
+
+    /**
      * creates a quad for the component
      * sets default values
      *
@@ -64,7 +69,12 @@ public class TextInputComponent extends TextComponent {
             return false;
         });
 
+
         getKeyListener().setKeyAction(key -> {
+
+            Vector2i cursorSave = new Vector2i(cursorPosition);
+
+
 
                 switch(key) {
 
@@ -174,6 +184,10 @@ public class TextInputComponent extends TextComponent {
                     }
                 }
 
+                if(cursorSave.x != cursorPosition.x || cursorSave.y != cursorPosition.y) {
+                    cursorChanged = true;
+                }
+
                 updateBounds();
 
             });
@@ -187,14 +201,15 @@ public class TextInputComponent extends TextComponent {
     private void setCursorPosition() {
         Vector2f pos = getTextItem().getCursorPosition(cursorPosition.x,cursorPosition.y);
 
-        cursor.setPosition(getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getxOffset()) + super.getAutoXOffset(),getOnScreenYPosition() - getOnScreenHeight()/2 + getOnScreenHeight() * (pos.y +0.5f + getyOffset()) + super.getAutoYOffset(),cursor.getPosition().z);
+        cursor.setPosition(getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getxOffset() + getAlignmentOffset()) - cursor.getScale3().x/4,getOnScreenYPosition() + getOnScreenHeight() * (pos.y + getyOffset()),cursor.getPosition().z);
 
-        if(onCursorChanged != null) {
+        if(onCursorChanged != null && cursorChanged) {
+            cursorChanged = false;
             onCursorChanged.execute();
         }
 
         super.updatePosition();
-        cursor.setPosition(getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getxOffset()) + super.getAutoXOffset(),getOnScreenYPosition() - getOnScreenHeight()/2 + getOnScreenHeight() * (pos.y +0.5f + getyOffset()) + super.getAutoYOffset(),cursor.getPosition().z);
+        cursor.setPosition(getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getxOffset() + getAlignmentOffset()) - cursor.getScale3().x/4,getOnScreenYPosition() + getOnScreenHeight() * (pos.y + getyOffset()),cursor.getPosition().z);
 
     }
 
@@ -334,7 +349,7 @@ public class TextInputComponent extends TextComponent {
         Vector2f pos = getTextItem().getCursorPosition(cursorPosition.x,cursorPosition.y);
 
         Vector2f result = new Vector2f();
-        result.x = getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getxOffset());
+        result.x = getOnScreenXPosition() - getOnScreenWidth()/2 + getOnScreenWidth()*(pos.x +0.5f + getxOffset() + getAlignmentOffset());
         result.y = getOnScreenYPosition() - getOnScreenHeight()/2 + getOnScreenHeight() * (pos.y +0.5f + getyOffset());
 
         return result;

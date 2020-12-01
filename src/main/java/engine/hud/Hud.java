@@ -155,6 +155,7 @@ public class Hud {
 
         scene.getKeyListener().handleKeyInput(window);
         if(currentInputFocus != null) {
+
             currentInputFocus.getKeyListener().handleKeyInput(window);
         }
 
@@ -350,7 +351,7 @@ public class Hud {
      */
     public void setCurrentInputFocus(ContentComponent currentInputFocus) {
 
-        if(this.currentInputFocus != null) {
+        if(this.currentInputFocus != null && !currentInputFocus.equals(this.currentInputFocus)) {
             this.currentInputFocus.lostInputFocus();
 
         }
@@ -365,7 +366,7 @@ public class Hud {
     }
 
     public void setCurrentFocus(ContentComponent currentFocus) {
-        if(this.currentFocus != null) {
+        if(this.currentFocus != null && !currentFocus.equals(this.currentFocus)) {
             this.currentFocus.lostFocus();
 
         }
