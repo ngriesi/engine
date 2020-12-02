@@ -4,6 +4,10 @@ import engine.hud.components.SubComponent;
 
 import static engine.hud.constraints.positionConstraints.PositionConstraint.Direction.X;
 
+/**
+ * constraint to set the position of a component. It defines where the component should
+ * be relative to its parent.
+ */
 public class RelativeToParentPosition extends PositionConstraint {
 
     /**

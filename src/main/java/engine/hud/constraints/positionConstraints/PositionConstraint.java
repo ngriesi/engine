@@ -2,6 +2,9 @@ package engine.hud.constraints.positionConstraints;
 
 import engine.hud.components.SubComponent;
 
+/**
+ * parent class for all position constraints
+ */
 public abstract class PositionConstraint {
 
     /**
