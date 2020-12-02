@@ -3,6 +3,10 @@ package engine.hud.events;
 import engine.hud.components.SubComponent;
 import org.joml.Vector2f;
 
+/**
+ * interface implemented by objects (normally components) that can be dragged and perform actions while
+ * they are
+ */
 public interface DragEvent {
 
     /**
@@ -18,5 +22,10 @@ public interface DragEvent {
      */
     SubComponent getDragVisual();
 
+    /**
+     * action called every frame this drag event is active
+     *
+     * @param lastMousePosition last position of the mouse
+     */
     void dragAction(Vector2f lastMousePosition);
 }

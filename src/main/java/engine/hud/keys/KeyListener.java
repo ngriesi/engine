@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * class used to handle key inputs that the current key target or the scene component receive
+ */
+@SuppressWarnings("unused")
 public class KeyListener {
 
     /** delay before the key spam starts (input frames) */
@@ -18,15 +22,20 @@ public class KeyListener {
     public static final int PRESSED_INTERVAL = 5;
 
     /** last used key */
-    private HashMap<Integer,KeyInfo> lastUsed;
+    private final HashMap<Integer,KeyInfo> lastUsed;
 
     /** determines if the spam of keys should be enabled */
     @SuppressWarnings("FieldCanBeLocal")
     private boolean useKeySpam = true;
 
-    @SuppressWarnings("unused")
+    /**
+     * action performed when a key is pressed
+     */
     private KeyAction onKeyPressedAction;
 
+    /**
+     * default constructor creating hash map object
+     */
     public KeyListener() {
         lastUsed = new HashMap<>();
     }
@@ -37,21 +46,25 @@ public class KeyListener {
      * @param window to get the last pressed key
      */
     public void handleKeyInput(Window window) {
+
+        // gets a list of all key presses of the last frame
         List<Integer> keys = window.getLastPressed();
+
         int key;
 
         List<Integer> remove = new ArrayList<>();
 
+        // updates the last used keys list
         for(Integer k : lastUsed.keySet()) {
             if(!keys.contains(k)) {
                 remove.add(k);
             }
         }
-
         for(Integer k : remove) {
             lastUsed.remove(k);
         }
 
+        // performs the key action and adds the newly pressed keys to the last used list
         for (Integer integer : keys) {
             key = integer;
 
@@ -79,6 +92,11 @@ public class KeyListener {
         }
     }
 
+    /**
+     * executes the on key pressed action if it exists
+     *
+     * @param keyCode code of the key, passed to the action
+     */
     protected void keyPressedAction(int keyCode) {
         if(onKeyPressedAction != null) {
             onKeyPressedAction.execute(keyCode);
@@ -89,6 +107,13 @@ public class KeyListener {
         this.onKeyPressedAction = keyAction;
     }
 
+    public void setUseKeySpam(boolean useKeySpam) {
+        this.useKeySpam = useKeySpam;
+    }
+
+    /**
+     * dataclass to store the data for each key that is currently pressed
+     */
     private static class KeyInfo {
 
         private int key;

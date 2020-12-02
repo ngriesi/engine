@@ -18,7 +18,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.glStencilMask;
 
 
-//TODO undo function, marking, copy, cut and paste
+//TODO undo function, copy, cut and paste
 
 /**
  * class used to create a component that can get text input

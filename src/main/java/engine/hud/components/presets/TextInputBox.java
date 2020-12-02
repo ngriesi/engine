@@ -18,6 +18,8 @@ import engine.hud.text.TextItem;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
+// TODO marking, center and right text alignment support
+
 /**
  * Component used to create a text input field to enter text
  * uses a Scroll view and a TextInputComponent
