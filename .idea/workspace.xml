@@ -25,12 +25,21 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up element size constraints">
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/positionConstraints/EndAtRelativeToParent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/positionConstraints/EndAtRelativeToParent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/positionConstraints/EndAtRelativeToWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/positionConstraints/EndAtRelativeToWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/positionConstraints/PositionConstraint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/positionConstraints/PositionConstraint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/positionConstraints/RelativeInParent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/positionConstraints/RelativeInParent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/positionConstraints/RelativeInWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/positionConstraints/RelativeInWindow.java" afterDir="false" />
+    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up component position constraints">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/AbsoluteAspectRatio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/AbsoluteAspectRatio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/AspectRatio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/AspectRatio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/InvertedDirectionRelativeToScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/InvertedDirectionRelativeToScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/InvertedRelativeToParent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/InvertedRelativeToParent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/InvertedRelativeToWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/InvertedRelativeToWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/PixelValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/PixelValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/RelativeToParentSize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/RelativeToParentSize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/RelativeToScreenSize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/RelativeToScreenSize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/RelativeToWindowSize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/RelativeToWindowSize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/SizeConstraint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/SizeConstraint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/SubtractConstraint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/SubtractConstraint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/TextAspectRatio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/TextAspectRatio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/TextureAspectRatio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/constraints/sizeConstraints/TextureAspectRatio.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +51,7 @@
       <list>
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -404,7 +414,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606906742878</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="cleaned up component position constraints">
+      <created>1606907303035</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1606907303035</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -420,7 +437,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="new mouse listener" />
     <MESSAGE value="back to opd rendering with better shader" />
     <MESSAGE value="reworked text and color rendering with single shader rendering" />
     <MESSAGE value="started code cleanup" />
@@ -445,13 +461,14 @@
     <MESSAGE value="cleaned up SceneComponent,SubComponent and ContentComponent" />
     <MESSAGE value="added mask behavior for sub components" />
     <MESSAGE value="cleaned up element size constraints" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up element size constraints" />
+    <MESSAGE value="cleaned up component position constraints" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up component position constraints" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1606833812167">
+    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1606908500092">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1606833812167" />
+    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1606908500092" />
     <state x="417" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1606833122813">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -496,10 +513,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1605877050773" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1606906744991">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1606907305363">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1606906744991" />
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1606907305363" />
     <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605877400645">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

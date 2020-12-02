@@ -8,6 +8,11 @@ public abstract class SizeConstraint {
     protected float value;
 
     /**
+     * stores if the constraint is an aspect ratio and uses the opposite constraint for its calculations
+     */
+    private boolean aspectRatio = false;
+
+    /**
      * passed by the component to determine direction
      */
     public enum Direction {
@@ -21,6 +26,16 @@ public abstract class SizeConstraint {
      */
     SizeConstraint(float value) {
         this.value = value;
+    }
+
+    /**
+     * constructor sets initial value of the constraint
+     *
+     * @param value initial value
+     */
+    SizeConstraint(float value,boolean aspectRatio) {
+        this.value = value;
+        this.aspectRatio = aspectRatio;
     }
 
     /**
@@ -50,4 +65,12 @@ public abstract class SizeConstraint {
         return value;
     }
 
+    /**
+     * used to check if this constraint needs its opposite for calculations
+     *
+     * @return true if this is an aspect ratio constraint
+     */
+    public boolean isAspectRatio() {
+        return aspectRatio;
+    }
 }
