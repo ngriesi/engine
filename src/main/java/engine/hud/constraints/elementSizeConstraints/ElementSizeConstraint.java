@@ -2,6 +2,10 @@ package engine.hud.constraints.elementSizeConstraints;
 
 import engine.hud.components.SubComponent;
 
+/**
+ * constraint used to define the size of elements of a component for Example corner size or edge size of a
+ * quad component
+ */
 public abstract class ElementSizeConstraint {
 
     /** value of the constraint */
@@ -25,9 +29,10 @@ public abstract class ElementSizeConstraint {
     }
 
     /**
-     * method called by the component to get the size of itself
+     * method called by the component to get the size of its element
      *
      * @param component component that uses this constraint
+     * @param proportion declares which value (width or height) should be used as reference
      * @return value for this constraint (width or height of the component)
      */
     public abstract float getValue(SubComponent component,Proportion proportion);
