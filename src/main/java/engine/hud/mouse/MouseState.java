@@ -1,21 +1,55 @@
 package engine.hud.mouse;
 
+/**
+ * class stores and updates the state value for the mouse and its buttons for a
+ * specific MouseListener
+ */
 public class MouseState {
 
-    private boolean[] pressedSinceEntered;
+    /**
+     * stores if a specific mouse button has been pressed since the mouse entered the
+     * component its currently inside
+     */
+    private final boolean[] pressedSinceEntered;
 
-    private boolean[] pressedOnLastFrame;
+    /**
+     * stores if a specific mouse button was pressed on the last frame
+     */
+    private final boolean[] pressedOnLastFrame;
 
-    private boolean[] pressed;
+    /**
+     * stores if a specific mouse button is currently pressed
+     */
+    private final boolean[] pressed;
 
-    private int[] buttonTimer;
+    /**
+     * stores the timers for all mouse buttons to determine if the action is a press or a click
+     */
+    private final int[] buttonTimer;
 
+    /**
+     * stores if the mouse moved since the last frame
+     */
     private boolean mouseMoved;
 
+    /**
+     * stores if the mouse is inside the component this MouseState belongs to
+     *
+     * this is a temporally set value used and only to be used by the mouse entered and exited
+     * methods in MouseListener
+     *
+     * @see MouseListener
+     */
     private boolean stillInside;
 
+    /**
+     * stores whether the mouse is currently inside the component this MouseState belongs to
+     */
     private boolean mouseInside;
 
+    /**
+     * constructor creates arrays
+     */
     public MouseState() {
         pressedOnLastFrame = new boolean[8];
         pressed = new boolean[8];
@@ -23,6 +57,12 @@ public class MouseState {
         buttonTimer = new int[8];
     }
 
+    /**
+     * sets the state of the buttons before the MouseListener checks for mouse events
+     *
+     * @param mouseInput reference to the MouseInput class
+     * @param button of which the state currently gets changed
+     */
     public void setState(MouseInput mouseInput, MouseListener.MouseButton button) {
         pressed[button.ordinal()] = mouseInput.isPressed(button);
         buttonTimer[button.ordinal()] = (pressedOnLastFrame[button.ordinal()] && !pressedSinceEntered[button.ordinal()])?buttonTimer[button.ordinal()]+1:0;
@@ -30,7 +70,12 @@ public class MouseState {
 
     }
 
-    public void resetFrameAction(MouseInput mouseInput, MouseListener.MouseButton button) {
+    /**
+     * sets the state for the next frame after the MouseListener has checked for mouse events
+     *
+     * @param button of which the state currently gets changed
+     */
+    public void resetFrameAction(MouseListener.MouseButton button) {
         pressedSinceEntered[button.ordinal()] = pressedSinceEntered[button.ordinal()] && pressed[button.ordinal()];
         pressedOnLastFrame[button.ordinal()] = pressed[button.ordinal()];
         pressed[button.ordinal()] = false;
@@ -45,7 +90,7 @@ public class MouseState {
      */
     private boolean checkForDrag(MouseInput mouseInput) {
 
-        return mouseInput.getDisplVec().x != 0 || mouseInput.getDisplVec().y != 0;
+        return mouseInput.getDisplayVec().x != 0 || mouseInput.getDisplayVec().y != 0;
 
     }
 

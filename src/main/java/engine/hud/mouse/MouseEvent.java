@@ -2,8 +2,15 @@ package engine.hud.mouse;
 
 import engine.hud.components.ContentComponent;
 
+/**
+ * data class stores the information about a mouse event that occures
+ * e.g. a press or release of a mouse button
+ */
 public class MouseEvent {
 
+    /**
+     * enum containing all possible mouse events to identify them
+     */
     public enum Event {
         CLICK_STARTED,
         CLICK_RELEASED,
@@ -14,17 +21,36 @@ public class MouseEvent {
         ENTERED,
         EXITED,
         ACTION
-
     }
 
-    private MouseInput mouseInput;
+    /**
+     * mouse input class reference to access mouse position data
+     */
+    private final MouseInput mouseInput;
 
-    private Event event;
+    /**
+     * kind of the event that occurred
+     */
+    private final Event event;
 
-    private ContentComponent component;
+    /**
+     * component in which the event happened
+     */
+    private final ContentComponent component;
 
-    private MouseListener.MouseButton mouseButton;
+    /**
+     * button that performed the event
+     */
+    private final MouseListener.MouseButton mouseButton;
 
+    /**
+     * constructor setting all attributes
+     *
+     * @param mouseInput MouseInput class reference of the window
+     * @param event kind of the event that occurred
+     * @param component component in which the event occurred
+     * @param mouseButton MouseButton that caused the event
+     */
     MouseEvent(MouseInput mouseInput, Event event, ContentComponent component, MouseListener.MouseButton mouseButton) {
         this.mouseInput = mouseInput;
         this.event = event;

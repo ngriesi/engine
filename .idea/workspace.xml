@@ -25,12 +25,15 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up component size constraints">
+    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up drag event and key listener">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextInputComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/contentcomponents/TextInputComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/TextInputBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/components/presets/TextInputBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/events/DragEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/events/DragEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/keys/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/keys/KeyListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/test/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/MainGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -419,7 +422,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606910029790</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="cleaned up drag event and key listener">
+      <created>1606917764913</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1606917764913</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -435,7 +445,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="reworked text and color rendering with single shader rendering" />
     <MESSAGE value="started code cleanup" />
     <MESSAGE value="cleanup of save and load classes" />
     <MESSAGE value="cleanup of main engine classes" />
@@ -460,17 +469,18 @@
     <MESSAGE value="cleaned up element size constraints" />
     <MESSAGE value="cleaned up component position constraints" />
     <MESSAGE value="cleaned up component size constraints" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up component size constraints" />
+    <MESSAGE value="cleaned up drag event and key listener" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up drag event and key listener" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1606917407698">
+    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1607008320747">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1606917407698" />
-    <state x="417" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1606833122813">
+    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1607008320747" />
+    <state x="417" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1607008256722">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="417" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1606833122813" />
+    <state x="417" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1607008256722" />
     <state x="707" y="380" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1605960926145">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -511,10 +521,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1605877050773" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1606910032870">
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1606917767675">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1606910032870" />
+    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1606917767675" />
     <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605877400645">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

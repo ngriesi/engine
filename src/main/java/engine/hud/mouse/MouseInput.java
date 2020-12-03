@@ -19,12 +19,15 @@ public class MouseInput {
     private final Vector2f relativePos;
 
     /** movement Vector of the mouse (direction and speed) */
-    private final Vector2f displVec;
+    private final Vector2f displayVec;
 
     /** true if mouse is inside the window */
     private boolean inWindow = false;
 
-    private boolean[] buttonsPressed;
+    /**
+     * stores for all eight possible mouse buttons if they are currently pressed
+     */
+    private final boolean[] buttonsPressed;
 
     /**stores the rotation of the mouse wheel */
     private float mouseWheelRotation = 0;
@@ -39,7 +42,7 @@ public class MouseInput {
         previousPos = new Vector2d(-1,-1);
         currentPos = new Vector2d(0,0);
         relativePos = new Vector2f();
-        displVec = new Vector2f();
+        displayVec = new Vector2f();
         buttonsPressed = new boolean[8];
 
     }
@@ -51,16 +54,16 @@ public class MouseInput {
      */
     public void init(Window window){
 
-        glfwSetCursorPosCallback(window.getWindowHandle(),((window1, xpos, ypos) -> {
-            currentPos.x = xpos;
-            currentPos.y = ypos;
-
+        // gives the mouse position
+        glfwSetCursorPosCallback(window.getWindowHandle(),((window1, xPos, yPos) -> {
+            currentPos.x = xPos;
+            currentPos.y = yPos;
         }));
 
-        glfwSetCursorEnterCallback(window.getWindowHandle(),((window1, entered) -> {
-            inWindow = entered;
-        }));
+        // tells if the mouse is inside the window
+        glfwSetCursorEnterCallback(window.getWindowHandle(),((window1, entered) -> inWindow = entered));
 
+        // sets for all the buttons the pressed values
         glfwSetMouseButtonCallback(window.getWindowHandle(),((window1, button, action, mods) -> {
             buttonsPressed[0] = button==GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS;
             buttonsPressed[1] = button==GLFW_MOUSE_BUTTON_2 && action == GLFW_PRESS;
@@ -70,16 +73,14 @@ public class MouseInput {
             buttonsPressed[5] = button==GLFW_MOUSE_BUTTON_6 && action == GLFW_PRESS;
             buttonsPressed[6] = button==GLFW_MOUSE_BUTTON_7 && action == GLFW_PRESS;
             buttonsPressed[7] = button==GLFW_MOUSE_BUTTON_8 && action == GLFW_PRESS;
-
-
-
         }));
 
+        // gives the scroll value of the current frame
         glfwSetScrollCallback(window.getWindowHandle(), new GLFWScrollCallback() {
             @Override
-            public void invoke(long window, double xoffset, double yoffset) {
-                mouseWheelRotation = (float) -yoffset;
-                horizontalScroll = (float) -xoffset;
+            public void invoke(long window, double xOffset, double yOffset) {
+                mouseWheelRotation = (float) -yOffset;
+                horizontalScroll = (float) -xOffset;
             }
         });
 
@@ -89,7 +90,7 @@ public class MouseInput {
     /**
      * @return the display vector (movement of the mouse)
      */
-    public Vector2f getDisplVec(){return displVec;}
+    public Vector2f getDisplayVec(){return displayVec;}
 
     /**
      * @return current mouse position in pixels relative to window top left corner
@@ -122,23 +123,23 @@ public class MouseInput {
      * @param window used to get window bounds to determine relativePos
      */
     public void input(Window window){
-        displVec.x = 0;
-        displVec.y = 0;
+        displayVec.x = 0;
+        displayVec.y = 0;
 
         relativePos.x = (float) (currentPos.x/window.getWidth());
         relativePos.y = (float) (currentPos.y/window.getHeight());
 
         if(previousPos.x > 0 && previousPos.y > 0 && inWindow){
 
-            double deltax = currentPos.x - previousPos.x;
-            double deltay = currentPos.y - previousPos.y;
-            boolean rotateX = deltax != 0;
-            boolean rotateY = deltay != 0;
+            double deltaX = currentPos.x - previousPos.x;
+            double deltaY = currentPos.y - previousPos.y;
+            boolean rotateX = deltaX != 0;
+            boolean rotateY = deltaY != 0;
             if (rotateX) {
-                displVec.y = (float)deltax;
+                displayVec.y = (float)deltaX;
             }
             if(rotateY) {
-                displVec.x = (float)deltay;
+                displayVec.x = (float)deltaY;
             }
         }
 
@@ -165,6 +166,12 @@ public class MouseInput {
         return t;
     }
 
+    /**
+     * checks for a specific button if its pressed
+     *
+     * @param button that gets checked
+     * @return true if the checked button is currently pressed
+     */
     public boolean isPressed(MouseListener.MouseButton button) {
         return buttonsPressed[button.ordinal()];
     }

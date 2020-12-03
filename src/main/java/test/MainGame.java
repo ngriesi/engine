@@ -128,7 +128,7 @@ public class MainGame implements IGameLogic {
 
         // Update camera based on mouse            
         if (mouseInput.isPressed(MouseListener.MouseButton.LEFT)) {
-            Vector2f rotVec = mouseInput.getDisplVec();
+            Vector2f rotVec = mouseInput.getDisplayVec();
             camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY, rotVec.y * MOUSE_SENSITIVITY, 0);
             hud.needsNextRendering();
         }
