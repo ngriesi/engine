@@ -25,6 +25,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import static engine.general.GameEngine.pTime;
 import static org.lwjgl.opengl.GL11.*;
 
+/**
+ * main class of the gui handles animations, drag events and stores the
+ * one Window reference and one SceneComponent reference
+ */
+@SuppressWarnings("unused")
 public class Hud {
 
     /** maximum number of components the depth buffer (24 bit) can distinguish */
@@ -49,16 +54,16 @@ public class Hud {
     private boolean needsNextRendering;
 
     /** list of animations to be added to animations in the next update frame */
-    private List<Animation> newAnimations;
+    private final List<Animation<?>> newAnimations;
 
     /** animations that currently get executed */
-    private List<Animation> animations;
+    private final List<Animation<?>> animations;
 
     /** list of animations to be removed from animations in the next update frame */
-    private List<Animation> finishedAnimations;
+    private final List<Animation<?>> finishedAnimations;
 
     /** Actions that get performed at the end of the frame */
-    private CopyOnWriteArrayList<Action> endOfFrameActions;
+    private final CopyOnWriteArrayList<Action> endOfFrameActions;
 
     /** saves the component that currently gets all the key inputs */
     private ContentComponent currentInputFocus;
@@ -67,7 +72,7 @@ public class Hud {
     private ContentComponent currentFocus;
 
     /** List of components that should get removed */
-    private List<SubComponent> removedComponents;
+    private final List<SubComponent> removedComponents;
 
     /** DragEvent for the left mouse button */
     private DragEvent leftDragEvent;
@@ -85,10 +90,10 @@ public class Hud {
     private Vector2f lastMousePositionRelative;
 
     /** actions from another thread / to be performed in the update cycle*/
-    private List<Action> newActions;
+    private final List<Action> newActions;
 
     /** actions from another thread / to be performed in the update cycle*/
-    private List<Action> actions;
+    private final List<Action> actions;
 
     /**
      * contains Shaders used by the hud
@@ -126,7 +131,6 @@ public class Hud {
     /**
      * initialises Hud
      */
-
     public void init() throws Exception{
         SceneComponent scene = new SceneComponent();
         setScene(scene);
@@ -134,10 +138,9 @@ public class Hud {
     }
 
     /**
-     * updates the bounds of all components
+     * updates the bounds of all components of this hud
      */
     public void updateBounds() {
-
         scene.updateBounds();
     }
 
@@ -174,6 +177,7 @@ public class Hud {
      */
     public void update(@SuppressWarnings("unused") float interval) {
 
+        // updates actions
         actions.addAll(newActions);
         newActions.clear();
         for(Action action : actions) {
@@ -181,17 +185,43 @@ public class Hud {
         }
         actions.clear();
 
+        // handles animations
         executeAnimations();
 
+        // updates drag events
         updateDragEventPositions();
 
         needsRendering = checkForUpdate();
 
+        // updates ednOfFrameActions
         for(Action action : endOfFrameActions) {
             action.execute();
         }
         endOfFrameActions.clear();
 
+
+    }
+
+    /**
+     * adds all animations from newAnimations to animations
+     * clears the newAnimations list
+     *
+     * for all animations in the animations list makeStep is called
+     *
+     * removes all animations in finished animations from animations
+     * clears the finished animations list
+     */
+    private void executeAnimations() {
+
+        for(Animation<?> animation : finishedAnimations) {
+            animations.remove(animation);
+        }
+        finishedAnimations.clear();
+        animations.addAll(newAnimations);
+        newAnimations.clear();
+        for(Animation<?> animation : animations) {
+            animation.makeStep();
+        }
 
     }
 
@@ -235,19 +265,26 @@ public class Hud {
     }
 
     /**
+     * removes all components that should be removed at the beginning of a frame
+     */
+    public void removeComponents() {
+        for (SubComponent c : removedComponents) {
+            c.getParent().removeComponent(c);
+        }
+        removedComponents.clear();
+    }
+
+
+    /**
      * starts hud rendering process in the main component
      *
-     * @param ortho orthographic projection matrix
+     * @param orthographic orthographic projection matrix
      * @param transformation transformation object
      */
-    public void render(Matrix4f ortho, Transformation transformation) {
-
-
-
-
+    public void render(Matrix4f orthographic, Transformation transformation) {
         glStencilMask(1);
         shaderManager.bindShader();
-        scene.render(ortho,transformation,shaderManager);
+        scene.render(orthographic,transformation,shaderManager);
 
     }
 
@@ -259,8 +296,6 @@ public class Hud {
      * @return color
      */
     public int getPixelColor(int x, int y) {
-
-
 
         GameEngine.pTime("read test 2");
         ByteBuffer rgb = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder());
@@ -275,38 +310,11 @@ public class Hud {
     }
 
     /**
-     * adds all animations from newAnimations to animations
-     * clears the newAnimations list
-     *
-     * for all animations in the animations list makeStep is called
-     *
-     * removes all animations in finished animations from animations
-     * clears the finished animations list
-     */
-    private void executeAnimations() {
-
-
-
-
-        for(Animation animation : finishedAnimations) {
-            animations.remove(animation);
-        }
-        finishedAnimations.clear();
-        animations.addAll(newAnimations);
-        newAnimations.clear();
-        for(Animation animation : animations) {
-            animation.makeStep();
-        }
-
-
-    }
-
-    /**
      * adds an animation to the list of new Animations
      *
      * @param animation animation to be added to the animations list
      */
-    public void addAnimation(Animation animation) {
+    public void addAnimation(Animation<?> animation) {
         newAnimations.add(animation);
     }
 
@@ -315,7 +323,7 @@ public class Hud {
      *
      * @param animation to be removed from the animations list
      */
-    public void removeAnimation(Animation animation) {
+    public void removeAnimation(Animation<?> animation) {
         finishedAnimations.add(animation);
     }
 
@@ -365,6 +373,11 @@ public class Hud {
 
     }
 
+    /**
+     * sets the component that will be in focus
+     *
+     * @param currentFocus component to get focus
+     */
     public void setCurrentFocus(ContentComponent currentFocus) {
         if(this.currentFocus != null && !currentFocus.equals(this.currentFocus)) {
             this.currentFocus.lostFocus();
@@ -397,16 +410,16 @@ public class Hud {
     /**
      * used to render the current visuals of the drag events
      *
-     * @param ortho transformation matrix
+     * @param orthographic transformation matrix
      * @param transformation transformation object
      * @param shaderManager of this hud
      */
-    public void renderDragEvents(Matrix4f ortho, Transformation transformation,HudShaderManager shaderManager) {
+    public void renderDragEvents(Matrix4f orthographic, Transformation transformation,HudShaderManager shaderManager) {
         if(rightDragEvent != null && rightDragEvent.getDragVisual() != null) {
-            rightDragEvent.getDragVisual().renderComponent(ortho, transformation,shaderManager,0);
+            rightDragEvent.getDragVisual().renderComponent(orthographic, transformation,shaderManager,0);
         }
         if(leftDragEvent != null && leftDragEvent.getDragVisual() != null) {
-            leftDragEvent.getDragVisual().renderComponent(ortho,transformation,shaderManager,0);
+            leftDragEvent.getDragVisual().renderComponent(orthographic,transformation,shaderManager,0);
         }
     }
 
@@ -422,6 +435,9 @@ public class Hud {
         }
     }
 
+    /**
+     * drops right drag event and calls the referring action
+     */
     public void dropRightDragEvent() {
         if(rightDragEvent != null) {
             rightDragEvent.dropAction();
@@ -433,6 +449,9 @@ public class Hud {
         }
     }
 
+    /**
+     * drops right drag event and calls the referring action
+     */
     public void dropLeftDragEvent() {
         if(leftDragEvent != null) {
             leftDragEvent.dropAction();
@@ -484,11 +503,17 @@ public class Hud {
         newActions.add(action);
     }
 
+    /**
+     * returns the drag event of a specific button
+     *
+     * @param mouseButton button of which the DragEvent is requested
+     * @return DragEvent of the passed MouseButton
+     */
     public DragEvent getDragEvent(MouseListener.MouseButton mouseButton) {
-        switch (mouseButton) {
-            case RIGHT:return getRightDragEvent();
-            default: return getLeftDragEvent();
+        if (mouseButton == MouseListener.MouseButton.RIGHT) {
+            return getRightDragEvent();
         }
+        return getLeftDragEvent();
     }
 
     public DragEvent getLeftDragEvent() {
@@ -516,13 +541,6 @@ public class Hud {
         endOfFrameActions.add(action);
     }
 
-    public void removeComponents() {
-        for (SubComponent c : removedComponents) {
-            c.getParent().removeComponent(c);
-        }
-        removedComponents.clear();
-    }
-
     public void removeComponent(SubComponent component) {
         removedComponents.add(component);
     }
@@ -533,5 +551,9 @@ public class Hud {
 
     public HudShaderManager getShaderManager() {
         return shaderManager;
+    }
+
+    public void setAlwaysRender(boolean alwaysRender) {
+        this.alwaysRender = alwaysRender;
     }
 }

@@ -25,62 +25,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up the MouseListener classes">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/LWJGL3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/LWJGL3.xml" afterDir="false" />
+    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up text classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/text/FontTexture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/text/FontTexture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/text/TextItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/text/TextItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/TextInputBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/TextInputBox.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/ElementSizeConstraint$Proportion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/ElementSizeConstraint$Proportion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/ElementSizeConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/ElementSizeConstraint.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToComponentSizeE.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToComponentSizeE.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToParentSizeE.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToParentSizeE.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToScreenSizeE.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToScreenSizeE.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToWindowSizeE.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToWindowSizeE.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/EndAtRelativeToParent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/EndAtRelativeToParent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/EndAtRelativeToWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/EndAtRelativeToWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/PositionConstraint$Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/PositionConstraint$Direction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/PositionConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/PositionConstraint.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeInParent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeInParent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeInWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeInWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeToParentPosition.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeToParentPosition.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeToWindowPosition.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeToWindowPosition.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/StartAtRelativeToParent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/StartAtRelativeToParent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/StartAtRelativeToWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/StartAtRelativeToWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/AbsoluteAspectRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/AbsoluteAspectRatio.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/AspectRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/AspectRatio.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedDirectionRelativeToScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedDirectionRelativeToScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedRelativeToParent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedRelativeToParent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedRelativeToWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedRelativeToWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/PixelValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/PixelValue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToParentSize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToParentSize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToScreenSize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToScreenSize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToWindowSize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToWindowSize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SizeConstraint$Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SizeConstraint$Direction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SizeConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SizeConstraint.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SubtractConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SubtractConstraint.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/TextAspectRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/TextAspectRatio.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/TextureAspectRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/TextureAspectRatio.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/keys/KeyListener$KeyInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/keys/KeyListener$KeyInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/keys/KeyListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/keys/KeyListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseAdapter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseAdapter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseEvent$Event.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseEvent$Event.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseEvent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseInput$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseInput$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseInput.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseInput.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseListener$MouseButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseListener$MouseButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseState.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/FontTexture$CharData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/text/FontTexture$CharData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/FontTexture.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/text/FontTexture.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem$LineData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem$LineData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/test/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/test/MainGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/Hud.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/HudShaderManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/HudShaderManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -483,7 +431,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607010685580</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="cleaned up text classes">
+      <created>1607168768453</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1607168768453</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -499,7 +454,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="cleanup of save and load classes" />
     <MESSAGE value="cleanup of main engine classes" />
     <MESSAGE value="fixed relative to screen size Element constraint" />
     <MESSAGE value="fixed vertical scroll view" />
@@ -524,7 +478,8 @@
     <MESSAGE value="cleaned up component size constraints" />
     <MESSAGE value="cleaned up drag event and key listener" />
     <MESSAGE value="cleaned up the MouseListener classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up the MouseListener classes" />
+    <MESSAGE value="cleaned up text classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up text classes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

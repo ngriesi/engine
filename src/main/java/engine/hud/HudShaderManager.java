@@ -3,28 +3,41 @@ package engine.hud;
 import engine.general.save.Resources;
 import engine.render.ShaderProgram;
 
+/**
+ * class handles the setup and use of the shader of the hud
+ */
+@SuppressWarnings("unused")
 public class HudShaderManager {
 
-
-
-
-
-    private ShaderProgram currentlyUsed;
-
+    /**
+     * shader program for the hud
+     */
     private ShaderProgram maskShader;
 
+    /**
+     * initialises the shader
+     *
+     * @throws Exception if shader cant be created
+     */
     public void init() throws Exception{
         setupMaskShader();
     }
 
-
+    /**
+     * initialises the shader
+     *
+     * @throws Exception if shader cant be created
+     */
     public void setupMaskShader() throws Exception {
 
         maskShader = new ShaderProgram();
-        maskShader.createVertexShader(Resources.loadResource("/shader/hudshader/maskShader/maskVertexShader.shader"));
-        maskShader.createFragmentShader(Resources.loadResource("/shader/hudshader/maskShader/maskFragmentShader.shader"));
+
+        // loads shader code
+        maskShader.createVertexShader(Resources.loadResource("/shader/hudShader/maskShader/maskVertexShader.shader"));
+        maskShader.createFragmentShader(Resources.loadResource("/shader/hudShader/maskShader/maskFragmentShader.shader"));
         maskShader.link();
 
+        // creates uniforms
         maskShader.createUniforms("projModelMatrix");
         maskShader.createUniforms("transparencyMode");
         maskShader.createUniforms("keepCornerProportion");
@@ -46,15 +59,23 @@ public class HudShaderManager {
         return maskShader;
     }
 
-
+    /**
+     * unbinds the shader
+     */
     public void unbindShader() {
-        currentlyUsed.unbind();
+        maskShader.unbind();
     }
 
+    /**
+     * binds the shader
+     */
     public void bindShader() {
         maskShader.bind();
     }
 
+    /**
+     * cleans the shader up
+     */
     public void cleanUp() {
         if(maskShader!= null) {
             maskShader.cleanup();
