@@ -10,9 +10,11 @@ import org.joml.Vector2i;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class creates the mesh for a text on to be displayed in the hud using
+ * the FontTexture class
+ */
 public class TextItem extends GameItem {
-
-
 
     /**
      * enums for text alignment
@@ -21,6 +23,9 @@ public class TextItem extends GameItem {
         LEFT,CENTER,RIGHT
     }
 
+    /**
+     * defines the distance between the top edge of the mesh and the first line
+     */
     private static final int VERTICAL_PADDING_ZERO = 30;
 
     /**
@@ -31,7 +36,7 @@ public class TextItem extends GameItem {
     private static final int START_PADDING = 4;
 
     /** texture of the font */
-    private FontTexture fontTexture;
+    private final FontTexture fontTexture;
 
     /** width of the longest line */
     private int maxLineWidth;
@@ -59,7 +64,7 @@ public class TextItem extends GameItem {
     private float[] texArr;
 
     /** normals array (only one default vector for all */
-    private float[] normals;
+    private final float[] normals;
 
     /** indices array for vertices */
     private int[] indicesArr;
@@ -70,6 +75,11 @@ public class TextItem extends GameItem {
     /** padding between lines */
     private int verticalPadding = 10;
 
+    /**
+     * constructor creating an empty TextItem with a FontTexture
+     *
+     * @param fontTexture font used by the text item
+     */
     public TextItem(FontTexture fontTexture) {
         this.fontTexture = fontTexture;
         alignment = TextAlignment.CENTER;
@@ -112,9 +122,9 @@ public class TextItem extends GameItem {
         List<Integer> indices = new ArrayList<>();
 
         String[] lines = text.split("\n",-1);
-
         this.lines = lines.length;
 
+        // sets the y position so that the mesh is centered around its cordinates
         yPos = (int) ( -getLineHeight() * this.lines/2);
 
 
@@ -129,6 +139,7 @@ public class TextItem extends GameItem {
 
             indicesLine = new int[line.length()];
 
+            // sets the x cord the line starts at
             switch (alignment) {
                 case CENTER:xStart = -getLineWidth(line)/2;break;
                 case LEFT:xStart = 0;break;
@@ -146,10 +157,10 @@ public class TextItem extends GameItem {
                 indicesLine[count] = nextIndex;
                 count++;
 
-                int yOffset = charData.getyOffset() -(VERTICAL_PADDING_ZERO - verticalPadding) /2;
+                int yOffset = charData.getYOffset() -(VERTICAL_PADDING_ZERO - verticalPadding) /2;
 
                 // Top left vertex
-                positions.add((float) (startX + charData.getxOffset())); // x
+                positions.add((float) (startX + charData.getXOffset())); // x
                 positions.add((float) (yPos + yOffset)); // y
                 positions.add(Z_POS); // z
                 textCords.add((float) (charData.getX()) / 512.0f); // texture x
@@ -157,7 +168,7 @@ public class TextItem extends GameItem {
                 indices.add(nextIndex * VERTICES_PER_QUAD);
 
                 // Bottom left vertex
-                positions.add((float) (startX + charData.getxOffset())); // x
+                positions.add((float) (startX + charData.getXOffset())); // x
                 positions.add((float) (yPos + yOffset + charData.getHeight())); // y
                 positions.add(Z_POS); // z
                 textCords.add((float) (charData.getX()) / 512.0f); // texture x
@@ -165,7 +176,7 @@ public class TextItem extends GameItem {
                 indices.add(nextIndex * VERTICES_PER_QUAD + 1);
 
                 // Top right vertex
-                positions.add((float) (startX + charData.getxOffset() + charData.getWidth())); // x
+                positions.add((float) (startX + charData.getXOffset() + charData.getWidth())); // x
                 positions.add((float) (yPos + yOffset)); // y
                 positions.add(Z_POS); // z
                 textCords.add((float) (charData.getX() + charData.getWidth()) / 512.0f); // texture x
@@ -173,7 +184,7 @@ public class TextItem extends GameItem {
                 indices.add(nextIndex * VERTICES_PER_QUAD + 2);
 
                 // Bottom right vertex
-                positions.add((float) (startX + charData.getxOffset() + charData.getWidth())); // x
+                positions.add((float) (startX + charData.getXOffset() + charData.getWidth())); // x
                 positions.add((float) (yPos + yOffset + charData.getHeight())); // y
                 positions.add(Z_POS); // z
                 textCords.add((float) (charData.getX() + charData.getWidth()) / 512.0f); // texture x
@@ -185,7 +196,7 @@ public class TextItem extends GameItem {
                 indices.add(nextIndex * VERTICES_PER_QUAD + 1);
 
                 nextIndex++;
-                startX += charData.getxAdvance();
+                startX += charData.getXAdvance();
             }
 
             lineData.add(new LineData(line,xStart,indicesLine,yPos));
@@ -196,6 +207,7 @@ public class TextItem extends GameItem {
 
         maxLineWidth = calculateMaxWidth();
 
+        // creates the mesh
         posArr = Utils.listToArray(positions);
         texArr = Utils.listToArray(textCords);
         indicesArr = indices.stream().mapToInt(i->i).toArray();
@@ -213,7 +225,7 @@ public class TextItem extends GameItem {
     private int getLineWidth(String line) {
         int result = 0;
         for(char c : line.toCharArray()) {
-            result += fontTexture.getCharData(c).getxAdvance();
+            result += fontTexture.getCharData(c).getXAdvance();
         }
         return result + START_PADDING;
     }
@@ -314,7 +326,6 @@ public class TextItem extends GameItem {
 
         if(lineData.size() > y) {
             result.x = (lineData.get(y).start + lineData.get(y).getPosition(x)) / (float) maxLineWidth;
-
         }
 
         return result;
@@ -343,7 +354,7 @@ public class TextItem extends GameItem {
 
         switch(alignment) {
             case LEFT:x = x/temp;break;
-            case RIGHT:x = x;break;
+            case RIGHT:x = x * temp;break;
             case CENTER:x = (x - temp2/2)/temp;
         }
 
@@ -560,7 +571,7 @@ public class TextItem extends GameItem {
                     maxLineWidth = calculateMaxWidth();
 
                     for(int i = position;i<indices.length;i++) {
-                        moveInX(indices[i],-charData.getxAdvance());
+                        moveInX(indices[i],-charData.getXAdvance());
                     }
 
                     break;
@@ -574,7 +585,7 @@ public class TextItem extends GameItem {
                         if(i < position ) {
                             moveInX(indices[i], -diff/2);
                         } else {
-                            moveInX(indices[i],-diff/2 - charData.getxAdvance());
+                            moveInX(indices[i],-diff/2 - charData.getXAdvance());
                         }
                     }
 
@@ -583,10 +594,10 @@ public class TextItem extends GameItem {
 
                     maxLineWidth = calculateMaxWidth();
 
-                    start += charData.getxAdvance();
+                    start += charData.getXAdvance();
 
                     for(int i = 0;i<position;i++) {
-                        moveInX(indices[i],charData.getxAdvance());
+                        moveInX(indices[i],charData.getXAdvance());
                     }
 
                     break;
@@ -664,7 +675,7 @@ public class TextItem extends GameItem {
                     startX = getPosition(position);
 
                     for(int i = position + 1;i<indices.length;i++) {
-                        moveInX(indices[i],charData.getxAdvance());
+                        moveInX(indices[i],charData.getXAdvance());
                     }
 
                     break;
@@ -678,7 +689,7 @@ public class TextItem extends GameItem {
                         if(i < position ) {
                             moveInX(indices[i], -diff/2);
                         } else if(i > position){
-                            moveInX(indices[i],-diff/2 + charData.getxAdvance());
+                            moveInX(indices[i],-diff/2 + charData.getXAdvance());
                         }
                     }
 
@@ -687,9 +698,9 @@ public class TextItem extends GameItem {
                     width = getLineWidth(line);
                     maxLineWidth = calculateMaxWidth();
                     startX = -width + getPosition(position);
-                    start  -= charData.getxAdvance();
+                    start  -= charData.getXAdvance();
                     for(int i = position + 1;i<indices.length;i++) {
-                        moveInX(indices[i],charData.getxAdvance());
+                        moveInX(indices[i],charData.getXAdvance());
                     }
 
                     break;
@@ -700,23 +711,23 @@ public class TextItem extends GameItem {
             posArr = new float[posArrTemp.length+VERTICES_PER_QUAD * 3];
             System.arraycopy(posArrTemp,0,posArr,0,posArrTemp.length);
 
-            int yOffset = charData.getyOffset()- (VERTICAL_PADDING_ZERO - verticalPadding) /2;
+            int yOffset = charData.getYOffset()- (VERTICAL_PADDING_ZERO - verticalPadding) /2;
 
             float zPosition = 0;
 
-            posArr[nextIndex * VERTICES_PER_QUAD * 3] = charData.getxOffset() + startX;
+            posArr[nextIndex * VERTICES_PER_QUAD * 3] = charData.getXOffset() + startX;
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 1] = this.yPos + yOffset;
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 2] = zPosition;
 
-            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 3] = charData.getxOffset() + startX;
+            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 3] = charData.getXOffset() + startX;
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 4] = this.yPos + yOffset + charData.getHeight();
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 5] = zPosition;
 
-            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 6] = charData.getxOffset() + startX + charData.getWidth();
+            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 6] = charData.getXOffset() + startX + charData.getWidth();
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 7] = this.yPos + yOffset;
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 8] = zPosition;
 
-            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 9] = charData.getxOffset() + startX + charData.getWidth();
+            posArr[nextIndex * VERTICES_PER_QUAD * 3 + 9] = charData.getXOffset() + startX + charData.getWidth();
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 10] = this.yPos + yOffset + charData.getHeight();
             posArr[nextIndex * VERTICES_PER_QUAD * 3 + 11] = zPosition;
 
@@ -778,7 +789,7 @@ public class TextItem extends GameItem {
         int getPosition(int letter) {
             int result = START_PADDING;
             for(int i  = 0; i < letter;i++) {
-                result+=fontTexture.getCharData(line.toCharArray()[i]).getxAdvance();
+                result+=fontTexture.getCharData(line.toCharArray()[i]).getXAdvance();
             }
             return result;
         }
@@ -789,14 +800,14 @@ public class TextItem extends GameItem {
             if(length <= START_PADDING) {
                 return 0;
             } else {
-                int temp = (int) (START_PADDING + fontTexture.getCharData(line.toCharArray()[0]).getxAdvance() * 0.5);
+                int temp = (int) (START_PADDING + fontTexture.getCharData(line.toCharArray()[0]).getXAdvance() * 0.5);
                 if(temp/(float)length > x) {
                     return 0;
                 }
                 for(int i = 1;i < line.length();i++) {
 
 
-                    temp += fontTexture.getCharData(line.toCharArray()[i-1]).getxAdvance() * 0.5 + fontTexture.getCharData(line.toCharArray()[i]).getxAdvance() * 0.5;
+                    temp += fontTexture.getCharData(line.toCharArray()[i-1]).getXAdvance() * 0.5 + fontTexture.getCharData(line.toCharArray()[i]).getXAdvance() * 0.5;
 
                     if(temp/(float)length > x) {
                         return i;

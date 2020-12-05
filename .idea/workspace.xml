@@ -25,15 +25,62 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up drag event and key listener">
+    <list default="true" id="013e9847-6f46-41dd-adec-e76c5e3625d9" name="Default Changelist" comment="cleaned up the MouseListener classes">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/LWJGL3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/LWJGL3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/mouse/MouseState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/MainGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/text/FontTexture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/text/FontTexture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/hud/text/TextItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/hud/text/TextItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/render/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/Hud.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/SubComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/TextInputBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/components/presets/TextInputBox.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/ElementSizeConstraint$Proportion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/ElementSizeConstraint$Proportion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/ElementSizeConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/ElementSizeConstraint.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToComponentSizeE.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToComponentSizeE.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToParentSizeE.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToParentSizeE.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToScreenSizeE.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToScreenSizeE.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToWindowSizeE.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/elementSizeConstraints/RelativeToWindowSizeE.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/EndAtRelativeToParent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/EndAtRelativeToParent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/EndAtRelativeToWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/EndAtRelativeToWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/PositionConstraint$Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/PositionConstraint$Direction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/PositionConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/PositionConstraint.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeInParent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeInParent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeInWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeInWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeToParentPosition.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeToParentPosition.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeToWindowPosition.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/RelativeToWindowPosition.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/StartAtRelativeToParent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/StartAtRelativeToParent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/StartAtRelativeToWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/positionConstraints/StartAtRelativeToWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/AbsoluteAspectRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/AbsoluteAspectRatio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/AspectRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/AspectRatio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedDirectionRelativeToScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedDirectionRelativeToScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedRelativeToParent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedRelativeToParent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedRelativeToWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/InvertedRelativeToWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/PixelValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/PixelValue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToParentSize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToParentSize.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToScreenSize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToScreenSize.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToWindowSize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/RelativeToWindowSize.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SizeConstraint$Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SizeConstraint$Direction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SizeConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SizeConstraint.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SubtractConstraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/SubtractConstraint.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/TextAspectRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/TextAspectRatio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/TextureAspectRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/constraints/sizeConstraints/TextureAspectRatio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/keys/KeyListener$KeyInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/keys/KeyListener$KeyInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/keys/KeyListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/keys/KeyListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseAdapter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseAdapter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseEvent$Event.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseEvent$Event.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseInput$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseInput$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseInput.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseInput.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseListener$MouseButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseListener$MouseButton.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/mouse/MouseState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/FontTexture$CharData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/text/FontTexture$CharData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/FontTexture.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/text/FontTexture.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem$LineData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem$LineData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/hud/text/TextItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/render/Renderer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/test/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/test/MainGame.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,12 +111,12 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Program Files/Java/LWJGL3.23" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.4586207" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -429,7 +476,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606917764913</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="cleaned up the MouseListener classes">
+      <created>1607010685579</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1607010685580</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -445,7 +499,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="started code cleanup" />
     <MESSAGE value="cleanup of save and load classes" />
     <MESSAGE value="cleanup of main engine classes" />
     <MESSAGE value="fixed relative to screen size Element constraint" />
@@ -470,81 +523,8 @@
     <MESSAGE value="cleaned up component position constraints" />
     <MESSAGE value="cleaned up component size constraints" />
     <MESSAGE value="cleaned up drag event and key listener" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up drag event and key listener" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1607008320747">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="765" y="241" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1607008320747" />
-    <state x="417" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1607008256722">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="417" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1607008256722" />
-    <state x="707" y="380" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1605960926145">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="707" y="380" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1050@0.0.1920.1050" timestamp="1605960926145" />
-    <state width="1877" height="253" key="GridCell.Tab.0.bottom" timestamp="1606834235082">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="253" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1606834235082" />
-    <state width="1877" height="253" key="GridCell.Tab.0.center" timestamp="1606834235082">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="253" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1606834235082" />
-    <state width="1877" height="253" key="GridCell.Tab.0.left" timestamp="1606834235081">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="253" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1606834235081" />
-    <state width="1877" height="253" key="GridCell.Tab.0.right" timestamp="1606834235082">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="253" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1606834235082" />
-    <state width="1877" height="98" key="GridCell.Tab.1.bottom" timestamp="1606491932729">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="98" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1606491932729" />
-    <state width="1877" height="98" key="GridCell.Tab.1.center" timestamp="1606491932729">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="98" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1606491932729" />
-    <state width="1877" height="98" key="GridCell.Tab.1.left" timestamp="1606491932729">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="98" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1606491932729" />
-    <state width="1877" height="98" key="GridCell.Tab.1.right" timestamp="1606491932729">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="98" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1606491932729" />
-    <state x="461" y="170" key="SettingsEditor" timestamp="1605877050773">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1605877050773" />
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2" timestamp="1606917767675">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="552" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1606917767675" />
-    <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605877400645">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="777" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1050@0.0.1920.1050" timestamp="1605877400645" />
-    <state x="505" y="261" width="909" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1605884814385">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="505" y="261" width="909" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1050@0.0.1920.1050" timestamp="1605884814385" />
-    <state x="394" y="0" width="1508" height="682" key="dock-window-1" timestamp="1606129739283">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="394" y="0" width="1508" height="682" key="dock-window-1/0.0.1920.1050@0.0.1920.1050" timestamp="1606129739283" />
-    <state x="720" y="314" key="git4idea.ui.GitUnstashDialog" timestamp="1606132069962">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="720" y="314" key="git4idea.ui.GitUnstashDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1606132069962" />
-    <state x="755" y="272" key="refactoring.ChangeSignatureDialog" timestamp="1606230404691">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="755" y="272" key="refactoring.ChangeSignatureDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1606230404691" />
+    <MESSAGE value="cleaned up the MouseListener classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up the MouseListener classes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

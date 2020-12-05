@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengles.GLES20.GL_COLOR_BUFFER_BIT;
 
 public class Renderer {
 
