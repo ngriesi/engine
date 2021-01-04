@@ -26,7 +26,22 @@ public class Transformation {
     private final Matrix4f modelMatrix;
 
     /** Matrix for an orthographic model */
+    private final Matrix4f orthographic2DMatrix;
+
+    /** Matrix for orthographic projection */
+    private final Matrix4f orthoProjectionMatrix;
+
+    /** model matrix for orthographic projecting */
     private final Matrix4f orthoModelMatrix;
+
+    /** light view matrix */
+    private final Matrix4f lightViewMatrix;
+
+    /** Light model matrix */
+    private final Matrix4f modelLightMatrix;
+
+    /** light model view Matrix */
+    private final Matrix4f modelLightViewMatrix;
 
     /**
      * create a new object for every matrix
@@ -38,7 +53,12 @@ public class Transformation {
         viewMatrix = new Matrix4f();
         modelViewMatrix = new Matrix4f();
         orthoMatrix = new Matrix4f();
+        orthographic2DMatrix = new Matrix4f();
         orthoModelMatrix = new Matrix4f();
+        orthoProjectionMatrix = new Matrix4f();
+        lightViewMatrix = new Matrix4f();
+        modelLightMatrix = new Matrix4f();
+        modelLightViewMatrix = new Matrix4f();
     }
 
     /**
@@ -67,11 +87,27 @@ public class Transformation {
      * @param zFar distance to far plane
      * @return ProjectionMatrix
      */
-
     @SuppressWarnings("UnusedReturnValue")
     public Matrix4f updateProjectionMatrix(float fov, float width, float height, float zNear, float zFar) {
         projectionMatrix.identity();
         return projectionMatrix.setPerspective(fov,width/height,zNear,zFar);
+    }
+
+    /**
+     * sets values  for an orthographic projection matrix
+     *
+     * @param left left of the scene
+     * @param right right of the scene
+     * @param bottom bottom of the scene
+     * @param top top og the scene
+     * @param near distance of the near plane
+     * @param far distance of the far plane
+     * @return orthographic projection matrix with newly set values
+     */
+    public Matrix4f updateOrthoProjectionMatrix(float left, float right, float bottom, float top, float near, float far) {
+        orthoProjectionMatrix.identity();
+        orthoProjectionMatrix.setOrtho(left, right, bottom, top, near, far);
+        return orthoProjectionMatrix;
     }
 
     /**
@@ -82,20 +118,35 @@ public class Transformation {
      * @param camera the camera object used in the scene
      * @return the view Matrix of the scene
      */
-
     @SuppressWarnings("UnusedReturnValue")
     public Matrix4f updateViewMatrix(Camera camera){
-        Vector3f cameraPos = camera.getPosition();
-        Vector3f rotation = camera.getRotation();
+        return updateGenericViewMatrix(camera.getPosition(), camera.getRotation(), viewMatrix);
+    }
 
-        viewMatrix.identity();
+    public Matrix4f getLightViewMatrix() {
+        return lightViewMatrix;
+    }
 
-        // First do the Rotation so the Camera rotates over its position
-        viewMatrix.rotate((float)Math.toRadians(rotation.x),new Vector3f(1,0,0)).rotate((float)Math.toRadians(rotation.y),new Vector3f(0,1,0));
-        //Then do the translation
-        viewMatrix.translate(-cameraPos.x,-cameraPos.y,-cameraPos.z);
+    public Matrix4f getOrthoProjectionMatrix() {
+        return orthoProjectionMatrix;
+    }
 
-        return viewMatrix;
+    public void setLightViewMatrix(Matrix4f lightViewMatrix) {
+        this.lightViewMatrix.set(lightViewMatrix);
+    }
+
+    public Matrix4f updateLightViewMatrix(Vector3f position, Vector3f rotation) {
+        return updateGenericViewMatrix(position, rotation, lightViewMatrix);
+    }
+
+    private Matrix4f updateGenericViewMatrix(Vector3f position, Vector3f rotation, Matrix4f matrix) {
+        matrix.identity();
+        // First do the rotation so camera rotates over its position
+        matrix.rotate((float)Math.toRadians(rotation.x), new Vector3f(1, 0, 0))
+                .rotate((float)Math.toRadians(rotation.y), new Vector3f(0, 1, 0));
+        // Then do the translation
+        matrix.translate(-position.x, -position.y, -position.z);
+        return matrix;
     }
 
     /**
@@ -110,7 +161,7 @@ public class Transformation {
      * @return orthographic Matrix
      */
 
-    public final Matrix4f getOrthoProjectionMatrix(float left, float right, float bottom, float top,float zNear,float zFar) {
+    public final Matrix4f getOrtho2DProjectionMatrix(float left, float right, float bottom, float top, float zNear, float zFar) {
         orthoMatrix.identity();
         orthoMatrix.setOrtho(left, right, bottom, top,zNear,zFar);
         return orthoMatrix;
@@ -136,6 +187,24 @@ public class Transformation {
     }
 
     /**
+     * creates the model view matrix for a game item from the perspective of a light
+     *
+     * @param gameItem game item the model view matrix is for
+     * @param matrix matrix of the light
+     * @return model view matrix
+     */
+    public Matrix4f buildModelLightViewMatrix(GameItem gameItem, Matrix4f matrix) {
+        Vector3f rotation = gameItem.getRotation();
+        modelLightMatrix.identity().translate(gameItem.getPosition()).
+                rotateX((float)Math.toRadians(-rotation.x)).
+                rotateY((float)Math.toRadians(-rotation.y)).
+                rotateZ((float)Math.toRadians(-rotation.z)).
+                scale(gameItem.getScale()).scale(gameItem.getScale3());
+        modelLightViewMatrix.set(matrix);
+        return modelLightViewMatrix.mul(modelLightMatrix);
+    }
+
+    /**
      * Creates the matrix that has to be used for the specific game item by using the transformation applied to this game item
      * this Method is for the game items drawn orthographically
      *
@@ -152,9 +221,9 @@ public class Transformation {
                 rotateY((float)Math.toRadians(-rotation.y)).
                 rotateZ((float)Math.toRadians(-rotation.z)).
                 scale(gameItem.getScale3().x,gameItem.getScale3().y,gameItem.getScale3().z);
-        orthoModelMatrix.set(orthoMatrix);
-        orthoModelMatrix.mul(modelMatrix);
-        return orthoModelMatrix;
+        orthographic2DMatrix.set(orthoMatrix);
+        orthographic2DMatrix.mul(modelMatrix);
+        return orthographic2DMatrix;
     }
 
 }

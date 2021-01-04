@@ -1,4 +1,4 @@
-package engine.graph.general;
+package engine.graph.environment;
 
 
 import engine.general.OBJLoader;
@@ -24,6 +24,7 @@ public class Skybox extends GameItem {
         Mesh skyBoxMesh = OBJLoader.loadInverted(objModel);
         Texture skyBoxTexture = new Texture(textureFile, Texture.FilterMode.NEAREST);
         skyBoxMesh.setMaterial(new Material(skyBoxTexture,0.0f));
+        this.setScale(100);
         setMesh(skyBoxMesh);
         setPosition(0,0,0);
     }

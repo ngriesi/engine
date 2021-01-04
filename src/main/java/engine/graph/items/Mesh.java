@@ -31,18 +31,78 @@ public class Mesh {
 
     /**
      * Method creates an vao that can be used by the open gl graphics context form the
-     * position Array, texture coordinates, normal Vectors and an indices array used to identify vertices
+     * position Array, texture coordinates, normal Vectors and an indices array used to identify vertices.
+     *
+     * @param positions positions of the vertices
+     * @param textCords texture coordinates
+     * @param normals normal vectors
+     * @param indices indices of the vertices
+     */
+    public Mesh(float[] positions, float[] textCords, float[] normals, int[] indices) {
+        this(positions, textCords, normals, new float[0], new float[0], new int[0], new float[0], indices);
+    }
+
+
+    /**
+     * creates a float vbo from a float array
+     *
+     * @param index index of the vbo
+     * @param size size of the vbo elements
+     * @param content content of the vbo
+     * @param empty if true an empty vbo is created
+     */
+    private void createFloatVBO(int index, int size, float[] content,boolean empty) {
+
+        FloatBuffer buffer;
+
+        //Position VBO
+        int vboId = glGenBuffers();
+        vboidList.add(vboId);
+        buffer = MemoryUtil.memAllocFloat(content.length);
+        if(!empty) buffer.put(content).flip();
+        glBindBuffer(GL_ARRAY_BUFFER, vboId);
+        glBufferData(GL_ARRAY_BUFFER,buffer,GL_STATIC_DRAW);
+        glEnableVertexAttribArray(index);
+        glVertexAttribPointer(index,size,GL_FLOAT,false,0,0);
+
+        MemoryUtil.memFree(buffer);
+    }
+
+    private void createIntVBO(int index, int size, int[] content,boolean empty) {
+
+        IntBuffer buffer;
+
+        //Position VBO
+        int vboId = glGenBuffers();
+        vboidList.add(vboId);
+        buffer = MemoryUtil.memAllocInt(content.length);
+        if(!empty) buffer.put(content).flip();
+        glBindBuffer(GL_ARRAY_BUFFER, vboId);
+        glBufferData(GL_ARRAY_BUFFER,buffer,GL_STATIC_DRAW);
+        glEnableVertexAttribArray(index);
+        glVertexAttribIPointer(index,size,GL_INT,0,0);
+
+        MemoryUtil.memFree(buffer);
+    }
+
+
+    /**
+     * Method creates an vao that can be used by the open gl graphics context form the
+     * position Array, texture coordinates, normal Vectors and an indices array used to identify vertices.
+     * It also uses tangent and bi tangent vectors to calculate the orientation of a potential normal map
      *
      * @param positions positions of the vertices
      * @param textCoords texture coordinates
      * @param normals normal vectors
+     * @param tangents tangent vectors
+     * @param biTangents biTangent vectors
      * @param indices indices of the vertices
      */
 
-    public Mesh(float[] positions,float[] textCoords,float[] normals,int[] indices){
-        FloatBuffer posBuffer = null;
-        FloatBuffer textCoordsBuffer = null;
-        FloatBuffer normalsBuffer = null;
+    public Mesh(float[] positions,float[] textCoords,float[] normals,float[] tangents,float[] biTangents,int[] jointIDs, float[] weights, int[] indices){
+
+        System.out.println(weights.length);
+
         IntBuffer indicesBuffer = null;
         material = new Material();
         try{
@@ -53,42 +113,46 @@ public class Mesh {
             glBindVertexArray(vaoId);
 
             //Position VBO
-            int vboId = glGenBuffers();
-            vboidList.add(vboId);
-            posBuffer = MemoryUtil.memAllocFloat(positions.length);
-            posBuffer.put(positions).flip();
-            glBindBuffer(GL_ARRAY_BUFFER, vboId);
-            glBufferData(GL_ARRAY_BUFFER,posBuffer,GL_STATIC_DRAW);
-            glEnableVertexAttribArray(0);
-            glVertexAttribPointer(0,3,GL_FLOAT,false,0,0);
+            createFloatVBO(0,3,positions,false);
 
             // texture coordinates VBO
-            vboId = glGenBuffers();
-            vboidList.add(vboId);
-            textCoordsBuffer = MemoryUtil.memAllocFloat(textCoords.length);
-            textCoordsBuffer.put(textCoords).flip();
-            glBindBuffer(GL_ARRAY_BUFFER, vboId);
-            glBufferData(GL_ARRAY_BUFFER, textCoordsBuffer, GL_STATIC_DRAW);
-            glEnableVertexAttribArray(1);
-            glVertexAttribPointer(1,2,GL_FLOAT,false,0,0);
+            createFloatVBO(1,2,textCoords,false);
 
             // normals VBO
-            vboId = glGenBuffers();
-            vboidList.add(vboId);
-            normalsBuffer = MemoryUtil.memAllocFloat(normals.length);
-            if(normalsBuffer.capacity() > 0) {
-                normalsBuffer.put(normals).flip();
+            if(normals.length > 0) {
+                createFloatVBO(2, 3, normals,false);
             } else {
-                // Create empty structure
-                normalsBuffer = MemoryUtil.memAllocFloat(positions.length);
+                createFloatVBO(2,3,positions,true);
             }
-            glBindBuffer(GL_ARRAY_BUFFER, vboId);
-            glBufferData(GL_ARRAY_BUFFER,normalsBuffer,GL_STATIC_DRAW);
-            glEnableVertexAttribArray(2);
-            glVertexAttribPointer(2,3,GL_FLOAT,false,0,0);
+
+            // Tangent VBO
+            if(tangents.length > 0) {
+                createFloatVBO(3, 3, tangents,false);
+            } else {
+                createFloatVBO(3,3,positions,true);
+            }
+
+            // BiTangent VBO
+            if(biTangents.length > 0) {
+                createFloatVBO(4, 3, biTangents,false);
+            } else {
+                createFloatVBO(4,3,positions,true);
+            }
+
+            // weights
+            if(weights.length > 0) {
+                createFloatVBO(5, 3, weights,false);
+            }
+
+            // joint ids
+            if (jointIDs.length > 0) {
+                createIntVBO(6, 3, jointIDs, false);
+            }
+
+
 
             //Index VBO
-            vboId = glGenBuffers();
+            int vboId = glGenBuffers();
             vboidList.add(vboId);
             indicesBuffer = MemoryUtil.memAllocInt(indices.length);
             indicesBuffer.put(indices).flip();
@@ -99,19 +163,10 @@ public class Mesh {
             glBindVertexArray(0);
 
         }finally {
-            if(posBuffer != null){
-                MemoryUtil.memFree(posBuffer);
-            }
-            if(textCoordsBuffer != null){
-                MemoryUtil.memFree(textCoordsBuffer);
-            }
-            if(normalsBuffer != null){
-                MemoryUtil.memFree(normalsBuffer);
-            }
+
             if(indicesBuffer != null){
                 MemoryUtil.memFree(indicesBuffer);
             }
-
         }
     }
 
@@ -161,6 +216,15 @@ public class Mesh {
             glActiveTexture(GL_TEXTURE0);
             //Bind texture
             glBindTexture(GL_TEXTURE_2D,texture.getId());
+        }
+
+        Texture normalMap = material.getNormalMap();
+        if(normalMap != null) {
+            // Activate second texture bank
+            glActiveTexture(GL_TEXTURE1);
+
+            // bind texture
+            glBindTexture(GL_TEXTURE_2D, normalMap.getId());
         }
 
         //Draw the mesh

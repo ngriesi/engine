@@ -1,27 +1,29 @@
 #version 330
 
+// input variables from the vertex shader
 in vec3 mvPos;
 in vec2 outTexCord;
 in vec4 color;
 
-
+// output variables
 out vec4 fragColor;
 out float gl_FragDepth;
 
+// UNIFROMS
+
 uniform int transparencyMode;
 
+// corner uniforms
 uniform float keepCornerProportion;
-
 uniform vec2 cornerScale;
-
 uniform float cornerSize;
 
+// texture uniforms
 uniform int useTexture;
-
 uniform sampler2D texture2d;
 
+// edge uniforms
 uniform float edgeValue;
-
 uniform vec4 edgeStartColor;
 uniform vec4 edgeEndColor;
 uniform float edgeSize;
@@ -30,6 +32,8 @@ uniform int edgeBlendMode;
 void main() {
 
     if(useTexture==2) {
+
+        // text mode
         float smoothing = 0.9f / (0.5 * 100);
 
         float full = 0.5f;
@@ -41,6 +45,7 @@ void main() {
         float alpha;
 
         if(cornerSize != 0) {
+            // calculating corners and edges
             if(keepCornerProportion==0) {
                 alpha = length(max(vec2(abs(mvPos.x),abs(mvPos.y)) - cornerScale + cornerSize, 0.0));
             } else if(keepCornerProportion < 0) {
@@ -49,6 +54,7 @@ void main() {
                 alpha = length(max(vec2(abs(mvPos.x * keepCornerProportion),abs(mvPos.y)) + cornerScale + cornerSize, 0.0));
             }
         } else if(edgeSize != 1) {
+            // calculating only edges
             if(keepCornerProportion==0) {
                 alpha = max(abs(mvPos.x),abs(mvPos.y)) * 2;
             } else if(keepCornerProportion < 0) {
@@ -66,13 +72,14 @@ void main() {
 
         float cornerValue = alpha<edgeSize?0:alpha;
 
-
+        // applying color
         if(useTexture==1) {
             fragColor = texture(texture2d, outTexCord);
         } else if(useTexture==0) {
             fragColor = color;
         }
 
+        // setting the edge color
         if(cornerValue > 0) {
             if(cornerSize > 0 && edgeSize > 0) {
                 vec4 edgeColor = (cornerValue - edgeSize)/(cornerSize - edgeSize) * edgeStartColor + (1- ((cornerValue - edgeSize)/(cornerSize - edgeSize))) * edgeEndColor;

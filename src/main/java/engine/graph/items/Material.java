@@ -1,6 +1,7 @@
 package engine.graph.items;
 
 import org.joml.Vector4f;
+import org.lwjgl.system.CallbackI;
 
 public class Material {
 
@@ -19,19 +20,18 @@ public class Material {
     /** reflectance of the surface*/
     private float reflectance;
 
-    /** texture of the object */
+    /** texture of the material */
     private Texture texture;
+
+    /** normal map of the material */
+    private Texture normalMap;
 
     /**
      * setting default values
      */
     @SuppressWarnings("unused")
     public Material(){
-        this.ambientColor = DEFAULT_COLOUR;
-        this.diffuseColor = DEFAULT_COLOUR;
-        this.specularColor = DEFAULT_COLOUR;
-        this.texture = null;
-        this.reflectance = 0;
+        this(DEFAULT_COLOUR, DEFAULT_COLOUR, DEFAULT_COLOUR,null, null, 0);
     }
 
     /**
@@ -64,7 +64,7 @@ public class Material {
     }
 
     /**
-     * custom values for all fields
+     * custom values for all fields (no normal map)
      *
      * @param ambientColor ambient
      * @param diffuseColor diffuse
@@ -79,6 +79,22 @@ public class Material {
         this.specularColor = specularColor;
         this.texture = texture;
         this.reflectance = reflectance;
+    }
+
+    /**
+     * custom values for all fields
+     *
+     * @param ambientColor ambient
+     * @param diffuseColor diffuse
+     * @param specularColor specular
+     * @param texture texture
+     * @param normalMap normal map
+     * @param reflectance reflectance
+     */
+    @SuppressWarnings("WeakerAccess")
+    public Material(Vector4f ambientColor, Vector4f diffuseColor, Vector4f specularColor, Texture texture, Texture normalMap, float reflectance){
+        this(ambientColor, diffuseColor, specularColor, texture, reflectance);
+        this.normalMap = normalMap;
     }
 
     /**
@@ -161,5 +177,20 @@ public class Material {
     @SuppressWarnings("unused")
     public void setTexture(Texture texture) {
         this.texture = texture;
+    }
+
+    /**
+     * @return returns true if the material uses a normal map
+     */
+    public boolean isNormalMap() {
+        return this.normalMap != null;
+    }
+
+    public Texture getNormalMap() {
+        return normalMap;
+    }
+
+    public void setNormalMap(Texture normalMap) {
+        this.normalMap = normalMap;
     }
 }

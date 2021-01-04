@@ -1,6 +1,8 @@
 package engine.graph.general;
 
 
+import engine.graph.environment.Fog;
+import engine.graph.environment.Skybox;
 import engine.graph.items.GameItem;
 import engine.graph.items.Mesh;
 import engine.graph.light.LightHandler;
@@ -22,10 +24,13 @@ public class Scene {
     /** handles lights of the scene */
     private LightHandler lightHandler;
 
+    /** the fog of the scene */
+    private Fog fog;
+
     /**
      * map of meshes with game items used for rendering of lists of meshes to improve performance
      */
-    private Map<Mesh, List<GameItem>> meshMap;
+    private final Map<Mesh, List<GameItem>> meshMap;
 
     /**
      * constructor creates hashMap and lightHandler
@@ -33,6 +38,7 @@ public class Scene {
     public Scene(){
         lightHandler = new LightHandler();
         meshMap = new HashMap<>();
+        fog = Fog.NO_FOG;
     }
 
     /**
@@ -94,5 +100,13 @@ public class Scene {
      */
     public Map<Mesh, List<GameItem>> getGameMeshes() {
         return meshMap;
+    }
+
+    public Fog getFog() {
+        return fog;
+    }
+
+    public void setFog(Fog fog) {
+        this.fog = fog;
     }
 }

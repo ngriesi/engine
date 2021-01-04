@@ -1,5 +1,6 @@
 package engine.render;
 
+import engine.graph.environment.Fog;
 import engine.graph.items.Material;
 import engine.graph.light.DirectionalLight;
 import engine.graph.light.PointLight;
@@ -256,6 +257,31 @@ public class ShaderProgram {
         createUniforms(uniformName + ".specular");
         createUniforms(uniformName + ".hasTexture");
         createUniforms(uniformName + ".reflectance");
+        createUniforms(uniformName + ".hasNormalMap");
+    }
+
+    /**
+     * creates a fog uniform
+     *
+     * @param uniformName name
+     * @throws Exception if uniform cant be found
+     */
+    public void createFogUniform(String uniformName) throws Exception {
+        createUniforms(uniformName + ".activeValue");
+        createUniforms(uniformName + ".color");
+        createUniforms(uniformName + ".density");
+    }
+
+    /**
+     * sets values of a fog uniform
+     *
+     * @param uniformName uniform name
+     * @param fog value
+     */
+    public void setUniform(String uniformName, Fog fog) {
+        setUniform(uniformName + ".activeValue", fog.isActive() ? 1 : 0);
+        setUniform(uniformName + ".color", fog.getColor());
+        setUniform(uniformName + ".density",fog.getDensity());
     }
 
     /**
@@ -288,6 +314,7 @@ public class ShaderProgram {
         setUniform(uniformName + ".specular", material.getSpecularColor());
         setUniform(uniformName + ".hasTexture", material.isTexture()? 1: 0);
         setUniform(uniformName + ".reflectance", material.getReflectance());
+        setUniform(uniformName + ".hasNormalMap",material.isNormalMap() ? 1 : 0);
 
     }
 
@@ -323,8 +350,8 @@ public class ShaderProgram {
      */
     @SuppressWarnings("WeakerAccess")
     public void createSpotLightUniform(String uniformName) throws Exception {
-        createPointLightUniform(uniformName +".pl");
-        createUniforms(uniformName + ".conedir");
+        createPointLightUniform(uniformName +".pointLight");
+        createUniforms(uniformName + ".coneDirection");
         createUniforms(uniformName + ".cutoff");
     }
 
@@ -336,8 +363,8 @@ public class ShaderProgram {
      */
     @SuppressWarnings("WeakerAccess")
     public void setUniform(String uniformName, SpotLight spotLight){
-        setUniform(uniformName + ".pl",spotLight.getPointLight());
-        setUniform(uniformName + ".conedir",spotLight.getConeDirection());
+        setUniform(uniformName + ".pointLight",spotLight.getPointLight());
+        setUniform(uniformName + ".coneDirection",spotLight.getConeDirection());
         setUniform(uniformName + ".cutoff",spotLight.getCutOff());
     }
 
@@ -443,6 +470,47 @@ public class ShaderProgram {
             createUniforms(uniformName + "["+i+"]");
         }
     }
+
+    /**
+     * creates an array of Matrix4f uniforms
+     *
+     * @param uniformName name of the array
+     * @param size size of the array
+     * @throws Exception if array cant be found
+     */
+    @SuppressWarnings("WeakerAccess")
+    public void createMatrix4fArrayUniform(String uniformName, int size) throws Exception {
+        for(int i = 0; i < size;i++){
+            createUniforms(uniformName + "["+i+"]");
+        }
+    }
+
+
+    /**
+     * sets array of Matrix4f uniforms
+     *
+     * @param uniformName name
+     * @param matrices value
+     */
+    @SuppressWarnings("unused")
+    public void setUniform(String uniformName, Matrix4f[] matrices){
+        int numLights = matrices != null ? matrices.length:0;
+        for(int i = 0; i < numLights;i++){
+            setUniform(uniformName,matrices[i],i);
+        }
+    }
+
+    /**
+     * sets value of a point light uniform inside an array
+     *
+     * @param uniformName name
+     * @param matrix value
+     * @param pos position in array
+     */
+    public void setUniform(String uniformName, Matrix4f matrix, int pos) {
+        setUniform(uniformName + "["+pos+"]",matrix);
+    }
+
 
 
 }

@@ -26,10 +26,10 @@ public class LightHandler {
     private float specularPower;
 
     /** maximum number of point lights used in scene */
-    private final int MAX_POINT_LIGHTS = 5;
+    private final int MAX_POINT_LIGHTS = 1;
 
     /** maximum number of spot lights used in scene */
-    private final int MAX_SPOT_LIGHTS = 5;
+    private final int MAX_SPOT_LIGHTS = 1;
 
     /**
      * creates new empty light handler with 10 as specular power
@@ -38,6 +38,7 @@ public class LightHandler {
         specularPower = 10.0f;
         pointLightsList = new ArrayList<>();
         spotLightsList = new ArrayList<>();
+        ambientLight = new Vector3f();
     }
 
 
@@ -47,7 +48,8 @@ public class LightHandler {
      * @param shaderProgram shader used for lights ( normally scene shader )
      * @throws Exception if uniform creation fails
      */
-    public void inti(ShaderProgram shaderProgram) throws Exception{
+    public void init(ShaderProgram shaderProgram) throws Exception{
+
         shaderProgram.createUniforms("specularPower");
         shaderProgram.createUniforms("ambientLight");
         shaderProgram.createPointLightListUniform("pointLights", MAX_POINT_LIGHTS);
@@ -64,7 +66,7 @@ public class LightHandler {
      */
     public void renderLights(Matrix4f viewMatrix, ShaderProgram shaderProgram) {
 
-        shaderProgram.setUniform("ambientLight",ambientLight);
+        shaderProgram.setUniform("ambientLight", ambientLight);
         shaderProgram.setUniform("specularPower",specularPower);
 
         //Point Lights
@@ -80,6 +82,7 @@ public class LightHandler {
             lightPos.z = aux.z;
             shaderProgram.setUniform("pointLights",currPointLight,i);
         }
+
 
         SpotLight[] spotLights = spotLightsList.toArray(new SpotLight[MAX_SPOT_LIGHTS]);
         numLights = Math.min(spotLightsList.size(), MAX_SPOT_LIGHTS);
@@ -97,11 +100,14 @@ public class LightHandler {
             shaderProgram.setUniform("spotLights",currSpotLight,i);
         }
 
+
+        // Get a copy of the directional light object and transform its position to view coordinates
         DirectionalLight currDirLight = new DirectionalLight(directionalLight);
         Vector4f dir = new Vector4f(currDirLight.getDirection(),0);
         dir.mul(viewMatrix);
         currDirLight.setDirection(new Vector3f(dir.x,dir.y,dir.z));
         shaderProgram.setUniform("directionalLight",currDirLight);
+
     }
 
     /**

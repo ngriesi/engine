@@ -555,5 +555,6 @@ public class Hud {
 
     public void setAlwaysRender(boolean alwaysRender) {
         this.alwaysRender = alwaysRender;
+        window.setRenderAlways(alwaysRender);
     }
 }

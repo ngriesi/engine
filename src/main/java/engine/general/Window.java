@@ -107,6 +107,8 @@ public class Window {
 
     void init() {
 
+
+
         //ErrorCallback
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -530,5 +532,9 @@ public class Window {
 
     public void setOnFocusAction(Action onFocusAction) {
         this.onFocusAction = onFocusAction;
+    }
+
+    public void setRenderAlways(boolean renderAlways) {
+        this.renderAlways = renderAlways;
     }
 }

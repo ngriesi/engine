@@ -13,6 +13,12 @@ public class DirectionalLight {
     /** light intensity, range 0 to 1 */
     private float intensity;
 
+    /** coordinates for orthographic shadow map projection */
+    private OrthoCords orthoCords;
+
+    /** multiplier for temporal light position for the shadow map */
+    private float shadowPosMult;
+
     /**
      * Constructor with all fields as parameters
      *
@@ -22,6 +28,8 @@ public class DirectionalLight {
      */
     @SuppressWarnings("WeakerAccess")
     public DirectionalLight(Vector3f color, Vector3f direction, float intensity) {
+        this.orthoCords = new OrthoCords();
+        this.shadowPosMult = 1;
         this.color = color;
         this.direction = direction;
         this.intensity = intensity;
@@ -78,5 +86,34 @@ public class DirectionalLight {
     @SuppressWarnings("unused")
     public void setIntensity(float i) {
         intensity = i;
+    }
+
+    public void setOrthoCords(float left, float right, float bottom, float top, float near, float far) {
+        orthoCords.left = left;
+        orthoCords.right = right;
+        orthoCords.bottom = bottom;
+        orthoCords.top = top;
+        orthoCords.near = near;
+        orthoCords.far = far;
+    }
+
+    public OrthoCords getOrthoCords() {
+        return orthoCords;
+    }
+
+    public float getShadowPosMult() {
+        return shadowPosMult;
+    }
+
+    public void setShadowPosMult(float shadowPosMult) {
+        this.shadowPosMult = shadowPosMult;
+    }
+
+    /**
+     * cords for shadow map projections
+     */
+    public static class OrthoCords {
+
+        public float left,right,bottom,top,near,far;
     }
 }
