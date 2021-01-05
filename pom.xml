@@ -42,14 +42,14 @@
             <version>3.2.3</version>
         </dependency>
         <dependency>
-            <groupId>org.joml</groupId>
-            <artifactId>joml</artifactId>
-            <version>1.9.25</version>
-        </dependency>
-        <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl-stb</artifactId>
             <version>3.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.joml</groupId>
+            <artifactId>joml</artifactId>
+            <version>1.9.25</version>
         </dependency>
     </dependencies>
 

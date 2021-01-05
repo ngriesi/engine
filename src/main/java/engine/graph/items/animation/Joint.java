@@ -116,7 +116,7 @@ public class Joint {
         System.out.println(name + "inverseBind\n" + inverseBindTransform);
 
         for (Joint child : children) {
-            child.calcInverseBindTransform(bindTransform);
+            child.calcInverseBindTransform(new Matrix4f(bindTransform));
         }
 
         switch ("test") {

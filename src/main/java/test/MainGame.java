@@ -105,7 +105,7 @@ public class MainGame implements IGameLogic {
 
         camera.getPosition().z = 2;
 
-        animator = BlenderLoader.loadAnimationFromBlendFile("simpelAni.blend");
+        animator = BlenderLoader.loadAnimationFromBlendFile("animation.blend");
 
         animator.getEntity().setPosition(0,3,0);
 

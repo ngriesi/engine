@@ -144,11 +144,11 @@ public class Animator {
         Map<String, Matrix4f> currentPose = new HashMap<>();
         for (String jointName : previousFrame.getPose().keySet()) {
             JointTransform previousTransform = previousFrame.getPose().get(jointName);
-            System.out.println("previous\n" + previousTransform.getLocalTransform());
+            //System.out.println("previous\n" + previousTransform.getLocalTransform());
             JointTransform nextTransform = nextFrame.getPose().get(jointName);
-            System.out.println("next\n" + nextTransform.getLocalTransform());
+            //System.out.println("next\n" + nextTransform.getLocalTransform());
             JointTransform currentTransform = JointTransform.interpolate(previousTransform, nextTransform, progression);
-            System.out.println("current\n" + currentTransform.getLocalTransform());
+            //System.out.println("current\n" + currentTransform.getLocalTransform());
             currentPose.put(jointName, currentTransform.getLocalTransform());
         }
         return currentPose;
