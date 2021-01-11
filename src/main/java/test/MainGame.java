@@ -112,8 +112,6 @@ public class MainGame implements IGameLogic {
         scene.setGameItems(new GameItem[]{animator.getEntity()});
 
 
-        System.out.println(getLocalTransform(new Vector3f(0,0,2),new Quaternionf(0.7,0,0,0.7)));
-
 
     }
 

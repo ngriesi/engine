@@ -44,6 +44,9 @@ public class SkeletonCreator {
 
         rot.rotate((float)Math.toRadians(-90),new Vector3f(1,0,0));
 
+
+        System.out.println(rot + " rot root2");
+
         String name = bone.getName().asString();
 
         Joint joint = new Joint(0, name, rot);

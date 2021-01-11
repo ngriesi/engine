@@ -89,18 +89,31 @@ public class LoadAnimation {
 
                 Matrix4f ma = boneLocalBindMap.get(data.boneName);
 
+                Matrix4f manuelInput = new Matrix4f(3.42285e-8f, -0.9999999f, 0f, 0f,
+                        0.9999999f, 3.42285e-8f, 0f, 0f,
+                        0f, 0f, 1f, 0f,
+                        0f, 1.36183f, 0f, 1 );
 
                 Quaternionf temp = fromMatrix(ma);
 
-                Quaternionf fin = new Quaternionf(temp.x, temp.y, temp.z, temp.w);
+                Quaternionf tempData = data.getRotation(i);
 
-                System.out.println(data.getRotation(i) + "  animation");
-                System.out.println(fromMatrix(ma) + "  joint");
-                System.out.println(fromMatrix(ma).mul(data.getRotation(i)));
-                System.out.println(fromMatrix(new Matrix4f(
-                        -0.9118632f, 0.3455495f, 0.221588f, 0, 0.4104198f, 0.7777416f, 0.4761026f, 1.36183f, -0.007821083f, 0.5250844f, -0.8510144f, 0, 0, 0, 0, 1 )));
+                System.out.println("auto: " + tempData + "  - " + temp);
+                Quaternionf fin;
+                if(!name.equals("Bone.002") || i != -1) {
 
-                pose.put(data.boneName, new JointTransform(data.getPosition(i).add(new Vector3f(ma.m30(),ma.m31(),ma.m32())),fin.mul(data.getRotation(i))));
+                    fin = tempData.mul(temp);
+                    pose.put(data.boneName, new JointTransform(data.getPosition(i).add(new Vector3f(ma.m30(),ma.m31(),ma.m32())),fin));
+                } else {
+                    fin = fromMatrix(manuelInput);
+                    System.out.println("manuel: " + fin + "  -  " + new Quaternionf(0,0,1,1).rotateAxis((float)Math.toRadians(-90),new Vector3f(1,0,0)));
+                    System.out.println(data.getPosition(i).add(new Vector3f(ma.m30(),ma.m31(),ma.m32())));
+                    pose.put(data.boneName, new JointTransform(new Vector3f(0,1.36f,0),new Quaternionf(-1,0,0,1)));
+                }
+
+
+
+               // pose.put(data.boneName, new JointTransform(data.getPosition(i).add(new Vector3f(ma.m30(),ma.m31(),ma.m32())),fin));
 
                 timestamp = data.position[0].values[i].time;
 
@@ -225,7 +238,7 @@ public class LoadAnimation {
         }
 
         Quaternionf getRotation(int i) {
-            return new Quaternionf(-quaternion[3].values[i].value,-quaternion[1].values[i].value,quaternion[2].values[i].value,quaternion[0].values[i].value);
+            return new Quaternionf(quaternion[3].values[i].value,-quaternion[2].values[i].value,quaternion[1].values[i].value,quaternion[0].values[i].value);
         }
 
         Vector3f getPosition(int i) {

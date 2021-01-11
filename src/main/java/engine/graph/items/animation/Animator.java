@@ -91,12 +91,12 @@ public class Animator {
         currentTransform = parentTransform.mul(currentLocalTransform,currentTransform );
         System.out.println(joint.name + "current\n" + currentTransform);
         for (Joint childJoint : joint.children) {
-            applyPoseToJoints(currentPose, childJoint, currentTransform);
+            applyPoseToJoints(currentPose, childJoint, new Matrix4f(currentTransform));
         }
 
         System.out.println(joint.name + "inverse\n" + joint.getInverseBindTransform());
         currentTransform.mul(joint.getInverseBindTransform(), currentTransform);
-        joint.setAnimatedTransform(currentTransform);
+        joint.setAnimatedTransform(new Matrix4f(currentTransform));
         System.out.println(joint.name + "animation\n" + currentTransform);
     }
 
